@@ -1,0 +1,114 @@
+In natural language processing, latent Dirichlet allocation (LDA) is a generative statistical model that explains how a collection of text documents can be described by a set of unobserved "topics." For example, given a set of news articles, LDA might discover that one topic is characterized by words like "president", "government", and "election", while another is characterized by "team", "game", and "score".
+It is one of the most common topic models.
+The LDA model was first presented as a graphical model for population genetics by J.
+The model was subsequently applied to machine learning by David Blei, Andrew Ng, and Michael I.
+Although its most frequent application is in modeling text corpora, it has also been used for other problems, such as in clinical psychology, social science, and computational musicology.
+The core assumption of LDA is that documents are represented as a random mixture of latent topics, and each topic is characterized by a probability distribution over words.
+The model is a generalization of probabilistic latent semantic analysis (pLSA), differing primarily in that LDA treats the topic mixture as a Dirichlet prior, leading to more reasonable mixtures and less susceptibility to overfitting.
+Learning the latent topics and their associated probabilities from a corpus is typically done using Bayesian inference, often with methods like Gibbs sampling or variational Bayes.
+In the context of population genetics, LDA was proposed by J.
+LDA was applied in machine learning by David Blei, Andrew Ng and Michael I.
+Other social scientists have used LDA to examine large sets of topical data from discussions on social media (e.g., tweets about prescription drugs).
+Additionally, supervised Latent Dirichlet Allocation with covariates (SLDAX) has been specifically developed to combine latent topics identified in texts with other manifest variables.
+This approach allows for the integration of text data as predictors in statistical regression analyses, improving the accuracy of mental health predictions.
+One of the main advantages of SLDAX over traditional two-stage approaches is its ability to avoid biased estimates and incorrect standard errors, allowing for a more accurate analysis of psychological texts.
+In the field of social sciences, LDA has proven to be useful for analyzing large datasets, such as social media discussions.
+For instance, researchers have used LDA to investigate tweets discussing socially relevant topics, like the use of prescription drugs and cultural differences in China.
+By analyzing these large text corpora, it is possible to uncover patterns and themes that might otherwise go unnoticed, offering valuable insights into public discourse and perception in real time.
+In the context of computational musicology, LDA has been used to discover tonal structures in different corpora.
+One application of LDA in machine learning  specifically, topic discovery, a subproblem in natural language processing  is to discover topics in a collection of documents, and then automatically classify any individual document within the collection in terms of how "relevant" it is to each of the discovered topics.
+A topic is considered to be a set of terms (i.e., individual words or phrases) that, taken together, suggest a shared theme.
+For example, in a document collection related to pet animals, the terms dog, spaniel, beagle, golden retriever, puppy, bark, and woof would suggest a DOG_related theme, while the terms cat, siamese, Maine coon, tabby, manx, meow, purr, and kitten would suggest a CAT_related theme.
+There may be many more topics in the collection  e.g., related to diet, grooming, healthcare, behavior, etc.
+that we do not discuss for simplicity's sake.
+(Very common, so called stop words in a language  e.g., "the", "an", "that", "are", "is", etc.,  would not discriminate between topics and are usually filtered out by pre-processing before LDA is performed.
+Pre-processing also converts terms to their "root" lexical forms  e.g., "barks", "barking", and "barked" would be converted to "bark".) If the document collection is sufficiently large, LDA will discover such sets of terms (i.e., topics) based upon the co-occurrence of individual terms, though the task of assigning a meaningful label to an individual topic (i.e., that all the terms are DOG_related) is up to the user, and often requires specialized knowledge (e.g., for collection of technical documents).
+The LDA approach assumes that:  The semantic content of a document is composed by combining one or more terms from one or more topics.
+ Certain terms are ambiguous, belonging to more than one topic, with different probability.
+(For example, the term training can apply to both dogs and cats, but are more likely to refer to dogs, which are used as work animals or participate in obedience or skill competitions.) However, in a document, the accompanying presence of specific neighboring terms (which belong to only one topic) will disambiguate their usage.
+ Most documents will contain only a relatively small number of topics.
+In the collection, e.g., individual topics will occur with differing frequencies.
+That is, they have a probability distribution, so that a given document is more likely to contain some topics than others.
+ Within a topic, certain terms will be used much more frequently than others.
+In other words, the terms within a topic will also have their own probability distribution.
+When LDA machine learning is employed, both sets of probabilities are computed during the training phase, using Bayesian methods and an expectationmaximization algorithm.
+LDA is a generalization of older approach of probabilistic latent semantic analysis (pLSA), The pLSA model is equivalent to LDA under a uniform Dirichlet prior distribution.
+pLSA relies on only the first two assumptions above and does not care about the remainder.
+While both methods are similar in principle and require the user to specify the number of topics to be discovered before the start of training (as with k-means clustering) LDA has the following advantages over pLSA:  LDA yields better disambiguation of words and a more precise assignment of documents to topics.
+ Computing probabilities allows a "generative" process by which a collection of new "synthetic documents" can be generated that would closely reflect the statistical characteristics of the original collection.
+ Unlike LDA, pLSA is vulnerable to overfitting especially when the size of corpus increases.
+ The LDA algorithm is more readily amenable to scaling up for large data sets using the MapReduce approach on a computing cluster.
+representing the LDA model With plate notation, which is often used to represent probabilistic graphical models (PGMs), the dependencies among the many variables can be captured concisely.
+The boxes are "plates" representing replicates, which are repeated entities.
+The outer plate represents documents, while the inner plate represents the repeated word positions in a given document; each position is associated with a choice of topic and word.
+The variable names are defined as follows: : M denotes the number of documents : N is number of words in a given document (document i has N_i words) : α is the parameter of the Dirichlet prior on the per-document topic distributions : β is the parameter of the Dirichlet prior on the per-topic word distribution : theta_i is the topic distribution for document i : varphi_k is the word distribution for topic k : z_ij is the topic for the j-th word in document i : w_ij is the specific word.
+The fact that W is grayed out means that words w_ij are the only observable variables, and the other variables are latent variables.
+As proposed in the original paper, .
+The original ML paper used a variational Bayes approximation of the posterior distribution.
+In practice, the optimal number of populations or topics is not known beforehand.
+It can be estimated by approximation of the posterior distribution with reversible-jump Markov chain Monte Carlo.
+Recent research has been focused on speeding up the inference of latent Dirichlet allocation to support the capture of a massive number of topics in a large number of documents.
+The update equation of the collapsed Gibbs sampler mentioned in the earlier section has a natural sparsity within it that can be taken advantage of.
+Intuitively, since each document only contains a subset of topics K_d, and a word also only appears in a subset of topics K_w, the above update equation could be rewritten to take advantage of this sparsity.
+: p(Z_d,n  k) propto fracalphabetaC_kneg n  Vbeta  fracC_kd betaC_kneg n  Vbeta  fracC_kw(alpha  C_kd)C_kneg n  Vbeta In this equation, we have three terms, out of which two are sparse, and the other is small.
+We call these terms a, b and c respectively.
+Now, if we normalize each term by summing over all the topics, we get: : A  sum_k1K fracalphabetaC_kneg n  Vbeta : B  sum_k1K fracC_kd betaC_kneg n  Vbeta : C  sum_k1K fracC_kw(alpha  C_kd)C_kneg n  Vbeta Here, we can see that B is a summation of the topics that appear in document d, and C is also a sparse summation of the topics that a word w is assigned to across the whole corpus.
+A on the other hand, is dense but because of the small values of alpha  beta, the value is very small compared to the two other terms.
+Now, while sampling a topic, if we sample a random variable uniformly from s sim U(smid ABC), we can check which bucket our sample lands in.
+Since A is small, we are very unlikely to fall into this bucket; however, if we do fall into this bucket, sampling a topic takes O(K) time (same as the original Collapsed Gibbs Sampler).
+However, if we fall into the other two buckets, we only need to check a subset of topics if we keep a record of the sparse topics.
+A topic can be sampled from the B bucket in O(K_d) time, and a topic can be sampled from the C bucket in O(K_w) time where K_d and K_w denotes the number of topics assigned to the current document and current word type respectively.
+Notice that after sampling each topic, updating these buckets is all basic O(1) arithmetic operations.
+Following is the derivation of the equations for collapsed Gibbs sampling, which means varphis and thetas will be integrated out.
+For simplicity, in this derivation the documents are all assumed to have the same length N_.
+The derivation is equally valid if the document lengths vary.
+According to the model, the total probability of the model is: : P(boldsymbolW, boldsymbolZ, boldsymboltheta, boldsymbolvarphi;alpha,beta)  prod_i1K P(varphi_i;beta) prod_j1M P(theta_j;alpha) prod_t1N P(Z_j,tmidtheta_j)P(W_j,tmidvarphi_Z_j,t) , where the bold-font variables denote the vector version of the variables.
+First, boldsymbolvarphi and boldsymboltheta need to be integrated out.
+:beginalign  P(boldsymbolZ, boldsymbolW;alpha,beta)  int_boldsymboltheta int_boldsymbolvarphi P(boldsymbolW, boldsymbolZ, boldsymboltheta, boldsymbolvarphi;alpha,beta) , dboldsymbolvarphi , dboldsymboltheta     int_boldsymbolvarphi prod_i1K P(varphi_i;beta) prod_j1M prod_t1N P(W_j,tmidvarphi_Z_j,t) , dboldsymbolvarphi int_boldsymboltheta prod_j1M P(theta_j;alpha) prod_t1N P(Z_j,tmidtheta_j) , dboldsymboltheta.
+endalign All the thetas are independent to each other and the same to all the varphis.
+So we can treat each theta and each varphi separately.
+We now focus only on the theta part.
+: int_boldsymboltheta prod_j1M P(theta_j;alpha) prod_t1N P(Z_j,tmidtheta_j) ,dboldsymboltheta  prod_j1M int_theta_j P(theta_j;alpha) prod_t1N P(Z_j,tmidtheta_j) , dtheta_j.
+We can further focus on only one theta as the following: : int_theta_j P(theta_j;alpha) prod_t1N P(Z_j,tmidtheta_j) , dtheta_j .
+Actually, it is the hidden part of the model for the jth document.
+Now we replace the probabilities in the above equation by the true distribution expression to write out the explicit equation.
+:int_theta_j P(theta_j;alpha) prod_t1N P(Z_j,tmidtheta_j) , dtheta_j  int_theta_j fracGammaleft (sum_i1K alpha_i right)prod_i1K Gamma(alpha_i) prod_i1K theta_j,ialpha_i - 1 prod_t1N P(Z_j,tmidtheta_j) , dtheta_j.
+Let n_j,ri be the number of word tokens in the jth document with the same word symbol (the rth word in the vocabulary) assigned to the ith topic.
+So, n_j,ri is three dimensional.
+If any of the three dimensions is not limited to a specific value, we use a parenthesized point (cdot) to denote.
+For example, n_j,(cdot)i denotes the number of word tokens in the jth document assigned to the ith topic.
+Thus, the right most part of the above equation can be rewritten as: : prod_t1N P(Z_j,tmidtheta_j)  prod_i1K theta_j,in_j,(cdot)i .
+So the theta_j integration formula can be changed to: :int_theta_j fracGammaleft (sum_i1K alpha_i right)prod_i1K Gamma(alpha_i) prod_i1K theta_j,ialpha_i - 1 prod_i1K theta_j,in_j,(cdot)i , dtheta_j  int_theta_j fracGammaleft (sum_i1K alpha_i right)prod_i1K Gamma(alpha_i) prod_i1K theta_j,in_j,(cdot)ialpha_i - 1 , dtheta_j.
+The equation inside the integration has the same form as the Dirichlet distribution.
+According to the Dirichlet distribution, :int_theta_j fracGammaleft (sum_i1K n_j,(cdot)ialpha_i right)prod_i1K Gamma(n_j,(cdot)ialpha_i) prod_i1K theta_j,in_j,(cdot)ialpha_i - 1 , dtheta_j 1 .
+endalign Now we turn our attention to the boldsymbolvarphi part.
+Actually, the derivation of the boldsymbolvarphi part is very similar to the boldsymboltheta part.
+endalign For clarity, here we write down the final equation with both boldsymbolphi and boldsymboltheta integrated out: : P(boldsymbolZ, boldsymbolW;alpha,beta)  prod_j1M fracGammaleft(sum_i1K alpha_i right )prod_i1K Gamma(alpha_i)fracprod_i1K Gamma(n_j,(cdot)ialpha_i)Gammaleft (sum_i1K n_j,(cdot)ialpha_i right) times prod_i1K fracGammaleft (sum_r1V beta_r right )prod_r1V Gamma(beta_r)fracprod_r1V Gamma(n_(cdot),ribeta_r)Gammaleft (sum_r1V n_(cdot),ribeta_r right).
+The goal of Gibbs Sampling here is to approximate the distribution of P(boldsymbolZmidboldsymbolW;alpha,beta).
+Since P(boldsymbolW;alpha,beta) is invariable for any of Z, Gibbs Sampling equations can be derived from P(boldsymbolZ, boldsymbolW;alpha,beta) directly.
+The key point is to derive the following conditional probability: : P(Z_(m,n)midboldsymbolZ_-(m,n), boldsymbolW;alpha,beta)fracP(Z_(m,n), boldsymbolZ_-(m,n),boldsymbolW;alpha,beta) P(boldsymbolZ_-(m,n), boldsymbolW;alpha,beta) , where Z_(m,n) denotes the Z hidden variable of the nth word token in the mth document.
+And further we assume that the word symbol of it is the vth word in the vocabulary, i.e.
+boldsymbolZ_-(m,n) denotes all the Zs but Z_(m,n).
+Note that Gibbs Sampling needs only to sample a value for Z_(m,n), according to the above probability, we do not need the exact value of :P left (Z_m,nmidboldsymbolZ_-(m,n), boldsymbolW;alpha,beta right ) but the ratios among the probabilities that Z_(m,n) can take value.
+endalign Finally, let n_j,ri,-(m,n) be the same meaning as n_j,ri but with the Z_(m,n) excluded.
+The above equation can be further simplified leveraging the property of gamma function.
+Topic modeling is a classic solution to the problem of information retrieval using linked data and semantic web technology.
+Related models and techniques are, among others, latent semantic indexing, independent component analysis, probabilistic latent semantic indexing, non-negative matrix factorization, and Gamma-Poisson distribution.
+The LDA model is highly modular and can therefore be easily extended.
+The main field of interest is modeling relations between topics.
+This is achieved by using another distribution on the simplex instead of the Dirichlet.
+The Correlated Topic Model follows this approach, inducing a correlation structure between topics by using the logistic normal distribution instead of the Dirichlet.
+Another extension is the hierarchical LDA (hLDA), where topics are joined together in a hierarchy by using the nested Chinese restaurant process, whose structure is learnt from data.
+LDA can also be extended to a corpus in which a document includes two types of information (e.g., words and names), as in the LDA-dual model.
+Nonparametric extensions of LDA include the hierarchical Dirichlet process mixture model, which allows the number of topics to be unbounded and learnt from data.
+As noted earlier, pLSA is similar to LDA.
+The LDA model is essentially the Bayesian version of pLSA model.
+The Bayesian formulation tends to perform better on small datasets because Bayesian methods can avoid overfitting the data.
+For very large datasets, the results of the two models tend to converge.
+One difference is that pLSA uses a variable d to represent a document in the training set.
+So in pLSA, when presented with a document the model has not seen before, we fix Pr(w mid z)the probability of words under topicsto be that learned from the training set and use the same EM algorithm to infer Pr(z mid d)the topic distribution under d.
+Blei argues that this step is cheating because you are essentially refitting the model to the new data.
+In evolutionary biology, it is often natural to assume that the geographic locations of the individuals observed bring some information about their ancestry.
+This is the rational of various models for geo-referenced genetic data.
+Variations on LDA have been used to automatically put natural images into categories, such as "bedroom" or "forest", by treating an image as a document, and small patches of the image as words; one of the variations is called spatial latent Dirichlet allocation.
+ Variational Bayesian methods  Pachinko allocation  tf-idf  Infer.NET .

@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Environment
+.env
+.env.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Logs
+*.log
+
+# Database
+rag.db
+
+# Vector store
+chroma_db/
+
+# Model checkpoints
+*.pth
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,145 @@
+In machine learning, backpropagation is a gradient computation method commonly used for training a neural network in computing parameter updates.
+It is an efficient application of the chain rule to neural networks.
+Backpropagation efficiently computes the gradient of the loss with respect to the network weights for a single inputoutput example.
+It does this by propagating derivatives backward, one layer at a time, from the output layer to the input layer, thereby avoiding redundant chain-rule calculations.
+Strictly speaking, the term backpropagation refers only to an algorithm for efficiently computing the gradient, not how the gradient is used, but the term is often used loosely to refer to the entire learning algorithm.
+This includes changing model parameters in the negative direction of the gradient, such as by stochastic gradient descent, or as an intermediate step in a more complicated optimizer, such as Adaptive Moment Estimation.
+Backpropagation had multiple discoveries and partial discoveries, with a tangled history and terminology (see ).
+Some other names for the technique include "reverse mode of automatic differentiation" or "reverse accumulation".
+Backpropagation computes the gradient in weight space of a feedforward neural network, with respect to a loss function.
+Denote:  x: input (vector of features)  y: target output :For classification, output will be a vector of class probabilities (e.g., (0.1, 0.7, 0.2), and target output is a specific class, encoded by the one-hotdummy variable (e.g., (0, 1, 0)).
+ C: loss function or "cost function" :For classification, this is usually cross-entropy (XC, log loss), while for regression it is usually squared error loss (SEL).
+ al_j: activation of the j-th node in layer l.
+In the derivation of backpropagation, other intermediate quantities are used by introducing them as needed below.
+Bias terms are not treated specially since they correspond to a weight with a fixed input of 1.
+For backpropagation the specific loss function and activation functions do not matter as long as they and their derivatives can be evaluated efficiently.
+Traditional activation functions include sigmoid, tanh, ReLU, Swish, Mish,, and many others.
+The overall network is a combination of function composition and matrix multiplication: :g(x) : fL(WL fL-1(WL-1 cdots f1(W1 x)cdots)) For a training set there will be a set of inputoutput pairs, left(x_i, y_i)right.
+For each inputoutput pair (x_i, y_i) in the training set, the loss of the model on that pair is the cost of the difference between the predicted output g(x_i) and the target output y_i: :C(y_i, g(x_i)) Note the distinction: during model evaluation the weights are fixed while the inputs vary (and the target output may be unknown), and the network ends with the output layer (it does not include the loss function).
+During model training the inputoutput pair is fixed while the weights vary, and the network ends with the loss function.
+Backpropagation computes the gradient for a fixed inputoutput pair (x_i, y_i), where the weights wl_jk can vary.
+Each individual component of the gradient, partial Cpartial wl_jk, can be computed by the chain rule; but doing this separately for each weight is inefficient.
+Backpropagation efficiently computes the gradient by avoiding duplicate calculations and not computing unnecessary intermediate values, by computing the gradient of each layer  specifically the gradient of the weighted input of each layer, denoted by deltal  from back to front.
+Informally, the key point is that since the only way a weight in Wl affects the loss is through its effect on the next layer, and it does so linearly, deltal are the only data you need to compute the gradients of the weights at layer l, and then the gradients of weights of previous layer can be computed by deltal-1 and repeated recursively.
+This avoids inefficiency in two ways.
+First, it avoids duplication because when computing the gradient at layer l, it is unnecessary to recompute all derivatives on later layers l1, l2, ldots each time.
+Second, it avoids unnecessary intermediate calculations, because at each stage it directly computes the gradient of the weights with respect to the ultimate output (the loss), rather than unnecessarily computing the derivatives of the values of hidden layers with respect to changes in weights partial al'_j'partial wl_jk.
+Backpropagation can be expressed for simple feedforward networks in terms of matrix multiplication, or more generally in terms of the adjoint graph.
+Given an inputoutput pair (x, y), the loss is: :C(y, fL(WL fL-1(WL-1 cdots f2(W2 f1(W1 x))cdots))) To compute this, one starts with the input x and works forward; denote the weighted input of each hidden layer as zl and the output of hidden layer l as the activation al.
+For backpropagation, the activation al as well as the derivatives (fl)' (evaluated at zl) must be cached for use during the backwards pass.
+The derivative of the loss in terms of the inputs is given by the chain rule; note that each term is a total derivative, evaluated at the value of the network (at each node) on the input x: :fracd Cd aLcdot fracd aLd zL cdot fracd zLd aL-1 cdot fracd aL-1d zL-1cdot fracd zL-1d aL-2 cdot ldots cdot fracd a1d z1 cdot fracpartial z1partial x, where fracd aLd zL is a diagonal matrix.
+These terms are: the derivative of the loss function; the derivatives of the activation functions; and the matrices of weights: :fracd Cd aLcirc (fL)' cdot WL circ (fL-1)' cdot WL-1 circ cdots circ (f1)' cdot W1.
+The gradient nabla is the transpose of the derivative of the output in terms of the input, so the matrices are transposed and the order of multiplication is reversed, but the entries are the same: :nabla_x C  (W1)T cdot (f1)' circ ldots circ (WL-1)T cdot (fL-1)' circ (WL)T cdot (fL)' circ nabla_aL C.
+Backpropagation then consists essentially of evaluating this expression from right to left (equivalently, multiplying the previous expression for the derivative from left to right), computing the gradient at each layer on the way; there is an added step, because the gradient of the weights is not just a subexpression: there's an extra multiplication.
+Introducing the auxiliary quantity deltal for the partial products (multiplying from right to left), interpreted as the "error at level l" and defined as the gradient of the input values at level l: :deltal : (fl)' circ (Wl1)Tcdot(fl1)' circ cdots circ (WL-1)T cdot (fL-1)' circ (WL)T cdot (fL)' circ nabla_aL C.
+Note that deltal is a vector, of length equal to the number of nodes in level l; each component is interpreted as the "cost attributable to (the value of) that node".
+The gradient of the weights in layer l is then: :nabla_Wl C  deltal(al-1)T.
+The factor of al-1 is because the weights Wl between level l - 1 and l affect level l proportionally to the inputs (activations): the inputs are fixed, the weights vary.
+The deltal can easily be computed recursively, going from right to left, as: :deltal-1 : (fl-1)' circ (Wl)T cdot deltal.
+The gradients of the weights can thus be computed using a few matrix multiplications for each level; this is backpropagation.
+Compared with naively computing forwards (using the deltal for illustration): :beginalign delta1  (f1)' circ (W2)T cdot (f2)' circ cdots circ (WL-1)T cdot (fL-1)' circ (WL)T cdot (fL)' circ nabla_aL C delta2  (f2)' circ cdots circ (WL-1)T cdot (fL-1)' circ (WL)T cdot (fL)' circ nabla_aL C vdots deltaL-1  (fL-1)' circ (WL)T cdot (fL)' circ nabla_aL C deltaL  (fL)' circ nabla_aL C, endalign There are two key differences with backpropagation:  Computing deltal-1 in terms of deltal avoids the obvious duplicate multiplication of layers l and beyond.
+ Multiplying starting from nabla_aL C  propagating the error backwards  means that each step simply multiplies a vector (deltal) by the matrices of weights (Wl)T and derivatives of activations (fl-1)'.
+By contrast, multiplying forwards, starting from the changes at an earlier layer, means that each multiplication multiplies a matrix by a matrix.
+This is much more expensive, and corresponds to tracking every possible path of a change in one layer l forward to changes in the layer l2 (for multiplying Wl1 by Wl2, with additional multiplications for the derivatives of the activations), which unnecessarily computes the intermediate quantities of how weight changes affect the values of hidden nodes.
+For more general graphs, and other advanced variations, backpropagation can be understood in terms of automatic differentiation, where backpropagation is a special case of reverse accumulation (or "reverse mode").
+To understand the mathematical derivation of the backpropagation algorithm, it helps to first develop some intuition about the relationship between the actual output of a neuron and the correct output for a particular training example.
+Consider a simple neural network with two input units, one output unit and no hidden units, and in which each neuron uses a linear output (unlike most work on neural networks, in which mapping from inputs to outputs is non-linear) that is the weighted sum of its input.
+Initially, before training, the weights will be set randomly.
+Then the neuron learns from training examples, which in this case consist of a set of tuples (x_1, x_2, t) where x_1 and x_2 are the inputs to the network and is the correct output (the output the network should produce given those inputs, when it has been trained).
+The initial network, given x_1 and x_2, will compute an output that likely differs from (given random weights).
+A loss function L(t, y) is used for measuring the discrepancy between the target output and the computed output .
+For regression analysis problems the squared error can be used as a loss function, for classification the categorical cross-entropy can be used.
+As an example consider a regression problem using the square error as a loss: :L(t, y) (t-y)2  E, where is the discrepancy or error.
+Consider the network on a single training case: (1, 1, 0).
+Thus, the input x_1 and x_2 are 1 and 1 respectively and the correct output, is 0.
+Now if the relation is plotted between the network's output on the horizontal axis and the error on the vertical axis, the result is a parabola.
+The minimum of the parabola corresponds to the output which minimizes the error .
+For a single training case, the minimum also touches the horizontal axis, which means the error will be zero and the network can produce an output that exactly matches the target output .
+Therefore, the problem of mapping inputs to outputs can be reduced to an optimization problem of finding a function that will produce the minimal error.
+However, the output of a neuron depends on the weighted sum of all its inputs: :yx_1w_1  x_2w_2, where w_1 and w_2 are the weights on the connection from the input units to the output unit.
+Therefore, the error also depends on the incoming weights to the neuron, which is ultimately what needs to be changed in the network to enable learning.
+In this example, upon injecting the training data (1, 1, 0), the loss function becomes E  (t-y)2  y2  (x_1w_1  x_2w_2)2  (w_1  w_2)2.
+Then, the loss function E takes the form of a parabolic cylinder with its base directed along w_1  -w_2.
+Since all sets of weights that satisfy w_1  -w_2 minimize the loss function, in this case additional constraints are required to converge to a unique solution.
+Additional constraints could either be generated by setting specific conditions to the weights, or by injecting additional training data.
+One commonly used algorithm to find the set of weights that minimizes the error is gradient descent.
+By backpropagation, the steepest descent direction is calculated of the loss function versus the present synaptic weights.
+Then, the weights can be modified along the steepest descent direction, and the error is minimized in an efficient way.
+The gradient descent method involves calculating the derivative of the loss function with respect to the weights of the network.
+This is normally done using backpropagation.
+Assuming one output neuron, the squared error function is :E  L(t, y) where :L is the loss for the output y and target value t, :t is the target output for a training sample, and :y is the actual output of the output neuron.
+In this section, the order of the weight indexes are reversed relative to the prior section: w_ij is weight from the ith to the jth unit.
+For each neuron j, its output o_j is defined as :o_j  varphi(textnet_j)  varphileft(sum_k1n w_kjx_kright), where the activation function varphi is non-linear and differentiable over the activation region (the ReLU is not differentiable at one point).
+A historically used activation function is the logistic function: : varphi(z)  frac 1 1e-z which has a convenient derivative of: : frac d varphid z  varphi(z)(1-varphi(z)) The input textnet_j to a neuron is the weighted sum of outputs o_k of previous neurons.
+If the neuron is in the first layer after the input layer, the o_k of the input layer are simply the inputs x_k to the network.
+The number of input units to the neuron is n.
+The variable w_kj denotes the weight between neuron k of the previous layer and neuron j of the current layer.
+Calculating the partial derivative of the error with respect to a weight w_ij is done using the chain rule twice:  fracpartial Epartial o_j fracpartial o_jpartial w_ij  fracpartial Epartial o_j fracpartial o_jpartialtextnet_j fracpartial textnet_jpartial w_ij In the last factor of the right-hand side of the above, only one term in the sum textnet_j depends on w_ij, so that  fracpartialpartial w_ij left(sum_k1n w_kj o_kright)  fracpartialpartial w_ij w_ij o_i o_i. If the neuron is in the first layer after the input layer, o_i is just x_i.
+The derivative of the output of neuron j with respect to its input is simply the partial derivative of the activation function:  which for the logistic activation function :fracpartial o_jpartialtextnet_j  frac partialpartial textnet_j varphi(textnet_j)  varphi(textnet_j)(1-varphi(textnet_j))  o_j(1-o_j) This is the reason why backpropagation requires that the activation function be differentiable.
+(Nevertheless, the ReLU activation function, which is non-differentiable at 0, has become quite popular, e.g.
+in AlexNet) The first factor is straightforward to evaluate if the neuron is in the output layer, because then o_j  y and  If half of the square error is used as loss function we can rewrite it as : fracpartial Epartial o_j  fracpartial Epartial y  fracpartialpartial y frac12(t - y)2  y - t However, if j is in an arbitrary inner layer of the network, finding the derivative E with respect to o_j is less obvious.
+Considering E as a function with the inputs being all neurons L  u, v, dots, w receiving input from neuron j, : fracpartial E(o_j)partial o_j  fracpartial E(mathrmnet_u, textnet_v, dots, mathrmnet_w)partial o_j and taking the total derivative with respect to o_j, a recursive expression for the derivative is obtained:  Therefore, the derivative with respect to o_j can be calculated if all the derivatives with respect to the outputs o_ell of the next layer  the ones closer to the output neuron  are known.
+The change in weight needs to reflect the impact on E of an increase or decrease in w_ij.
+If fracpartial Epartial w_ij  0, an increase in w_ij increases E; conversely, if fracpartial Epartial w_ij , an increase in w_ij decreases E.
+The new Delta w_ij is added to the old weight, and the product of the learning rate and the gradient, multiplied by -1 guarantees that w_ij changes in a way that always decreases E.
+In other words, in the equation immediately below, - eta fracpartial Epartial w_ij always changes w_ij in such a way that E is decreased: : Delta w_ij  - eta fracpartial Epartial w_ij  - eta o_i delta_j .
+Using a Hessian matrix of second-order derivatives of the error function, the LevenbergMarquardt algorithm often converges faster than first-order gradient descent, especially when the topology of the error function is complicated.
+It may also find solutions in smaller node counts for which other methods might not converge.
+As an example, consider a simple feedforward network.
+At the l-th layer, we havex(l)_i, quad a(l)_i  f(x(l)_i), quad x(l1)_i  sum_j W_ij a(l)_jwhere x are the pre-activations, a are the activations, and W is the weight matrix.
+Arbitrary-order derivatives in arbitrary computational graphs can be computed with backpropagation, but with more complex expressions for higher orders.
+The loss function is a function that maps values of one or more variables onto a real number intuitively representing some "cost" associated with those values.
+For backpropagation, the loss function calculates the difference between the network output and its expected output, after a training example has propagated through the network.
+The mathematical expression of the loss function must fulfill two conditions in order for it to be possibly used in backpropagation.
+The first is that it can be written as an average Efrac1nsum_xE_x over error functions E_x, for n individual training examples, x.
+The reason for this assumption is that the backpropagation algorithm calculates the gradient of the error function for a single training example, which needs to be generalized to the overall error function.
+The second assumption is that it can be written as a function of the outputs from the neural network.
+Let y,y' be vectors in mathbbRn.
+Select an error function E(y,y') measuring the difference between two outputs.
+The standard choice is the square of the Euclidean distance between the vectors y and y':E(y,y')  tfrac12 lVert y-y'rVert2The error function over n training examples can then be written as an average of losses over individual examples:Efrac12nsum_xlVert (y(x)-y'(x)) rVert2 .
+ Gradient descent with backpropagation is not guaranteed to find the global minimum of the error function, but only a local minimum; also, it has trouble crossing plateaus in the error function landscape.
+This issue, caused by the non-convexity of error functions in neural networks, was long thought to be a major drawback, but Yann LeCun et al.
+argue that in many practical problems, it is not.
+ Backpropagation learning does not require normalization of input vectors; however, normalization could improve performance.
+ Backpropagation requires the derivatives of activation functions to be known at network design time.
+Backpropagation had been derived repeatedly, as it is essentially an efficient application of the chain rule (first written down by Gottfried Wilhelm Leibniz in 1676) to neural networks.
+The terminology "back-propagating error correction" was introduced in 1962 by Frank Rosenblatt, but he did not know how to implement this.
+In any case, he only studied neurons whose outputs were discrete levels, which only had zero derivatives, making backpropagation impossible.
+Precursors to backpropagation appeared in optimal control theory since 1950s.
+Yann LeCun et al credits 1950s work by Pontryagin and others in optimal control theory, especially the adjoint state method, for being a continuous-time version of backpropagation.
+Hecht-Nielsen credits the RobbinsMonro algorithm (1951) and Arthur Bryson and Yu-Chi Ho's Applied Optimal Control (1969) as presages of backpropagation.
+Other precursors were Henry J.
+Kelley 1960, and Arthur E.
+In 1962, Stuart Dreyfus published a simpler derivation based only on the chain rule.
+In 1973, he adapted parameters of controllers in proportion to error gradients.
+Unlike modern backpropagation, these precursors used standard Jacobian matrix calculations from one stage to the previous one, neither addressing direct links across several stages nor potential additional efficiency gains due to network sparsity.
+The ADALINE (1960) learning algorithm was gradient descent with a squared error loss for a single layer.
+The first multilayer perceptron (MLP) with more than one layer trained by stochastic gradient descent The MLP had 5 layers, with 2 learnable layers, and it learned to classify patterns not linearly separable.
+for discrete connected networks of nested differentiable functions.
+In 1982, Paul Werbos applied backpropagation to MLPs in the way that has become standard.
+Werbos described how he developed backpropagation in an interview.
+In 1971, during his PhD work, he developed backpropagation to mathematicize Freud's "flow of psychic energy".
+He faced repeated difficulty in publishing the work, only managing in 1981.
+He also claimed that "the first practical application of back-propagation was for estimating a dynamic model to predict nationalism and social communications in 1974" by him.
+Around 1982, backpropagation and taught the algorithm to others in his research circle.
+He did not cite previous work as he was unaware of them.
+He published the algorithm first in a 1985 paper, then in a 1986 Nature paper an experimental analysis of the technique.
+These papers became highly cited, contributed to the popularization of backpropagation, and coincided with the resurging research interest in neural networks during the 1980s.
+In 1985, the method was also described by David Parker.
+Yann LeCun proposed an alternative form of backpropagation for neural networks in his PhD thesis in 1987.
+Gradient descent took a considerable amount of time to reach acceptance.
+Some early objections were: there were no guarantees that gradient descent could reach a global minimum, only local minimum; neurons were "known" by physiologists as making discrete signals (01), not continuous ones, and with discrete signals, there is no gradient to take.
+See the interview with Geoffrey Hinton, .
+Contributing to the acceptance were several applications in training neural networks via backpropagation, sometimes achieving popularity outside the research circles.
+In 1987, NETtalk learned to convert English text into pronunciation.
+Sejnowski tried training it with both backpropagation and Boltzmann machine, but found the backpropagation significantly faster, so he used it for the final NETtalk.
+Pomerleau published ALVINN, a neural network trained to drive autonomously using backpropagation.
+The LeNet was published in 1989 to recognize handwritten zip codes.
+In 1992, TD-Gammon achieved top human level play in backgammon.
+It was a reinforcement learning agent with a neural network with two layers, trained by backpropagation.
+In 1993, Eric Wan won an international pattern recognition contest through backpropagation.
+During the 2000s it fell out of favour, but returned in the 2010s, benefiting from cheap, powerful GPU-based computing systems.
+This has been especially so in speech recognition, machine vision, natural language processing, and language structure learning research (in which it has been used to explain a variety of phenomena related to first and second language learning.) Error backpropagation has been suggested to explain human brain event-related potential (ERP) components like the N400 and P600.
+In 2023, a backpropagation algorithm was implemented on a photonic processor by a team at Stanford University.
+ Artificial neural network  Neural circuit  Catastrophic interference  Ensemble learning  AdaBoost  Overfitting  Neural backpropagation  Backpropagation through time  Backpropagation through structure  Three-factor learning .
+ Backpropagation neural network tutorial at the Wikiversity    

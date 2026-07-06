@@ -1,0 +1,137 @@
+A Bayesian network (also known as a Bayes network, Bayes net, belief network, or decision network) is a probabilistic graphical model that represents a set of variables and their conditional dependencies via a directed acyclic graph (DAG).
+While it is one of several forms of causal notation, causal networks are special cases of Bayesian networks.
+Bayesian networks are ideal for taking an event that occurred and predicting the likelihood that any one of several possible known causes was the contributing factor.
+For example, a Bayesian network could represent the probabilistic relationships between diseases and symptoms.
+Given symptoms, the network can be used to compute the probabilities of the presence of various diseases.
+Efficient algorithms can perform inference and learning in Bayesian networks.
+Bayesian networks that model sequences of variables (e.g.
+speech signals or protein sequences) are called dynamic Bayesian networks.
+Generalizations of Bayesian networks that can represent and solve decision problems under uncertainty are called influence diagrams.
+Formally, Bayesian networks are directed acyclic graphs (DAGs) whose nodes represent variables in the Bayesian sense: they may be observable quantities, latent variables, unknown parameters or hypotheses.
+Each edge represents a direct conditional dependency.
+Any pair of nodes that are not connected (i.e.
+no path connects one node to the other) represent variables that are conditionally independent of each other.
+Each node is associated with a probability function that takes, as input, a particular set of values for the node's parent variables, and gives (as output) the probability (or probability distribution, if applicable) of the variable represented by the node.
+For example, if m parent nodes represent m Boolean variables, then the probability function could be represented by a table of 2m entries, one entry for each of the 2m possible parent combinations.
+Similar ideas may be applied to undirected, and possibly cyclic, graphs such as Markov networks.
+s  Suppose we want to model the dependencies between three variables: the sprinkler (or more appropriately, its state - whether it is on or not), the presence or absence of rain and whether the grass is wet or not.
+Observe that two events can cause the grass to become wet: an active sprinkler or rain.
+Rain has a direct effect on the use of the sprinkler (namely that when it rains, the sprinkler usually is not active).
+This situation can be modeled with a Bayesian network (shown to the right).
+Each variable has two possible values, T (for true) and F (for false).
+The joint probability function is, by the chain rule of probability, : Pr(G,S,R)Pr(Gmid S,R) Pr(Smid R)Pr(R) where G  "Grass wet (truefalse)", S  "Sprinkler turned on (truefalse)", and R  "Raining (truefalse)".
+For example, : beginalign Pr(GT, ST,RT)   Pr(GTmid ST,RT)Pr(STmid RT)Pr(RT)    0.99 times 0.01 times 0.2    0.00198.
+endalign Then the numerical results (subscripted by the associated variable values) are : Pr(RTmid GT)  frac 0.00198_TTT  0.1584_TFT  0.00198_TTT  0.288_TTF  0.1584_TFT  0.0_TFF   frac8912491approx 35.77 .
+To answer an interventional question, such as "What is the probability that it would rain, given that we wet the grass?" the answer is governed by the post-intervention joint distribution function : Pr(S,Rmidtextdo(GT))  Pr(Smid R) Pr(R) obtained by removing the factor Pr(Gmid S,R) from the pre-intervention distribution.
+The do operator forces the value of G to be true.
+The probability of rain is unaffected by the action: : Pr(Rmidtextdo(GT))  Pr(R).
+To predict the impact of turning the sprinkler on: : Pr(R,Gmidtextdo(ST))  Pr(R)Pr(Gmid R,ST) with the term Pr(STmid R) removed, showing that the action affects the grass but not the rain.
+These predictions may not be feasible given unobserved variables, as in most policy evaluation problems.
+The effect of the action textdo(x) can still be predicted, however, whenever the back-door criterion is satisfied.
+It states that, if a set Z of nodes can be observed that d-separates (or blocks) all back-door paths from X to Y then : Pr(Y,Zmidtextdo(x))  fracPr(Y,Z,Xx)Pr(Xxmid Z).
+A back-door path is one that ends with an arrow into X.
+Sets that satisfy the back-door criterion are called "sufficient" or "admissible." For example, the set Z  R is admissible for predicting the effect of S  T on G, because R d-separates the (only) back-door path S  R  G.
+However, if S is not observed, no other set d-separates this path and the effect of turning the sprinkler on (S  T) on the grass (G) cannot be predicted from passive observations.
+In that case P(G  do(S  T)) is not "identified".
+This reflects the fact that, lacking interventional data, the observed dependence between S and G is due to a causal connection or is spurious (apparent dependence arising from a common cause, R).
+(see Simpson's paradox) To determine whether a causal relation is identified from an arbitrary Bayesian network with unobserved variables, one can use the three rules of "do-calculus" and test whether all do terms can be removed from the expression of that relation, thus confirming that the desired quantity is estimable from frequency data.
+Using a Bayesian network can save considerable amounts of memory over exhaustive probability tables, if the dependencies in the joint distribution are sparse.
+For example, a naive way of storing the conditional probabilities of 10 two-valued variables as a table requires storage space for 210  1024 values.
+If no variable's local distribution depends on more than three parent variables, the Bayesian network representation stores at most 10cdot23  80 values.
+One advantage of Bayesian networks is that it is intuitively easier for a human to understand (a sparse set of) direct dependencies and local distributions than complete joint distributions.
+Bayesian networks perform three main inference tasks:  Inferring unobserved variables  Parameter learning for the probability distributions of each node in the network  Structure learning of the graphical network .
+Because a Bayesian network is a complete model for its variables and their relationships, it can be used to answer probabilistic queries about them.
+For example, the network can be used to update knowledge of the state of a subset of variables when other variables (the evidence variables) are observed.
+This process of computing the posterior distribution of variables given evidence is called probabilistic inference.
+The posterior gives a universal sufficient statistic for detection applications, when choosing values for the variable subset that minimize some expected loss function, for instance the probability of decision error.
+A Bayesian network can thus be considered a mechanism for automatically applying Bayes' theorem to complex problems.
+The most common exact inference methods are: variable elimination, which eliminates (by integration or summation) the non-observed non-query variables one by one by distributing the sum over the product; clique tree propagation, which caches the computation so that many variables can be queried at one time and new evidence can be propagated quickly; and recursive conditioning and ANDOR search, which allow for a spacetime tradeoff and match the efficiency of variable elimination when enough space is used.
+All of these methods have complexity that is exponential in the network's treewidth.
+The most common approximate inference algorithms are importance sampling, stochastic MCMC simulation, mini-bucket elimination, loopy belief propagation, generalized belief propagation and variational methods.
+In order to fully specify the Bayesian network and thus fully represent the joint probability distribution, it is necessary to specify for each node X the probability distribution for X conditional upon X parents.
+The distribution of X conditional upon its parents may have any form.
+It is common to work with discrete or Gaussian distributions since that simplifies calculations.
+Sometimes only constraints on distribution are known; one can then use the principle of maximum entropy to determine a single distribution, the one with the greatest entropy given the constraints.
+(Analogously, in the specific context of a dynamic Bayesian network, the conditional distribution for the hidden state's temporal evolution is commonly specified to maximize the entropy rate of the implied stochastic process.) Often these conditional distributions include parameters that are unknown and must be estimated from data, e.g., via the maximum likelihood approach.
+Direct maximization of the likelihood (or of the posterior probability) is often complex given unobserved variables.
+A classical approach to this problem is the expectation-maximization algorithm, which alternates computing expected values of the unobserved variables conditional on observed data, with maximizing the complete likelihood (or posterior) assuming that previously computed expected values are correct.
+Under mild regularity conditions, this process converges on maximum likelihood (or maximum posterior) values for parameters.
+A more fully Bayesian approach to parameters is to treat them as additional unobserved variables and to compute a full posterior distribution over all nodes conditional upon observed data, then to integrate out the parameters.
+This approach can be expensive and lead to large dimension models, making classical parameter-setting approaches more tractable.
+In the simplest case, a Bayesian network is specified by an expert and is then used to perform inference.
+In other applications, the task of defining the network is too complex for humans.
+In this case, the network structure and the parameters of the local distributions must be learned from data.
+Automatically learning the graph structure of a Bayesian network (BN) is a challenge pursued within machine learning.
+The basic idea goes back to a recovery algorithm developed by Rebane and Pearl and rests on the distinction between the three possible patterns allowed in a 3-node DAG: The first 2 represent the same dependencies (X and Z are independent given Y) and are, therefore, indistinguishable.
+The collider, however, can be uniquely identified, since X and Z are marginally independent and all other pairs are dependent.
+Thus, while the skeletons (the graphs stripped of arrows) of these three triplets are identical, the directionality of the arrows is partially identifiable.
+The same distinction applies when X and Z have common parents, except that one must first condition on those parents.
+Algorithms have been developed to systematically determine the skeleton of the underlying graph and, then, orient all arrows whose directionality is dictated by the conditional independences observed.
+An alternative method of structural learning uses optimization-based search.
+It requires a scoring function and a search strategy.
+A common scoring function is posterior probability of the structure given the training data, like the BIC or the BDeu.
+The time requirement of an exhaustive search returning a structure that maximizes the score is superexponential in the number of variables.
+A local search strategy makes incremental changes aimed at improving the score of the structure.
+A global search algorithm like Markov chain Monte Carlo (MCMC) can avoid getting trapped in local minima.
+Finding a structure that maximizes the mutual information, typically by restricting the parent candidate set to k nodes or by finding an optimal k on a node-per-node basis, is a technique that consistently achieves high scores on benchmark datasets.
+A particularly fast method for exact BN learning is to cast the problem as an optimization problem, and solve it using integer programming.
+Acyclicity constraints are added to the integer program (IP) during solving in the form of cutting planes.
+Such method can handle problems with up to 100 variables.
+In order to deal with problems with thousands of variables, a different approach is necessary.
+One is to first sample one ordering, and then find the optimal BN structure with respect to that ordering.
+This implies working on the search space of the possible orderings, which is convenient as it is smaller than the space of network structures.
+Multiple orderings are then sampled and evaluated.
+This method has been proven to be the best available in literature when the number of variables is huge.
+Another method consists of focusing on the sub-class of decomposable models, for which the MLE have a closed form.
+It is then possible to discover a consistent structure for hundreds of variables.
+Learning Bayesian networks with bounded treewidth is necessary to allow exact, tractable inference, since the worst-case inference complexity is exponential in the treewidth k (under the exponential time hypothesis).
+Yet, as a global property of the graph, it considerably increases the difficulty of the learning process.
+In this context it is possible to use K-tree for effective learning.
+and parameter theta, a simple Bayesian analysis starts with a prior probability (prior) p(theta) and likelihood p(xmidtheta) to compute a posterior probability p(thetamid x) propto p(xmidtheta)p(theta).
+Often the prior on theta depends in turn on other parameters varphi that are not mentioned in the likelihood.
+So, the prior p(theta) must be replaced by a likelihood p(thetamid varphi), and a prior p(varphi) on the newly introduced parameters varphi is required, resulting in a posterior probability : p(theta,varphimid x) propto p(xmidtheta)p(thetamidvarphi)p(varphi).
+This is the simplest example of a hierarchical Bayes model.
+The process may be repeated; for example, the parameters varphi may depend in turn on additional parameters psi,!, which require their own prior.
+Eventually the process must terminate, with priors that do not depend on unmentioned parameters.
+Given the measured quantities x_1,dots,x_n,!each with normally distributed errors of known standard deviation sigma,!, : x_i sim N(theta_i, sigma2) Suppose we are interested in estimating the theta_i.
+An approach would be to estimate the theta_i using a maximum likelihood approach; since the observations are independent, the likelihood factorizes and the maximum likelihood estimate is simply : theta_i  x_i.
+However, if the quantities are related, so that for example the individual theta_ihave themselves been drawn from an underlying distribution, then this relationship destroys the independence and suggests a more complex model, e.g., : x_i sim N(theta_i,sigma2), : theta_isim N(varphi, tau2), with improper priors varphisimtextflat, tausimtextflat in (0,infty).
+When nge 3, this is an identified model (i.e.
+there exists a unique solution for the model's parameters), and the posterior distributions of the individual theta_i will tend to move, or shrink away from the maximum likelihood estimates towards their common mean.
+This shrinkage is a typical behavior in hierarchical Bayes models.
+Some care is needed when choosing priors in a hierarchical model, particularly on scale variables at higher levels of the hierarchy such as the variable tau,!
+The usual priors such as the Jeffreys prior often do not work, because the posterior distribution will not be normalizable and estimates made by minimizing the expected loss will be inadmissible.
+Several equivalent definitions of a Bayesian network have been offered.
+For the following, let G  (V,E) be a directed acyclic graph (DAG) and let X  (Xv), v  V be a set of random variables indexed by V.
+X is a Bayesian network with respect to G if its joint probability density function (with respect to a product measure) can be written as a product of the individual density functions, conditional on their parent variables: : p (x)  prod_v in V p left(x_v ,big, x_operatornamepa(v) right) where pa(v) is the set of parents of v (i.e.
+those vertices pointing directly to v via a single edge).
+X is a Bayesian network with respect to G if it satisfies the local Markov property: each variable is conditionally independent of its non-descendants given its parent variables: : X_v perp!!!perp X_V ,smallsetminus, operatornamede(v) mid X_operatornamepa(v) quadtextfor all v in V where de(v) is the set of descendants and V  de(v) is the set of non-descendants of v.
+This can be expressed in terms similar to the first definition, as : beginalign  operatorname P(X_vx_v mid X_ix_i text for each  X_i text that is not a descendant of  X_v, ) 6pt    P(X_vx_v mid X_jx_j text for each  X_j text that is a parent of  X_v, ) endalign The set of parents is a subset of the set of non-descendants because the graph is acyclic.
+In general, learning a Bayesian network from data is known to be NP-hard.
+This is due in part to the combinatorial explosion of enumerating DAGs as the number of variables increases.
+Nevertheless, insights about an underlying Bayesian network can be learned from data in polynomial time by focusing on its marginal independence structure: while the conditional independence statements of a distribution modeled by a Bayesian network are encoded by a DAG (according to the factorization and Markov properties above), its marginal independence statementsthe conditional independence statements in which the conditioning set is emptyare encoded by a simple undirected graph with special properties such as equal intersection and independence numbers.
+Developing a Bayesian network often begins with creating a DAG G such that X satisfies the local Markov property with respect to G.
+Sometimes this is a causal DAG.
+The conditional probability distributions of each variable given its parents in G are assessed.
+In many cases, in particular in the case where the variables are discrete, if the joint distribution of X is the product of these conditional distributions, then X is a Bayesian network with respect to G.
+The Markov blanket of a node is the set of nodes consisting of its parents, its children, and any other parents of its children.
+The Markov blanket renders the node independent of the rest of the network; the joint distribution of the variables in the Markov blanket of a node is sufficient knowledge for calculating the distribution of the node.
+X is a Bayesian network with respect to G if every node is conditionally independent of all other nodes in the network, given its Markov blanket.
+This definition can be made more general by defining the "d"-separation of two nodes, where d stands for directional.
+This result prompted research on approximation algorithms with the aim of developing a tractable approximation to probabilistic inference.
+In 1993, Paul Dagum and Michael Luby proved two surprising results on the complexity of approximation of probabilistic inference in Bayesian networks.
+First, they proved that no tractable deterministic algorithm can approximate probabilistic inference to within an absolute error ɛ n1ɛ for every ɛ  0, even for Bayesian networks with restricted architecture, is NP-hard.
+In practical terms, these complexity results suggested that while Bayesian networks were rich representations for AI and machine learning applications, their use in large real-world applications would need to be tempered by either topological structural constraints, such as naïve Bayes networks, or by restrictions on the conditional probabilities.
+The bounded variance algorithm developed by Dagum and Luby was the first provable fast approximation algorithm to efficiently approximate probabilistic inference in Bayesian networks with guarantees on the error approximation.
+This powerful algorithm required the minor restriction on the conditional probabilities of the Bayesian network to be bounded away from zero and one by 1p(n) where p(n) was any polynomial of the number of nodes in the network, n.
+Notable software for Bayesian networks include:  OpenBUGS  Open-source development of WinBUGS.
+ SPSS Modeler  Commercial software that includes an implementation for Bayesian networks.
+ Stan (software)  Stan is an open-source package for obtaining Bayesian inference using the No-U-Turn sampler (NUTS), a variant of Hamiltonian Monte Carlo.
+ WinBUGS  One of the first computational implementations of MCMC samplers.
+No longer maintained.
+The term Bayesian network was coined by Judea Pearl in 1985 to emphasize: the often subjective nature of the input information the reliance on Bayes' conditioning as the basis for updating information the distinction between causal and evidential modes of reasoning In the late 1980s Pearl's Probabilistic Reasoning in Intelligent Systems and Neapolitan's Probabilistic Reasoning in Expert Systems summarized their properties and established them as a field of study.
+       (This paper puts decision trees in internal nodes of Bayes networks using http:www.csse.monash.edu.audldMML.html Minimum Message Length (MML).
+The paper is about both parameter and structure learning in Bayesian networks.
+ This paper presents variable elimination for belief networks.
+  first1  Stefan  last1  Conrady  first2  Lionel  last2  Jouffe  name-list-style  vanc  isbn  978-0-9965333-0-0  publisher  Bayesian USA  location  Franklin, Tennessee date2015-07-01     date2013 publisher  Springer-Verlag  location  London  isbn  978-1-4471-5012-1    date  2009  publisher  Wiley  location  Chichester  isbn  978-0-470-74956-2  edition  Second  .
+http:www.labmedinfo.orgdownloadlmi339.pdf Hierarchical Naive Bayes Model for handling sample uncertainty , shows how to perform classification and learning with continuous and discrete variables with replicated measurements.

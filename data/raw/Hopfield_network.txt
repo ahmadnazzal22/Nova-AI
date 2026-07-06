@@ -1,0 +1,131 @@
+A Hopfield network (or associative memory) is a form of recurrent neural network, or a spin glass system, that can serve as a content-addressable memory.
+The Hopfield network, named for John Hopfield, consists of a single layer of neurons, where each neuron is connected to every other neuron except itself.
+These connections are bidirectional and symmetric, meaning the weight of the connection from neuron i to neuron j is the same as the weight from neuron j to neuron i.
+Patterns are associatively recalled by fixing certain inputs, and dynamically evolve the network to minimize an energy function, towards local energy minimum states that correspond to stored patterns.
+Patterns are associatively learned (or "stored") by a Hebbian learning algorithm.
+One of the key features of Hopfield networks is their ability to recover complete patterns from partial or noisy inputs, making them robust in the face of incomplete or corrupted data.
+Their connection to statistical mechanics, recurrent networks, and human cognitive psychology has led to their application in various fields, including physics, psychology, neuroscience, and machine learning theory and practice.
+Due to their binary-valued neurons (1 or 01), limited scalability, and incompatibility with gradient-based learning, classical Hopfield networks are rarely used in modern machine learning.
+One origin of associative memory is human cognitive psychology, specifically the associative memory.
+Frank Rosenblatt studied "close-loop cross-coupled perceptrons", which are 3-layered perceptron networks whose middle layer contains recurrent connections that change by a Hebbian learning rule.
+Another model of associative memory is where the output does not loop back to the input.
+Taylor proposed such a model trained by Hebbian learning in 1956.
+Karl Steinbuch, who wanted to understand learning, and was inspired by watching his children learn, published the Lernmatrix in 1961.
+It was translated to English in 1963.
+Similar research was done with the correlogram of D.
+Teuvo Kohonen trained an associative memory by gradient descent in 1974.
+They proposed to modify the weights of an Ising model by Hebbian learning rule as a model of associative memory.
+The same idea was published by in 1974, who was acknowledged by Hopfield in his 1982 paper.
+See Carpenter (1989) and Cowan (1990) for a technical description of some of these early works in associative memory.
+The SherringtonKirkpatrick model of spin glass, published in 1975, is the Hopfield network with random initialization.
+Sherrington and Kirkpatrick found that it is highly likely for the energy function of the SK model to have many local minima.
+In the 1982 paper, Hopfield applied this recently developed theory to study the Hopfield network with binary activation functions.
+In a 1984 paper he extended this to continuous activation functions.
+A major advance in memory storage capacity was developed by Dimitry Krotov and Hopfield in 2016 In this way, Hopfield networks have the ability to "remember" states stored in the interaction matrix, because if a new state Vs' is subjected to the interaction matrix, each neuron will change until it matches the original state Vs (see the Updates section below).
+The connections in a Hopfield net typically have the following restrictions:  w_ii0, forall i (no unit has a connection with itself)  w_ij  w_ji, forall i,j (connections are symmetric) The constraint that weights are symmetric guarantees that the energy function decreases monotonically while following the activation rules.
+A network with asymmetric weights may exhibit some periodic or chaotic behaviour; however, Hopfield found that this behavior is confined to relatively small parts of the phase space and does not impair the network's ability to act as a content-addressable associative memory system.
+Hopfield also modeled neural nets for continuous values, in which the electric output of each neuron is not binary but some value between 0 and 1.
+He found that this type of network was also able to store and reproduce memorized states.
+Notice that every pair of units i and j in a Hopfield network has a connection that is described by the connectivity weight w_ij .
+In this sense, the Hopfield network can be formally described as a complete undirected graph G  langle V, frangle , where V is a set of McCullochPitts neurons and f:V2 rightarrow mathbb R is a function that links pairs of units to a real value, the connectivity weight.
+Updating one unit (node in the graph simulating the artificial neuron) in the Hopfield network is performed using the following rule: s_i leftarrow leftbeginarrayll 1  textif sum_jw_ijs_jgeqtheta_i,  -1  textotherwise.endarrayright.
+where:  w_ij is the strength of the connection weight from unit j to unit i (the weight of the connection).
+ s_i is the state of unit i.
+ theta_i is the threshold of unit i.
+Updates in the Hopfield network can be performed in two different ways:  Asynchronous: Only one unit is updated at a time.
+This unit can be picked at random, or a pre-defined order can be imposed from the very beginning.
+ Synchronous: All units are updated at the same time.
+This requires a central clock to the system in order to maintain synchronization.
+This method is viewed by some as less realistic, based on an absence of observed global clock influencing analogous biological or physical systems of interest.
+The weight between two units has a powerful impact upon the values of the neurons.
+Consider the connection weight w_ij between two neurons i and j.
+If w_ij  0 , the updating rule implies that:  when s_j  1, the contribution of j in the weighted sum is positive.
+Thus, s_i is pulled by j towards its value s_i  1  when s_j  -1, the contribution of j in the weighted sum is negative.
+Then again, s_i is pushed by j towards its value s_i  -1 Thus, the values of neurons i and j will converge if the weight between them is positive.
+Similarly, they will diverge if the weight is negative.
+https:www.paradise.caltech.edubruck.html Bruck in his paper in 1990 studied discrete Hopfield networks and proved a generalized convergence theorem that is based on the connection between the network's dynamics and cuts in the associated graph.
+This generalization covered both asynchronous as well as synchronous dynamics and presented elementary proofs based on greedy algorithms for max-cut in graphs.
+A subsequent paper further investigated the behavior of any neuron in both discrete-time and continuous-time Hopfield networks when the corresponding energy function is minimized during an optimization process.
+Hopfield nets have a scalar value associated with each state of the network, referred to as the "energy", E, of the network, where: :E  -frac12sum_i,j w_ij s_i s_j sum_i theta_i s_i This quantity is called "energy" because it either decreases or stays the same upon network units being updated.
+Furthermore, under repeated updating the network will eventually converge to a state which is a local minimum in the energy function (which is considered to be a Lyapunov function).
+Since then, the Hopfield network has been widely used for optimization.
+The idea of using the Hopfield network in optimization problems is straightforward: If a constrainedunconstrained cost function can be written in the form of the Hopfield energy function E, then there exists a Hopfield network whose equilibrium points represent solutions to the constrainedunconstrained optimization problem.
+Minimizing the Hopfield energy function both minimizes the objective function and satisfies the constraints also as the constraints are "embedded" into the synaptic weights of the network.
+Although including the optimization constraints into the synaptic weights in the best possible way is a challenging task, many difficult optimization problems with constraints in different disciplines have been converted to the Hopfield energy function: Associative memory systems, Analog-to-Digital conversion, job-shop scheduling problem, quadratic assignment and other related NP-complete problems, channel allocation problem in wireless networks, mobile ad-hoc network routing problem, image restoration, system identification, combinatorial optimization, etc., just to name a few.
+However, while it is possible to convert hard optimization problems to Hopfield energy functions, it does not guarantee convergence to a solution (even in exponential time).
+Initialization of the Hopfield networks is done by setting the values of the units to the desired start pattern.
+Repeated updates are then performed until the network converges to an attractor pattern.
+Convergence is generally assured, as Hopfield proved that the attractors of this nonlinear dynamical system are stable, not periodic or chaotic as in some other systems.
+Therefore, in the context of Hopfield networks, an attractor pattern is a final stable state, a pattern that cannot change any value within it under updating.
+Training a Hopfield net involves lowering the energy of states that the net should "remember".
+This allows the net to serve as a content addressable memory system, that is to say, the network will converge to a "remembered" state if it is given only part of the state.
+The net can be used to recover from a distorted input to the trained state that is most similar to that input.
+This is called associative memory because it recovers memories on the basis of similarity.
+For example, if we train a Hopfield net with five units so that the state (1, 1, 1, 1, 1) is an energy minimum, and we give the network the state (1, 1, 1, 1, 1) it will converge to (1, 1, 1, 1, 1).
+Thus, the network is properly trained when the energy of states which the network should remember are local minima.
+Note that, in contrast to Perceptron training, the thresholds of the neurons are never updated.
+There are various different learning rules that can be used to store information in the memory of the Hopfield network.
+It is desirable for a learning rule to have both of the following two properties:  Local: A learning rule is local if each weight is updated using information available to neurons on either side of the connection that is associated with that particular weight.
+ Incremental: New patterns can be learned without using information from the old patterns that have been also used for training.
+That is, when a new pattern is used for training, the new values for the weights only depend on the old values and on the new pattern.
+It is often summarized as "Neurons that fire together wire together.
+Neurons that fire out of sync fail to link".
+The Hebbian rule is both local and incremental.
+For the Hopfield networks, it is implemented in the following manner when learning n binary patterns: w_ijfrac1nsum_mu1nepsilon_imu epsilon_jmu where epsilon_imu represents bit i from pattern mu.
+If the bits corresponding to neurons i and j are equal in pattern mu, then the product epsilon_imu epsilon_jmu will be positive.
+This would, in turn, have a positive effect on the weight w_ij and the values of i and j will tend to become equal.
+The opposite happens if the bits corresponding to neurons i and j are different.
+This rule was introduced by Amos Storkey in 1997 and is both local and incremental.
+Storkey also showed that a Hopfield network trained using this rule has a greater capacity than a corresponding network trained using the Hebbian rule.
+The weight matrix of an attractor neural network is said to follow the Storkey learning rule if it obeys: w_ijnu  w_ijnu-1 frac1nepsilon_inu epsilon_jnu -frac1nepsilon_inu h_jinu -frac1nepsilon_jnu h_ijnu where h_ijnu  sum_k1:ineq kneq jn w_iknu-1epsilon_knu is a form of local field at neuron i.
+This learning rule is local, since the synapses take into account only neurons at their sides.
+The rule makes use of more information from the patterns and weights than the generalized Hebbian rule, due to the effect of the local field.
+Patterns that the network uses for training (called retrieval states) become attractors of the system.
+Repeated updates would eventually lead to convergence to one of the retrieval states.
+However, sometimes the network will converge to spurious patterns (different from the training patterns).
+In fact, the number of spurious patterns can be exponential in the number of stored patterns, even if the stored patterns are orthogonal.
+The energy in these spurious patterns is also a local minimum.
+For each stored pattern x, the negation -x is also a spurious pattern.
+A spurious state can also be a linear combination of an odd number of retrieval states.
+For example, when using 3 patterns mu_1, mu_2, mu_3, one can get the following spurious state: epsilon_irmmix  pm sgn(pm epsilon_imu_1 pm epsilon_imu_2 pm epsilon_imu_3) Spurious patterns that have an even number of states cannot exist, since they might sum up to zero ETAM experiments also in.
+Ulterior models inspired by the Hopfield network were later devised to raise the storage limit and reduce the retrieval error rate, with some being capable of one-shot learning.
+The storage capacity using the Hebb's rule can be given as C cong fracn2ln n where n is the number of neurons in the net.
+It accounts for associative memory through the incorporation of memory vectors.
+Memory vectors can be slightly used, and this would spark the retrieval of the most similar vector in the network.
+However, we will find out that due to this process, intrusions can occur.
+In associative memory for the Hopfield network, there are two types of operations: auto-association and hetero-association.
+The first being when a vector is associated with itself, and the latter being when two different vectors are associated in storage.
+Furthermore, both types of operations are possible to store within a single memory matrix, but only if that given representation matrix is not one or the other of the operations, but rather the combination (auto-associative and hetero-associative) of the two.
+Hopfield's network model utilizes the same learning rule as Hebb's (1949) learning rule, which characterised learning as being a result of the strengthening of the weights in cases of neuronal activity.
+Rizzuto and Kahana (2001) were able to show that the neural network model can account for repetition on recall accuracy by incorporating a probabilistic-learning algorithm.
+During the retrieval process, no learning occurs.
+As a result, the weights of the network remain fixed, showing that the model is able to switch from a learning stage to a recall stage.
+By adding contextual drift they were able to show the rapid forgetting that occurs in a Hopfield model during a cued-recall task.
+The entire network contributes to the change in the activation of any single node.
+McCulloch and Pitts' (1943) dynamical rule, which describes the behavior of neurons, does so in a way that shows how the activations of multiple neurons map onto the activation of a new neuron's firing rate, and how the weights of the neurons strengthen the synaptic connections between the new activated neuron (and those that activated it).
+Hopfield would use McCullochPitts's dynamical rule in order to show how retrieval is possible in the Hopfield network.
+However, Hopfield would do so in a repetitious fashion.
+Hopfield would use a nonlinear activation function, instead of using a linear function.
+This would therefore create the Hopfield dynamical rule and with this, Hopfield was able to show that with the nonlinear activation function, the dynamical rule will always modify the values of the state vector in the direction of one of the stored patterns.
+Hopfield networks Dense Associative Memories (also known as the modern Hopfield networks) are generalizations of the classical Hopfield Networks that break the linear scaling relationship between the number of input features and the number of stored memories.
+This is achieved by introducing stronger non-linearities (either in the energy function or neurons' activation functions) leading to super-linear) memory storage capacity as a function of the number of feature neurons, in effect increasing the order of interactions between the neurons.
+The key theoretical idea behind dense associative memory networks is to use an energy function and an update rule that is more sharply peaked around the stored memories in the space of neuron's configurations compared to the classical model, for details) The last inequality sign holds provided that the matrix M_IK (or its symmetric part) is positive semi-definite.
+If, in addition to this, the energy function is bounded from below the non-linear dynamical equations are guaranteed to converge to a fixed point attractor state.
+The advantage of formulating this network in terms of the Lagrangian functions is that it makes it possible to easily experiment with different choices of the activation functions and different architectural arrangements of neurons.
+For all those flexible choices the conditions of convergence are determined by the properties of the matrix M_IJ and the existence of the lower bound on the energy function.
+The neurons can be organized in layers so that every neuron in a given layer has the same activation function and the same dynamic time scale.
+If we assume that there are no horizontal connections between the neurons within the layer (lateral connections) and there are no skip-layer connections, the general fully connected network (), () reduces to the architecture shown in Fig.4.
+It has N_textlayer layers of recurrently connected neurons with the states described by continuous variables x_iA and the activation functions g_iA, index A enumerates the layers of the network, and index i enumerates individual neurons in that layer.
+The activation functions can depend on the activities of all the neurons in the layer.
+Every layer can have a different number of neurons N_A.
+These neurons are recurrently connected with the neurons in the preceding and the subsequent layers.
+The matrices of weights that connect neurons in layers A and B are denoted by xi(A,B)_ij (the order of the upper indices for weights is the same as the order of the lower indices, in the example above this means that the index i enumerates neurons in the layer A, and index j enumerates neurons in the layer B).
+The feedforward weights and the feedback weights are equal.
+The dynamical equations for the neurons' states can be written as xi(A, A-1)_ij g_jA-1  sumlimits_j1N_A1 xi(A, A1)_ij g_jA1 - x_iA14 with boundary conditions The main difference between these equations and those from the conventional feedforward networks is the presence of the second term, which is responsible for the feedback from higher layers.
+These top-down signals help neurons in lower layers to decide on their response to the presented stimuli.
+Following the general recipe it is convenient to introduce a Lagrangian function LA(xA_i) for the A-th hidden layer, which depends on the activities of all the neurons in that layer.
+The activation functions in that layer can be defined as partial derivatives of the Lagrangian With these definitions the energy (Lyapunov) function is given by Big sumlimits_i1N_A x_iA g_iA - LABig - sumlimits_A1N_textlayer-1 sumlimits_i1N_A1 sumlimits_j1N_A g_iA1 xi(A1,A)_ij g_jA17 If the Lagrangian functions, or equivalently the activation functions, are chosen in such a way that the Hessians for each layer are positive semi-definite and the overall energy is bounded from below, this system is guaranteed to converge to a fixed point attractor state.
+The temporal derivative of this energy function is given by tau_A sumlimits_i,j1N_A fracdx_jAdt fracpartial2 LApartial x_jA partial x_iA fracdx_iAdt leq 018 Thus, the hierarchical layered network is indeed an attractor network with the global energy function.
+This network is described by a hierarchical set of synaptic weights that can be learned for each specific problem.
+ Associative memory (disambiguation)  Autoassociative memory  Boltzmann machine  like a Hopfield net but uses annealed Gibbs sampling instead of gradient descent  Dynamical systems model of cognition  Ising model  Hebbian theory .
+ http:www.heatonresearch.comaifhvol3hopfield.html Hopfield Network Javascript http:to-campos.planetaclix.ptneuralhope.html The Travelling Salesman Problem  Hopfield Neural Network JAVA Applet   

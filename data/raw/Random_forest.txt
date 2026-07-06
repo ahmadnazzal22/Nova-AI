@@ -1,0 +1,77 @@
+Random forests or random decision forests is an ensemble learning method for classification, regression and other tasks that works by creating a multitude of decision trees during training.
+For classification tasks, the output of the random forest is the class selected by most trees.
+For regression tasks, the output is the average of the predictions of the trees.
+using the random subspace method, which, in Ho's formulation, is a way to implement the "stochastic discrimination" approach to classification proposed by Eugene Kleinberg.
+An extension of the algorithm was developed by Leo Breiman and Adele Cutler, "Random Forests" as a trademark in 2006 (, owned by Minitab, Inc.).
+The extension combines Breiman's "bagging" idea and random selection of features, introduced first by Ho in order to construct a collection of decision trees with controlled variance.
+The general method of random decision forests was first proposed by Salzberg and Heath in 1993, with a method that used a randomized decision tree algorithm to create multiple trees and then combine them using majority voting.
+This idea was developed further by Ho in 1995.
+The proper introduction of random forests was made in a paper by Leo Breiman, This paper describes a method of building a forest of uncorrelated trees using a CART-like procedure, combined with randomized node optimization and bagging.
+In addition, this paper combines several ingredients, some previously known and some novel, which form the basis of the modern practice of random forests, in particular:  Using out-of-bag error as an estimate of the generalization error.
+ Measuring variable importance through permutation.
+The report also offers the first theoretical result for random forests in the form of a bound on the generalization error which depends on the strength of the trees in the forest and their correlation.
+Decision trees are a popular method for various machine learning tasks.
+Tree learning is almost "an off-the-shelf procedure for data mining", say Hastie et al., "because it is invariant under scaling and various other transformations of feature values, is robust to inclusion of irrelevant features, and produces inspectable models.
+However, they are seldom accurate".
+In particular, trees that are grown very deep tend to learn highly irregular patterns: they overfit their training sets, i.e.
+have low bias, but very high variance.
+Random forests are a way of averaging multiple deep decision trees, trained on different parts of the same training set, with the goal of reducing the variance.
+The training and test error tend to level off after some number of trees have been fit.
+The above procedure describes the original bagging algorithm for trees.
+Random forests also include another type of bagging scheme: they use a modified tree learning algorithm that selects, at each candidate split in the learning process, a random subset of the features.
+This process is sometimes called "feature bagging".
+The reason for doing this is the correlation of the trees in an ordinary bootstrap sample: if one or a few features are very strong predictors for the response variable (target output), these features will be selected in many of the trees, causing them to become correlated.
+An analysis of how bagging and random subspace projection contribute to accuracy gains under different conditions is given by Ho.
+Typically, for a classification problem with p features, sqrtp (rounded down) features are used in each split.
+The basic random forest procedure may not work well in situations where there are a large number of features but only a small proportion of these features are informative with respect to sample classification.
+This can be addressed by encouraging the procedure to focus mainly on features and trees that are informative.
+Some methods for accomplishing this are:  Prefiltering: Eliminate features that are mostly just noise.
+ Enriched Random Forest (ERF): Use weighted random sampling instead of simple random sampling at each node of each tree, giving greater weight to features that appear to be more informative.
+ Tree-weighted random forest (TWRF): Give more weight to more accurate trees.
+Random forests can be used to rank the importance of variables in a regression or classification problem in a natural way.
+The following technique was described in Breiman's original paper .
+To measure a feature's importance in a data set mathcalD_n (X_i, Y_i)_i1n, first a random forest is trained on the data.
+During training, the out-of-bag error for each data point is recorded and averaged over the forest.
+(If bagging is not used during training, we can instead compute errors on an independent test set.) After training, the values of the feature are permuted in the out-of-bag samples and the out-of-bag error is again computed on this perturbed data set.
+The importance for the feature is computed by averaging the difference in out-of-bag error before and after the permutation over all trees.
+The score is normalized by the standard deviation of these differences.
+Features which produce large values for this score are ranked as more important than features which produce small values.
+The statistical definition of the variable importance measure was given and analyzed by Zhu et al.
+This method of determining variable importance has some drawbacks:  When features have different numbers of values, random forests favor features with more values.
+Solutions to this problem include partial permutations and growing unbiased trees.
+ If the data contain groups of correlated features of similar relevance, then smaller groups are favored over large groups.
+ If there are collinear features, the procedure may fail to identify important features.
+A solution is to permute groups of correlated features together.
+This approach to feature importance for random forests considers as important the variables which decrease a lot the impurity during splitting.
+It is described in the book Classification and Regression Trees by Leo Breiman and is the default implementation in scikit learn and R.
+The definition is:textunormalized average importance(x)frac1n_T sum_i1n_T sum_textnode j in T_i  textsplit variable(j)  x p_T_i(j)Delta i_T_i(j),where  x is a feature  n_T is the number of trees in the forest  T_i is tree i  p_T_i(j)fracn_jn is the fraction of samples reaching node j  Delta i_T_i(j) is the change in impurity in tree i at node j.
+As impurity measure for samples falling in a node e.g.
+the following statistics can be used: Entropy Gini coefficient Mean squared error The normalized importance is then obtained by normalizing over all features, so that the sum of normalized feature importances is 1.
+The scikit learn default implementation can report misleading feature importance: .
+A relationship between random forests and the -nearest neighbor algorithm (-NN) was pointed out by Lin and Jeon in 2002.
+Both can be viewed as so-called weighted neighborhoods schemes.
+These are models built from a training set (x_i, y_i)_i1n that make predictions haty for new points by looking at the "neighborhood" of the point, formalized by a weight function :haty  sum_i1n W(x_i, x') , y_i.Here, W(x_i, x') is the non-negative weight of the 'th training point relative to the new point in the same tree.
+For any , the weights for points x_i must sum to 1.
+Weight functions are as follows:  In -NN, W(x_i, x')  frac1k if is one of the points closest to , and zero otherwise.
+ In a tree, W(x_i, x')  frac1k' if is one of the points in the same leaf as , and zero otherwise.
+Since a forest averages the predictions of a set of trees with individual weight functions W_j, its predictions arehaty  frac1msum_j1msum_i1n W_j(x_i, x') , y_i  sum_i1nleft(frac1msum_j1m W_j(x_i, x')right) , y_i.
+This shows that the whole forest is again a weighted neighborhood scheme, with weights that average those of the individual trees.
+The neighbors of in this interpretation are the points x_i sharing the same leaf in any tree j.
+In this way, the neighborhood of depends in a complex way on the structure of the trees, and thus on the structure of the training set.
+Lin and Jeon show that the shape of the neighborhood used by a random forest adapts to the local importance of each feature.
+A random forest dissimilarity is attractive because it handles mixed variable types very well, is invariant to monotonic transformations of the input variables, and is robust to outlying observations.
+Random forest dissimilarity easily deals with a large number of semi-continuous variables due to its intrinsic variable selection; for example, the "Addcl 1" random forest dissimilarity weighs the contribution of each variable according to how dependent it is on other variables.
+Random forest dissimilarity has been used in a variety of applications, e.g.
+to find clusters of patients based on tissue marker data.
+Instead of decision trees, linear models have been proposed and evaluated as base estimators in random forests, in particular multinomial logistic regression and naive Bayes classifiers.
+In cases that the relationship between the predictors and the target variable is linear, the base learners may have an equally high accuracy as the ensemble learner.
+Leo Breiman was the first person to notice the link between random forest and kernel methods.
+He pointed out that random forests trained using i.i.d.
+random vectors in the tree construction are equivalent to a kernel acting on the true margin.
+Lin and Jeon established the connection between random forests and adaptive nearest neighbor, implying that random forests can be seen as adaptive kernel estimates.
+Davies and Ghahramani proposed Kernel Random Forest (KeRF) and showed that it can empirically outperform state-of-art kernel methods.
+Scornet and uniform random forest, two simplified models of random forest.
+He named these two KeRFs Centered KeRF and Uniform KeRF, and proved upper bounds on their rates of consistency.
+Centered forest Another limitation of random forests is that if features are linearly correlated with the target, random forest may not enhance the accuracy of the base learner.
+ https:www.stat.berkeley.edubreimanRandomForestscc_home.htm Random Forests classifier description (Leo Breiman's site)  https:cran.r-project.orgdocRnewsRnews_2002-3.pdf Liaw, Andy  Wiener, Matthew "Classification and Regression by randomForest" R News (2002) Vol.
+18 (Discussion of the use of the random forest package for R)

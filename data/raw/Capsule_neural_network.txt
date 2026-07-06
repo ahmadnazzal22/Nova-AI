@@ -1,0 +1,27 @@
+A capsule neural network (CapsNet) is a machine learning system that is a type of artificial neural network (ANN) that can be used to better model hierarchical relationships.
+The approach is an attempt to more closely mimic biological neural organization.
+The output is a vector consisting of the probability of an observation, and a pose for that observation.
+This vector is similar to what is done for example when doing classification with localization in CNNs.
+Among other benefits, capsnets address the "Picasso problem" in image recognition: images that have all the right parts but that are not in the correct spatial relationship (e.g., in a "face", the positions of the mouth and one eye are switched).
+For image recognition, capsnets exploit the fact that while viewpoint changes have nonlinear effects at the pixel level, they have linear effects at the partobject level.
+This can be compared to inverting the rendering of an object of multiple parts.
+In 2000, Geoffrey Hinton et al.
+described an imaging system that combined segmentation and recognition into a single inference process using parse trees.
+So-called credibility networks described the joint distribution over the latent variables and over the possible parse trees.
+That system proved useful on the MNIST handwritten digit database.
+A nonequivariant is a property whose value does not change predictably under a transformation.
+For example, transforming a circle into an ellipse means that its perimeter can no longer be computed as π times the diameter.
+In computer vision, the class of an object is expected to be an invariant over many transformations.
+I.e., a cat is still a cat if it is shifted, turned upside down or shrunken in size.
+However, many other properties are instead equivariant.
+The volume of a cat changes when it is scaled.
+Equivariant properties such as a spatial relationship are captured in a pose, data that describes an object's translation, rotation, scale and reflection.
+Translation is a change in location in one or more dimensions.
+Rotation is a change in orientation.
+Scale is a change in size.
+Reflection is a mirror image.
+Capsnets reject the pooling layer strategy of conventional CNNs that reduces the amount of detail to be processed at the next higher layer.
+Pooling allows a degree of translational invariance (it can recognize the same object in a somewhat different location) and allows a larger number of feature types to be represented.
+Capsnet proponents argue that pooling: Capsnets explore the intuition that the human visual system creates a tree-like structure for each focal point and coordinates these trees to recognize objects.
+However, with capsnets each tree is "carved" from a fixed network (by adjusting coefficients) rather than assembled on the fly.
+ Convolutional neural network  Geoffrey Hinton  MNIST database .

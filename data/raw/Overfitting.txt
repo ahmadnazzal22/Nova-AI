@@ -1,0 +1,51 @@
+Although the polynomial function is a perfect fit, the linear function can be expected to generalize better: If the two functions were used to extrapolate beyond the fitted data, the linear function should make better predictions. In mathematical modeling, overfitting is the production of an analysis that corresponds too closely or exactly to a particular set of data, and may therefore fail to fit to additional data or predict future observations reliably.
+An overfitted model is a mathematical model that contains more parameters than can be justified by the data.
+Even when the fitted model does not have an excessive number of parameters, it is to be expected that the fitted relationship will appear to perform less well on a new dataset than on the dataset used for fitting (a phenomenon sometimes known as shrinkage).
+In particular, the value of the coefficient of determination will shrink relative to the original data.
+To lessen the chance or amount of overfitting, several techniques are available (e.g., model comparison, cross-validation, regularization, early stopping, pruning, Bayesian priors, or dropout).
+The basis of some techniques is to either (1) explicitly penalize overly complex models or (2) test the model's ability to generalize by evaluating its performance on a set of data not used for training, which is assumed to approximate the typical unseen data that a model will encounter.
+In statistics, an inference is drawn from a statistical model, which has been selected via some procedure.
+Burnham  Anderson, in their much-cited text on model selection, argue that to avoid overfitting, one should adhere to the "Principle of Parsimony".
+The authors also state the following.
+In regression analysis, overfitting occurs frequently.
+As an extreme example, if there are p variables in a linear regression with p data points, the fitted line can go exactly through every point.
+For logistic regression or Cox proportional hazards models, there are a variety of rules of thumb (e.g.
+59, 10 and 1015  the guideline of 10 observations per independent variable is known as the "one in ten rule").
+In the process of regression model selection, the mean squared error of the random regression function can be split into random noise, approximation bias, and variance in the estimate of the regression function.
+The biasvariance tradeoff is often used to overcome overfit models.
+With a large set of explanatory variables that actually have no relation to the dependent variable being predicted, some variables will in general be falsely found to be statistically significant and the researcher may thus retain them in the model, thereby overfitting the model.
+This is known as Freedman's paradox.
+Training error is shown in blue, and validation error in red, both as a function of the number of training cycles.
+If the validation error increases (positive slope) while the training error steadily decreases (negative slope), then a situation of overfitting may have occurred.
+The best predictive and fitted model would be where the validation error has its global minimum. Usually, a learning algorithm is trained using some set of "training data": exemplary situations for which the desired output is known.
+The goal is that the algorithm will also perform well on predicting the output when fed "validation data" that was not encountered during its training.
+Overfitting is the use of models or procedures that violate Occam's razor, for example by including more adjustable parameters than are ultimately optimal, or by using a more complicated approach than is ultimately optimal.
+For an example where there are too many adjustable parameters, consider a dataset where training data for can be adequately predicted by a linear function of two independent variables.
+Such a function requires only three parameters (the intercept and two slopes).
+Replacing this simple function with a new, more complex quadratic function, or with a new, more complex linear function on more than two independent variables, carries a risk: Occam's razor implies that any given complex function is a priori less probable than any given simple function.
+If the new, more complicated function is selected instead of the simple function, and if there was not a large enough gain in training data fit to offset the complexity increase, then the new complex function "overfits" the data and the complex overfitted function will likely perform worse than the simpler function on validation data outside the training dataset, even though the complex function performed as well, or perhaps even better, on the training dataset.
+When comparing different types of models, complexity cannot be measured solely by counting how many parameters exist in each model; the expressivity of each parameter must be considered as well.
+For example, it is nontrivial to directly compare the complexity of a neural net (which can track curvilinear relationships) with parameters to a regression model with parameters.
+The optimal function usually needs verification on bigger or completely new datasets.
+There are, however, methods like minimum spanning tree or life-time of correlation that applies the dependence between correlation coefficients and time-series (window width).
+Whenever the window width is big enough, the correlation coefficients are stable and don't depend on the window width size anymore.
+Therefore, a correlation matrix can be created by calculating a coefficient of correlation between investigated variables.
+This matrix can be represented topologically as a complex network where direct and indirect influences between variables are visualized.
+Dropout regularisation (random removal of training set data) can also improve robustness and therefore reduce over-fitting by probabilistically removing inputs to a layer.
+Pruning is another technique that mitigates overfitting and enhances generalization by identifying a sparse, optimal neural network structure, while simultaneously reducing the computational cost of both training and inference.
+Underfitting is the inverse of overfitting, meaning that the statistical model or machine learning algorithm is too simplistic to accurately capture the patterns in the data.
+A sign of underfitting is that there is a high bias and low variance detected in the current model or algorithm used (the inverse of overfitting: low bias and high variance).
+This can be gathered from the Bias-variance tradeoff, which is the method of analyzing a model or algorithm for bias error, variance error, and irreducible error.
+With a high bias and low variance, the result of the model is that it will inaccurately represent the data points and thus insufficiently be able to predict future data results (see Generalization error).
+As shown in Figure 5, the linear line could not represent all the given data points due to the line not resembling the curvature of the points.
+One would expect to see a parabola-shaped line as shown in Figure 6 and Figure 1.
+If Figure 5 were to be used for analysis, false predictive results would be given contrary to the results if Figure 6 was analyzed.
+Burnham  Anderson state the following.
+ Use a different algorithm: If the current algorithm is not able to capture the patterns in the data, it may be necessary to try a different one.
+For example, a neural network may be more effective than a linear regression model for some types of data.
+ Ensemble Methods: Ensemble methods combine multiple models to create a more accurate prediction.
+This can help reduce underfitting by allowing multiple models to work together to capture the underlying patterns in the data.
+ Feature engineering: Feature engineering involves creating new model features from the existing ones that may be more relevant to the problem at hand.
+This can help improve the accuracy of the model and prevent underfitting.
+ Biasvariance tradeoff  Curve fitting  Data dredging  Double descent  Feature selection  Feature engineering  Freedman's paradox  Generalization error  Goodness of fit  Grokking (machine learning)  Life-time of correlation  Model selection  Researcher degrees of freedom  Occam's razor  Primary model  VapnikChervonenkis dimension  larger VC dimension implies larger risk of overfitting .
+ http:www3.cs.stonybrook.eduskienajaialaiexcerptsnode16.html The Problem of Overfitting Data  Stony Brook University  https:statmodeling.stat.columbia.edu20170715what-is-overfitting-exactly What is "overfitting," exactly?  Andrew Gelman blog  http:courses.cs.washington.educoursescse54612wislidescse546wi12LinearRegression.pdf CSE546: Linear Regression Bias  Variance Tradeoff  University of Washington  https:www.ibm.comcloudlearnunderfitting What is Underfitting  IBM

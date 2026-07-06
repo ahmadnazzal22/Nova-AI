@@ -1,0 +1,242 @@
+In statistics, linear regression is a model that estimates the relationship between a scalar response (dependent variable) and one or more explanatory variables (regressor or independent variable).
+A model with exactly one explanatory variable is a simple linear regression; a model with two or more explanatory variables is a multiple linear regression.
+This term is distinct from multivariate linear regression, which predicts multiple correlated dependent variables rather than a single dependent variable.
+In linear regression, the relationships are modeled using linear predictor functions whose unknown model parameters are estimated from the data.
+Most commonly, the conditional mean of the response given the values of the explanatory variables (or predictors) is assumed to be an affine function of those values; less commonly, the conditional median or some other quantile is used.
+Like all forms of regression analysis, linear regression focuses on the conditional probability distribution of the response given the values of the predictors, rather than on the joint probability distribution of all of these variables, which is the domain of multivariate analysis.
+Linear regression is also a type of machine learning algorithm, more specifically a supervised algorithm, that learns from the labelled datasets and maps the data points to the most optimized linear functions that can be used for prediction on new datasets.
+Linear regression was the first type of regression analysis to be studied rigorously, and to be used extensively in practical applications.
+This is because models which depend linearly on their unknown parameters are easier to fit than models which are non-linearly related to their parameters and because the statistical properties of the resulting estimators are easier to determine.
+Linear regression has many practical uses.
+Most applications fall into one of the following two broad categories:  If the goal is to reduce error, i.e.
+variance in prediction or forecasting, linear regression can be used to fit a predictive model to an observed data set of values of the response and explanatory variables.
+After developing such a model, if additional values of the explanatory variables are collected without an accompanying response value, the fitted model can be used to make a prediction of the response.
+ If the goal is to explain variation in the response variable that can be attributed to variation in the explanatory variables, linear regression analysis can be applied to quantify the strength of the relationship between the response and the explanatory variables, and in particular to determine whether some explanatory variables may have no linear relationship with the response at all, or to identify which subsets of explanatory variables may contain redundant information about the response.
+Linear regression models are often fitted using the least squares approach, but they may also be fitted in other ways, such as by minimizing the "lack of fit" in some other norm (as with least absolute deviations regression), or by minimizing a penalized version of the least squares cost function as in ridge regression (L2-norm penalty) and lasso (L1-norm penalty).
+Use of the Mean Squared Error (MSE) as the cost on a dataset that has many large outliers, can result in a model that fits the outliers more than the true data due to the higher importance assigned by MSE to large errors.
+So, cost functions that are robust to outliers should be used if the dataset has many large outliers.
+Conversely, the least squares approach can be used to fit models that are not linear models.
+Thus, although the terms "least squares" and "linear model" are closely linked, they are not synonymous.
+Given a data set y_i,, x_i1, ldots, x_ip_i1n of n statistical units, a linear regression model assumes that the relationship between the dependent variable y and the vector of regressors x is linear.
+This relationship is modeled through a disturbance term or error variable εan unobserved random variable that adds extra "noise" to the linear relationship between the dependent variable and regressors.
+Thus the model takes its form y_i  beta_0  beta_1 x_i1  cdots  beta_p x_ip  varepsilon_i  mathbfxmathsfT_iboldsymbolbeta  varepsilon_i, qquad i  1, ldots, n, where T denotes the transpose, so that xiTβ is the inner product between vectors xi and β.
+ mathbfy is a vector of observed values y_i (i1,ldots,n) of the variable called the regressand, endogenous variable, response variable, target variable, measured variable, criterion variable, or dependent variable.
+This variable is also sometimes known as the predicted variable, but this should not be confused with predicted values, which are denoted haty.
+The decision as to which variable in a data set is modeled as the dependent variable and which are modeled as the independent variables may be based on a presumption that the value of one of the variables is caused by, or directly influenced by the other variables.
+Alternatively, there may be an operational reason to model one of the variables in terms of the others, in which case there need be no presumption of causality.
+ mathbfX may be seen as a matrix of row-vectors mathbfx_icdot or of n-dimensional column-vectors mathbfx_cdot j, which are known as regressors, exogenous variables, explanatory variables, covariates, input variables, predictor variables, or independent variables (not to be confused with the concept of independent random variables).
+The matrix mathbfX is sometimes called the design matrix.
+ Usually a constant is included as one of the regressors.
+In particular, x_i01 for i1,ldots,n.
+The corresponding element of β is called the intercept.
+Many statistical inference procedures for linear models require an intercept to be present, so it is often included even if theoretical considerations suggest that its value should be zero.
+ Sometimes one of the regressors can be a non-linear function of another regressor or of the data values, as in polynomial regression and segmented regression.
+The model remains linear as long as it is linear in the parameter vector β.
+ The values xij may be viewed as either observed values of random variables Xj or as fixed values chosen prior to observing the dependent variable.
+Both interpretations may be appropriate in different cases, and they generally lead to the same estimation procedures; however different approaches to asymptotic analysis are used in these two situations.
+ boldsymbolbeta is a (p1)-dimensional parameter vector, where beta_0 is the intercept term (if one is included in the modelotherwise boldsymbolbeta is p-dimensional).
+Its elements are known as effects or regression coefficients (although the latter term is sometimes reserved for the estimated effects).
+In simple linear regression, p1, and the coefficient is known as regression slope.
+Statistical estimation and inference in linear regression focuses on β.
+The elements of this parameter vector are interpreted as the partial derivatives of the dependent variable with respect to the various independent variables.
+ boldsymbolvarepsilon is a vector of values varepsilon_i.
+This part of the model is called the error term, disturbance term, or sometimes noise (in contrast with the "signal" provided by the rest of the model).
+This variable captures all other factors which influence the dependent variable y other than the regressors x.
+The relationship between the error term and the regressors, for example their correlation, is a crucial consideration in formulating a linear regression model, as it will determine the appropriate estimation method.
+Fitting a linear model to a given data set usually requires estimating the regression coefficients boldsymbolbeta such that the error term boldsymbolvarepsilonmathbfy- mathbfXboldsymbolbeta is minimized.
+For example, it is common to use the sum of squared errors boldsymbolvarepsilon_22 as a measure of boldsymbolvarepsilon for minimization.
+Consider a situation where a small ball is being tossed up in the air and then we measure its heights of ascent hi at various moments in time ti.
+Physics tells us that, ignoring the drag, the relationship can be modeled as : h_i  beta_1 t_i  beta_2 t_i2  varepsilon_i, where β1 determines the initial velocity of the ball, β2 is proportional to the standard gravity, and εi is due to measurement errors.
+Linear regression can be used to estimate the values of β1 and β2 from the measured data.
+This model is non-linear in the time variable, but it is linear in the parameters β1 and β2; if we take regressors xi  (xi1, xi2)  (ti, ti2), the model takes on the standard form : h_i  mathbfxmathsfT_iboldsymbolbeta  varepsilon_i.
+When estimating the parameters of linear regression models with standard estimation techniques such as ordinary least squares, it is necessary to make a number of assumptions about the predictor variables, the response variable and their relationship, to get estimators that are unbiased in finite sample.
+Numerous extensions have been developed that allow each of these assumptions to be relaxed (reduced to a weaker form), and in some cases eliminated entirely.
+Generally these extensions require more data or modelling assumptions to produce an equally precise model.
+are designed to have approximately the same linear regression line (as well as nearly identical means, standard deviations, and correlations) but are graphically very different.
+This illustrates the pitfalls of relying solely on a fitted model to understand the relationship between variables. A fitted linear regression model can be used to identify the relationship between a single predictor variable xj and the response variable y when all the other predictor variables in the model are "held fixed".
+Specifically, the interpretation of βj is the expected change in y for a one-unit change in xj when the other covariates are held fixedthat is, the expected value of the partial derivative of y with respect to xj.
+This is sometimes called the unique effect of xj on y.
+In contrast, the marginal effect of xj on y can be assessed using a correlation coefficient or simple linear regression model relating only xj to y; this effect is the total derivative of y with respect to xj.
+Care must be taken when interpreting regression results, as some of the regressors may not allow for marginal changes (such as dummy variables, or the intercept term), while others cannot be held fixed (recall the example from the introduction: it would be impossible to "hold ti fixed" and at the same time change the value of ti2).
+It is possible that the unique effect be nearly zero even when the marginal effect is large.
+This may imply that some other covariate captures all the information in xj, so that once that variable is in the model, there is no contribution of xj to the variation in y.
+Conversely, the unique effect of xj can be large while its marginal effect is nearly zero.
+This would happen if the other covariates explained a great deal of the variation of y, but they mainly explain variation in a way that is complementary to what is captured by xj.
+In this case, including the other variables in the model reduces the part of the variability of y that is unrelated to xj, thereby strengthening the apparent relationship with xj.
+The meaning of the expression "held fixed" may depend on how the values of the predictor variables arise.
+If the experimenter directly sets the values of the predictor variables according to a study design, the comparisons of interest may literally correspond to comparisons among units whose predictor variables have been "held fixed" by the experimenter.
+Alternatively, the expression "held fixed" can refer to a selection that takes place in the context of data analysis.
+In this case, we "hold a variable fixed" by restricting our attention to the subsets of the data that happen to have a common value for the given predictor variable.
+This is the only interpretation of "held fixed" that can be used in an observational study.
+The notion of a "unique effect" is appealing when studying a complex system where multiple interrelated components influence the response variable.
+In some cases, it can literally be interpreted as the causal effect of an intervention that is linked to the value of a predictor variable.
+However, it has been argued that in many cases multiple regression analysis fails to clarify the relationships between the predictor variables and the response variable when the predictors are correlated with each other and are not assigned following a study design.
+Numerous extensions of linear regression have been developed, which allow some or all of the assumptions underlying the basic model to be relaxed.
+, which has one independent variable The simplest case of a single scalar predictor variable x and a single scalar response variable y is known as simple linear regression.
+The extension to multiple andor vector-valued predictor variables (denoted with a capital X) is known as multiple linear regression, also known as multivariable linear regression (not to be confused with multivariate linear regression).
+Multiple linear regression is a generalization of simple linear regression to the case of more than one independent variable, and a special case of general linear models, restricted to one dependent variable.
+The basic model for multiple linear regression is : Y_i  beta_0  beta_1 X_i1  beta_2 X_i2  ldots  beta_p X_ip  epsilon_i for each observation i  1, ldots , n .
+In the formula above we consider n observations of one dependent variable and p independent variables.
+Thus, Yi is the ith observation of the dependent variable, Xij is ith observation of the jth independent variable, j  1, 2, ..., p.
+The values βj represent parameters to be estimated, and εi is the ith independent identically distributed normal error.
+In the more general multivariate linear regression, there is one equation of the above form for each of m  1 dependent variables that share the same set of explanatory variables and hence are estimated simultaneously with each other: : Y_ij  beta_0j  beta_1j X_i1  beta_2jX_i2  ldots  beta_pj X_ip  epsilon_ij for all observations indexed as i  1, ...
+, n and for all dependent variables indexed as j  1, ...
+Nearly all real-world regression models involve multiple predictors, and basic descriptions of linear regression are often phrased in terms of the multiple regression model.
+Note, however, that in these cases the response variable y is still a scalar.
+Another term, multivariate linear regression, refers to cases where y is a vector, i.e., the same as general linear regression.
+The general linear model considers the situation when the response variable is not a scalar (for each observation) but a vector, yi.
+Conditional linearity of E(mathbfymidmathbfx_i)mathbfx_imathsfTB is still assumed, with a matrix B replacing the vector β of the classical linear regression model.
+Multivariate analogues of ordinary least squares (OLS) and generalized least squares (GLS) have been developed.
+"General linear models" are also called "multivariate linear models".
+These are not the same as multivariable linear models (also called "multiple linear models").
+Various models have been created that allow for heteroscedasticity, i.e.
+the errors for different response variables may have different variances.
+For example, weighted least squares is a method for estimating linear regression models when the response variables may have different error variances, possibly with correlated errors.
+(See also Weighted linear least squares, and Generalized least squares.) Heteroscedasticity-consistent standard errors is an improved method for use with uncorrelated but potentially heteroscedastic errors.
+The Generalized linear model (GLM) is a framework for modeling response variables that are bounded or discrete.
+This is used, for example:  when modeling positive quantities (e.g.
+ratings on a scale from 0 to 5, where the different outcomes can be ordered but where the quantity itself may not have any absolute meaning (e.g.
+a rating of 4 may not be "twice as good" in any objective sense as a rating of 2, but simply indicates that it is better than 2 or 3 but not as good as 5).
+Generalized linear models allow for an arbitrary link function, g, that relates the mean of the response variable(s) to the predictors: E(Y)  g-1(XB).
+The link function is often related to the distribution of the response, and in particular it typically has the effect of transforming between the (-infty,infty) range of the linear predictor and the range of the response variable.
+Some common examples of GLMs are:  Poisson regression for count data.
+ Logistic regression and probit regression for binary data.
+ Multinomial logistic regression and multinomial probit regression for categorical data.
+ Ordered logit and ordered probit regression for ordinal data.
+Single index models allow some degree of nonlinearity in the relationship between x and y, while preserving the central role of the linear predictor βx as in the classical linear regression model.
+Under certain conditions, simply applying OLS to data from a single-index model will consistently estimate β up to a proportionality constant.
+Hierarchical linear models (or multilevel regression) organizes the data into a hierarchy of regressions, for example where A is regressed on B, and B is regressed on C.
+It is often used where the variables of interest have a natural hierarchical structure such as in educational statistics, where students are nested in classrooms, classrooms are nested in schools, and schools are nested in some administrative grouping, such as a school district.
+The response variable might be a measure of student achievement such as a test score, and different covariates would be collected at the classroom, school, and school district levels.
+Errors-in-variables models (or "measurement error models") extend the traditional linear regression model to allow the predictor variables X to be observed with error.
+This error causes standard estimators of β to become biased.
+Generally, the form of bias is an attenuation, meaning that the effects are biased toward zero.
+In a multiple linear regression model : y beta_0  beta_1 x_1  cdots  beta_p x_p  varepsilon, parameter beta_j of predictor variable x_j represents the individual effect of x_j.
+It has an interpretation as the expected change in the response variable y when x_j increases by one unit with other predictor variables held constant.
+When x_j is strongly correlated with other predictor variables, it is improbable that x_j can increase by one unit with other variables held constant.
+In this case, the interpretation of beta_j becomes problematic as it is based on an improbable condition, and the effect of x_j cannot be evaluated in isolation.
+For a group of predictor variables, say, x_1, x_2, dots, x_q, a group effect xi(mathbfw) is defined as a linear combination of their parameters : xi(mathbfw)  w_1beta_1w_2beta_2dotsw_qbeta_q, where mathbfw(w_1,w_2,dots,w_q)intercal is a weight vector satisfying sum_j1q w_j1.
+Because of the constraint on w_j, xi(mathbfw) is also referred to as a normalized group effect.
+A group effect xi(mathbfw) has an interpretation as the expected change in y when variables in the group x_1, x_2,dots,x_q change by the amount w_1, w_2, dots, w_q, respectively, at the same time with other variables (not in the group) held constant.
+It generalizes the individual effect of a variable to a group of variables in that (i) if q1, then the group effect reduces to an individual effect, and (ii) if w_i1 and w_j0 for jneq i, then the group effect also reduces to an individual effect.
+A group effect xi(mathbfw) is said to be meaningful if the underlying simultaneous changes of the q variables (x_1,x_2,dots, x_q)intercal is probable.
+Group effects provide a means to study the collective impact of strongly correlated predictor variables in linear regression models.
+Individual effects of such variables are not well-defined as their parameters do not have good interpretations.
+Furthermore, when the sample size is not large, none of their parameters can be accurately estimated by the least squares regression due to the multicollinearity problem.
+Nevertheless, there are meaningful group effects that have good interpretations and can be accurately estimated by the least squares regression.
+A simple way to identify these meaningful group effects is to use an all positive correlations (APC) arrangement of the strongly correlated variables under which pairwise correlations among these variables are all positive, and standardize all p predictor variables in the model so that they all have mean zero and length one.
+To illustrate this, suppose that x_1, x_2, dots, x_q is a group of strongly correlated variables in an APC arrangement and that they are not strongly correlated with predictor variables outside the group.
+Let y' be the centred y and x_j' be the standardized x_j.
+Then, the standardized linear regression model is : y' beta_1' x_1'  cdots  beta_p' x_p'  varepsilon .
+Parameters beta_j in the original model, including beta_0, are simple functions of beta_j' in the standardized model.
+The standardization of variables does not change their correlations, so x_1', x_2', dots, x_q' is a group of strongly correlated variables in an APC arrangement and they are not strongly correlated with other predictor variables in the standardized model.
+A group effect of x_1', x_2', dots, x_q' is : xi'(mathbfw)w_1beta_1'w_2beta_2'dotsw_qbeta_q', and its minimum-variance unbiased linear estimator is : hatxi'(mathbfw)w_1hatbeta_1'w_2hatbeta_2'dotsw_qhatbeta_q', where hatbeta_j' is the least squares estimator of beta_j'.
+In particular, the average group effect of the q standardized variables is : xi_Afrac1q(beta_1'beta_2'dotsbeta_q'), which has an interpretation as the expected change in y' when all x_j' in the strongly correlated group increase by (1q)th of a unit at the same time with variables outside the group held constant.
+With strong positive correlations and in standardized units, variables in the group are approximately equal, so they are likely to increase at the same time and in similar amount.
+Thus, the average group effect xi_A is a meaningful effect.
+It can be accurately estimated by its minimum-variance unbiased linear estimator hatxi_Afrac1q(hatbeta_1'hatbeta_2'dotshatbeta_q'), even when individually none of the beta_j' can be accurately estimated by hatbeta_j'.
+Not all group effects are meaningful or can be accurately estimated.
+For example, beta_1' is a special group effect with weights w_11 and w_j0 for jneq 1, but it cannot be accurately estimated by hatbeta'_1.
+It is also not a meaningful effect.
+In general, for a group of q strongly correlated predictor variables in an APC arrangement in the standardized model, group effects whose weight vectors mathbfw are at or near the centre of the simplex sum_j1q w_j1 (w_jgeq 0) are meaningful and can be accurately estimated by their minimum-variance unbiased linear estimators.
+Effects with weight vectors far away from the centre are not meaningful as such weight vectors represent simultaneous changes of the variables that violate the strong positive correlations of the standardized variables in an APC arrangement.
+As such, they are not probable.
+These effects also cannot be accurately estimated.
+Applications of the group effects include (1) estimation and inference for meaningful group effects on the response variable, (2) testing for "group significance" of the q variables via testing H_0: xi_A0 versus H_1: xi_Aneq 0, and (3) characterizing the region of the predictor variable space over which predictions by the least squares estimated model are accurate.
+A group effect of the original variables x_1, x_2, dots, x_q can be expressed as a constant times a group effect of the standardized variables x_1', x_2',dots, x_q'.
+The former is meaningful when the latter is.
+Thus meaningful group effects of the original variables can be found through meaningful group effects of the standardized variables.
+In DempsterShafer theory, or a linear belief function in particular, a linear regression model may be represented as a partially swept matrix, which can be combined with similar matrices representing observations and other assumed normal distributions and state equations.
+The combination of swept or unswept matrices provides an alternative method for estimating linear regression models.
+A large number of procedures have been developed for parameter estimation and inference in linear regression.
+These methods differ in computational simplicity of algorithms, presence of a closed-form solution, robustness with respect to heavy-tailed distributions, and theoretical assumptions needed to validate desirable statistical properties such as consistency and asymptotic efficiency.
+Some of the more common estimation techniques for linear regression are summarized below.
+1886 illustration of the correlation between the heights of adults and their parents.
+The observation that adult children's heights tended to deviate less from the mean height than their parents suggested the concept of "regression toward the mean", giving regression its name.
+The "locus of horizontal tangential points" passing through the leftmost and rightmost points on the ellipse (which is a level curve of the bivariate normal distribution estimated from the data) is the OLS estimate of the regression of parents' heights on children's heights, while the "locus of vertical tangential points" is the OLS estimate of the regression of children's heights on parent's heights.
+The major axis of the ellipse is the TLS estimate. Assuming that the independent variables are vecx_i  leftx_1i, x_2i, ldots, x_miright and the model's parameters are vecbeta  leftbeta_0, beta_1, ldots, beta_mright, then the model's prediction would be : y_i approx beta_0  sum_j1m beta_jtimes x_ji.
+If vecx_i is extended to vecx_i  left1, x_1i, x_2i, ldots, x_miright then y_i would become a dot product of the parameter and the independent vectors, i.e.
+: y_i approx sum_j0 m beta_j times x_ji  vecbeta cdot vecx_i.
+This is provided by the GaussMarkov theorem.
+Linear least squares methods include mainly:  Ordinary least squares  Weighted least squares  Generalized least squares  Linear Template Fit .
+Maximum likelihood estimation can be performed when the distribution of the error terms is known to belong to a certain parametric family ƒθ of probability distributions.
+When fθ is a normal distribution with zero mean and variance θ, the resulting estimate is identical to the OLS estimate.
+GLS estimates are maximum likelihood estimates when ε follows a multivariate normal distribution with a known covariance matrix.
+Let's denote each data point by (vecx_i, y_i) and the regression parameters as vecbeta , and the set of all data by D and the cost function by L(D, vecbeta)  sum_i(y_i - vecbeta , cdot , vecx_i)2 .
+As shown below the same optimal parameter that minimizes L(D, vecbeta) achieves maximum likelihood too.
+Ridge regression and other forms of penalized estimation, such as Lasso regression, deliberately introduce bias into the estimation of β in order to reduce the variability of the estimate.
+The resulting estimates generally have lower mean squared error than the OLS estimates, particularly when multicollinearity is present or when overfitting is a problem.
+They are generally used when the goal is to predict the value of the response variable y for values of the predictors x that have not yet been observed.
+These methods are not as commonly used when the goal is inference, since it is difficult to account for the bias.
+Least absolute deviation (LAD) regression is a robust estimation technique in that it is less sensitive to the presence of outliers than OLS (but is less efficient than OLS when no outliers are present).
+It is equivalent to maximum likelihood estimation under a Laplace distribution model for ε.
+If we assume that error terms are independent of the regressors, varepsilon_i perp mathbfx_i, then the optimal estimator is the 2-step MLE, where the first step is used to non-parametrically estimate the distribution of the error term.
+(black) and simple linear regression (blue) for a set of points with outliers  Bayesian linear regression applies the framework of Bayesian statistics to linear regression.
+(See also Bayesian multivariate linear regression.) In particular, the regression coefficients β are assumed to be random variables with a specified prior distribution.
+The prior distribution can bias the solutions for the regression coefficients, in a way similar to (but more general than) ridge regression or lasso regression.
+In addition, the Bayesian estimation process produces not a single point estimate for the "best" values of the regression coefficients but an entire posterior distribution, completely describing the uncertainty surrounding the quantity.
+This can be used to estimate the "best" coefficients using the mean, mode, median, any quantile (see quantile regression), or any other function of the posterior distribution.
+ Quantile regression focuses on the conditional quantiles of y given X rather than the conditional mean of y given X.
+Linear quantile regression models a particular conditional quantile, for example the conditional median, as a linear function βTx of the predictors.
+ Mixed models are widely used to analyze linear regression relationships involving dependent data when the dependencies have a known structure.
+Common applications of mixed models include analysis of data involving repeated measurements, such as longitudinal data, or data obtained from cluster sampling.
+They are generally fit as parametric models, using maximum likelihood or Bayesian estimation.
+In the case where the errors are modeled as normal random variables, there is a close connection between mixed models and generalized least squares.
+Fixed effects estimation is an alternative approach to analyzing this type of data.
+ Principal component regression (PCR) is used when the number of predictor variables is large, or when strong correlations exist among the predictor variables.
+This two-stage procedure first reduces the predictor variables using principal component analysis, and then uses the reduced variables in an OLS regression fit.
+While it often works well in practice, there is no general theoretical reason that the most informative linear function of the predictor variables should lie among the dominant principal components of the multivariate distribution of the predictor variables.
+The partial least squares regression is the extension of the PCR method which does not suffer from the mentioned deficiency.
+ Least-angle regression is an estimation procedure for linear regression models that was developed to handle high-dimensional covariate vectors, potentially with more covariates than observations.
+ The TheilSen estimator is a simple robust estimation technique that chooses the slope of the fit line to be the median of the slopes of the lines through pairs of sample points.
+It has similar statistical efficiency properties to simple linear regression but is much less sensitive to outliers.
+ Other robust estimation techniques, including the α-trimmed mean approach, and L-, M-, S-, and R-estimators have been introduced.
+Linear regression is widely used in biological, behavioral and social sciences to describe possible relationships between variables.
+It ranks as one of the most important tools used in these disciplines.
+A trend line represents a trend, the long-term movement in time series data after other components have been accounted for.
+It tells whether a particular data set (say GDP, oil prices or stock prices) have increased or decreased over the period of time.
+A trend line could simply be drawn by eye through a set of data points, but more properly their position and slope is calculated using statistical techniques like linear regression.
+Trend lines typically are straight lines, although some variations use higher degree polynomials depending on the degree of curvature desired in the line.
+Trend lines are sometimes used in business analytics to show changes in data over time.
+This has the advantage of being simple.
+Trend lines are often used to argue that a particular action or event (such as training, or an advertising campaign) caused observed changes at a point in time.
+This is a simple technique, and does not require a control group, experimental design, or a sophisticated analysis technique.
+However, it suffers from a lack of scientific validity in cases where other potential changes can affect the data.
+Early evidence relating tobacco smoking to mortality and morbidity came from observational studies employing regression analysis.
+In order to reduce spurious correlations when analyzing observational data, researchers usually include several variables in their regression models in addition to the variable of primary interest.
+For example, in a regression model in which cigarette smoking is the independent variable of primary interest and the dependent variable is lifespan measured in years, researchers might include education and income as additional independent variables, to ensure that any observed effect of smoking on lifespan is not due to those other socio-economic factors.
+However, it is never possible to include all possible confounding variables in an empirical analysis.
+For example, a hypothetical gene might increase mortality and also cause people to smoke more.
+For this reason, randomized controlled trials are often able to generate more compelling evidence of causal relationships than can be obtained using regression analyses of observational data.
+When controlled experiments are not feasible, variants of regression analysis such as instrumental variables regression may be used to attempt to estimate causal relationships from observational data.
+The capital asset pricing model uses linear regression as well as the concept of beta for analyzing and quantifying the systematic risk of an investment.
+This comes directly from the beta coefficient of the linear regression model that relates the return on the investment to the return on all risky assets.
+Linear regression is the predominant empirical tool in economics.
+For example, it is used to predict consumption spending, fixed investment spending, inventory investment, purchases of a country's exports, the demand to hold liquid assets, labor demand, .
+Linear regression finds application in a wide range of environmental science applications such as land use, infectious diseases, and air pollution.
+For example, linear regression can be used to predict the changing effects of car pollution.
+One notable example of this application in infectious diseases is the flattening the curve strategy emphasized early in the COVID-19 pandemic, where public health officials dealt with sparse data on infected individuals and sophisticated models of disease transmission to characterize the spread of COVID-19.
+Linear regression is commonly used in building science field studies to derive characteristics of building occupants.
+In a thermal comfort field study, building scientists usually ask occupants' thermal sensation votes, which range from -3 (feeling cold) to 0 (neutral) to 3 (feeling hot), and measure occupants' surrounding temperature data.
+A neutral or comfort temperature can be calculated based on a linear regression between the thermal sensation vote and indoor temperature, and setting the thermal sensation vote as zero.
+However, there has been a debate on the regression direction: regressing thermal sensation votes (y-axis) against indoor temperature (x-axis) or the opposite: regressing indoor temperature (y-axis) against thermal sensation votes (x-axis).
+Linear regression plays an important role in the subfield of artificial intelligence known as machine learning.
+The linear regression algorithm is one of the fundamental supervised machine-learning algorithms due to its relative simplicity and well-known properties.
+Isaac Newton is credited with inventing "a certain technique known today as linear regression analysis" in his work on equinoxes in 1700, and wrote down the first of the two normal equations of the ordinary least squares method.
+The Least squares linear regression, as a means of finding a good rough linear fit to a set of points was performed by Legendre (1805) and Gauss (1809) for the prediction of planetary movement.
+Quetelet was responsible for making the procedure well-known and for using it extensively in the social sciences.
+ Cohen, J., Cohen P., West, S.
+https:books.google.combooks?id98p4AgAAQBAJq22Appliedmultipleregression2Fcorrelationanalysisforthebehavioralsciences22 Applied multiple regressioncorrelation analysis for the behavioral sciences .
+(2nd ed.) Hillsdale, New Jersey: Lawrence Erlbaum Associates  Charles Darwin.
+The Variation of Animals and Plants under Domestication.
+(1868) (Chapter XIII describes what was known about reversion in Galton's time.
+Darwin uses the term "reversion".)   Francis Galton.
+"Regression Towards Mediocrity in Hereditary Stature," Journal of the Anthropological Institute, 15:246263 (1886).
+(Facsimile at: http:www.mugu.comgaltonessays1880-1889galton-1886-jaigi-regression-stature.pdf )  Robert S.
+Pindyck and Daniel L.
+Rubinfeld (1998, 4th ed.).
+Econometric Models and Economic Forecasts, ch.
+1 (Intro, including appendices on Σ operators  derivation of parameter est.)  Appendix 4.3 (mult.
+regression in matrix form).
+  http:www.incertitudes.frbook.pdf Mathieu Rouaud, 2013: Probability, Statistics and Estimation Chapter 2: Linear Regression, Linear Regression with Error Bars and Nonlinear Regression.
+ https:phet.colorado.eduensimulationleast-squares-regression Least-Squares Regression, PhET Interactive simulations, University of Colorado at Boulder  http:www.geocities.wsdiylfDIYLF.html DIY Linear Fit

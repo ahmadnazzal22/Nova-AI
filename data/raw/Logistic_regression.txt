@@ -1,0 +1,285 @@
+In statistics, a logistic model (or logit model) is a statistical model that models the log-odds of an event as a linear combination of one or more independent variables.
+In regression analysis, logistic regression (or logit regression) estimates the parameters of a logistic model (the coefficients in the linear or non linear combinations).
+In binary logistic regression there is a single binary dependent variable, coded by an indicator variable, where the two values are labeled "0" and "1", while the independent variables can each be a binary variable (two classes, coded by an indicator variable) or a continuous variable (any real value).
+The corresponding probability of the value labeled "1" can vary between 0 (certainly the value "0") and 1 (certainly the value "1"), hence the labeling; Many other medical scales used to assess severity of a patient have been developed using logistic regression.
+Logistic regression may be used to predict the risk of developing a given disease (e.g.
+diabetes; coronary heart disease), based on observed characteristics of the patient (age, sex, body mass index, results of various blood tests, etc.).
+Another example might be to predict whether a Nepalese voter will vote Nepali Congress or Communist Party of Nepal or for any other party, based on age, income, sex, race, state of residence, votes in previous elections, etc.
+It is also used in marketing applications such as prediction of a customer's propensity to purchase a product or halt a subscription, etc.
+In economics, it can be used to predict the likelihood of a person ending up in the labor force, and a business application would be to predict the likelihood of a homeowner defaulting on a mortgage.
+Conditional random fields, an extension of logistic regression to sequential data, are used in natural language processing.
+Disaster planners and engineers rely on these models to predict decisions taken by householders or building occupants in small-scale and large-scales evacuations, such as building fires, wildfires, hurricanes among others.
+These models help in the development of reliable disaster managing plans and safer design for the built environment.
+Logistic regression is a supervised machine learning algorithm widely used for binary classification tasks, such as identifying whether an email is spam or not and diagnosing diseases by assessing the presence or absence of specific conditions based on patient test results.
+This approach utilizes the logistic (or sigmoid) function to transform a linear combination of input features into a probability value ranging between 0 and 1.
+This probability indicates the likelihood that a given input corresponds to one of two predefined categories.
+The essential mechanism of logistic regression is grounded in the logistic function's ability to model the probability of binary outcomes accurately.
+With its distinctive S-shaped curve, the logistic function effectively maps any real-valued number to a value within the 0 to 1 interval.
+This feature renders it particularly suitable for binary classification tasks, such as sorting emails into "spam" or "not spam".
+By calculating the probability that the dependent variable will be categorized into a specific group, logistic regression provides a probabilistic framework that supports informed decision-making.
+As a simple example, we can use a logistic regression with one explanatory variable and two categories to answer the following question: A group of 20 students spends between 0 and 6 hours studying for an exam.
+How does the number of hours spent studying affect the probability of the student passing the exam?
+The reason for using logistic regression for this problem is that the values of the dependent variable, pass and fail, while represented by "1" and "0", are not cardinal numbers.
+If the problem was changed so that passfail was replaced with the grade 0100 (cardinal numbers), then simple regression analysis could be used.
+The table shows the number of hours each student spent studying, and whether they passed (1) or failed (0).
+We wish to fit a logistic function to the data consisting of the hours studied (xk) and the outcome of the test (yk 1 for pass, 0 for fail).
+The data points are indexed by the subscript k which runs from k1 to kK20.
+The x variable is called the "explanatory variable", and the y variable is called the "categorical variable" consisting of two categories: "pass" or "fail" corresponding to the categorical values 1 and 0 respectively.
+The logistic function is of the form: :p(x)frac11e-(x-mu)s where μ is a location parameter (the midpoint of the curve, where p(mu)12) and s is a scale parameter.
+This expression may be rewritten as: :p(x)frac11e-(beta_0beta_1 x) where beta_0  -mus and is known as the intercept (it is the vertical intercept or y-intercept of the line y  beta_0beta_1 x), and beta_1 1s (inverse scale parameter or rate parameter): these are the y-intercept and slope of the log-odds as a function of x.
+Conversely, mu-beta_0beta_1 and s1beta_1.
+Note that this model is actually an oversimplification, as it implies that every student will pass if they study indefinitely (limit  1).
+The usual measure of goodness of fit for a logistic regression uses logistic loss (or log loss), the negative log-likelihood.
+For a given xk and yk, write p_kp(x_k).
+The are the probabilities that the corresponding will equal one, and are the probabilities that they will be zero (see Bernoulli distribution).
+We wish to find the values of and which give the "best fit" to the data.
+For comparison of a "best fit" to the data, see the case of linear regression.
+There, the sum of the squared deviations of the fit from the data points (yk), the squared error loss, is taken as a measure of the goodness of fit, and the best fit is obtained when this loss is minimized.
+The log loss for the k-th point is: :ell_k  begincases -ln p_k  text if  y_k  1,  -ln (1 - p_k)  text if  y_k  0.
+endcases The log loss can be interpreted as the "surprisal" of the actual outcome relative to the prediction , and is a measure of information content.
+Log loss is always greater than or equal to 0, equals 0 only in case of a perfect prediction (i.e., when p_k  1 and y_k  1, or p_k  0 and y_k  0), and approaches infinity as the prediction gets worse (i.e., when y_k  1 and p_k to 0 or y_k  0 and p_k to 1), meaning the actual outcome is "more surprising".
+Since the value of the logistic function is always strictly between zero and one, the log loss is always greater than zero and less than infinity.
+Unlike in a linear regression, where the model can have zero loss at a point by passing through a data point (and zero loss overall if all points are on a line), in a logistic regression it is not possible to have zero loss at any points, since is either 0 or 1, but .
+These can be combined into a single expression: :ell_k  -y_kln p_k - (1 - y_k)ln (1 - p_k).
+This expression is more formally known as the cross-entropy of the predicted distribution big(p_k, (1-p_k)big) from the actual distribution big(y_k, (1-y_k)big), as probability distributions on the two-element space of (pass, fail).
+The sum of these, the total loss, is the overall negative log-likelihood , and the best fit is obtained for those choices of and for which is minimized.
+Alternatively, instead of minimizing the loss, one can maximize its inverse, the (positive) log-likelihood: :ell  sum_k:y_k1ln(p_k)  sum_k:y_k0ln(1-p_k)  sum_k1K left(,y_k ln(p_k)(1-y_k)ln(1-p_k)right) or equivalently maximize the likelihood function itself, which is the probability that the given data set is produced by a particular logistic function: :L  prod_k:y_k1p_k,prod_k:y_k0(1-p_k) This method is known as maximum likelihood estimation.
+Since ℓ is nonlinear in and , determining their optimum values will require numerical methods.
+One method of maximizing ℓ is to require the derivatives of ℓ with respect to and to be zero: :0  fracpartial ellpartial beta_0  sum_k1K(y_k-p_k) :0  fracpartial ellpartial beta_1  sum_k1K(y_k-p_k)x_k and the maximization procedure can be accomplished by solving the above two equations for and , which, again, will generally require the use of numerical methods.
+The values of and which maximize ℓ and L using the above data are found to be: :beta_0 approx -4.1 :beta_1 approx 1.5 which yields a value for μ and s of: :mu  -beta_0beta_1 approx 2.7 :s  1beta_1 approx 0.67 .
+The and coefficients may be entered into the logistic regression equation to estimate the probability of passing the exam.
+For example, for a student who studies 2 hours, entering the value x  2 into the equation gives the estimated probability of passing the exam of 0.25: : t  beta_02beta_1 approx - 4.1  2 cdot 1.5  -1.1 : p  frac11  e-t  approx 0.25  textProbability of passing exam Similarly, for a student who studies 4 hours, the estimated probability of passing the exam is 0.87: : t  beta_04beta_1 approx - 4.1  4 cdot 1.5  1.9 : p  frac11  e-t  approx 0.87  textProbability of passing exam This table shows the estimated probability of passing the exam for several values of hours studying.
+The logistic regression analysis gives the following output.
+By the Wald test, the output indicates that hours studying is significantly associated with the probability of passing the exam (p  0.017).
+Rather than the Wald method, the recommended method to calculate the p-value for logistic regression is the likelihood-ratio test (LRT), which for these data give p approx 0.00064 (see below).
+This simple model is an example of binary logistic regression, and has one explanatory variable and a binary categorical variable which can assume one of two categorical values.
+Multinomial logistic regression is the generalization of binary logistic regression to include any number of explanatory variables and any number of categories.
+An explanation of logistic regression can begin with an explanation of the standard logistic function.
+The logistic function is a sigmoid function, which takes any real input t, and outputs a value between zero and one.
+For a binary independent variable the odds ratio is defined as fracadbc where a, b, c and d are cells in a 22 contingency table.
+If there are multiple explanatory variables, the above expression beta_0beta_1x can be revised to beta_0beta_1x_1beta_2x_2cdotsbeta_mx_m  beta_0 sum_i1m beta_ix_i.
+Then when this is used in the equation relating the log odds of a success to the values of the predictors, the linear regression will be a multiple regression with m explanators; the parameters beta_i for all i  0, 1, 2, dots, m are all estimated.
+Again, the more traditional equations are: :log fracp1-p  beta_0beta_1x_1beta_2x_2cdotsbeta_mx_m and :p  frac11b-(beta_0  beta_1 x_1  beta_2 x_2  cdots  beta_mx_m ) where usually be.
+A dataset contains N points.
+Each point i consists of a set of m input variables x1,i ...
+xm,i (also called independent variables, explanatory variables, predictor variables, features, or attributes), and a binary outcome variable Yi (also known as a dependent variable, response variable, output variable, or class), i.e.
+it can assume only the two possible values 0 (often meaning "no" or "failure") or 1 (often meaning "yes" or "success").
+The goal of logistic regression is to use the dataset to create a predictive model of the outcome variable.
+As in linear regression, the outcome variables Yi are assumed to depend on the explanatory variables x1,i ...
+; Explanatory variables The explanatory variables may be of any type: real-valued, binary, categorical, etc.
+The main distinction is between continuous variables and discrete variables.
+This can be expressed in any of the following equivalent forms: :: beginalign Y_imid x_1,i,ldots,x_m,i   sim operatornameBernoulli(p_i) 5pt operatornamemathbb EY_imid x_1,i,ldots,x_m,i  p_i 5pt Pr(Y_iymid x_1,i,ldots,x_m,i)  begincases p_i  textif y1  1-p_i  textif y0 endcases 5pt Pr(Y_iymid x_1,i,ldots,x_m,i)  p_iy (1-p_i)(1-y) endalign The meanings of these four lines are:  The first line expresses the probability distribution of each Yi : conditioned on the explanatory variables, it follows a Bernoulli distribution with parameters pi, the probability of the outcome of 1 for trial i.
+As noted above, each separate trial has its own probability of success, just as each trial has its own explanatory variables.
+The probability of success pi is not observed, only the outcome of an individual Bernoulli trial using that probability.
+ The second line expresses the fact that the expected value of each Yi is equal to the probability of success pi, which is a general property of the Bernoulli distribution.
+In other words, if we run a large number of Bernoulli trials using the same probability of success pi, then take the average of all the 1 and 0 outcomes, then the result would be close to pi.
+This is because doing an average this way simply computes the proportion of successes seen, which we expect to converge to the underlying probability of success.
+ The third line writes out the probability mass function of the Bernoulli distribution, specifying the probability of seeing each of the two possible outcomes.
+ The fourth line is another way of writing the probability mass function, which avoids having to write separate cases and is more convenient for certain types of calculations.
+This relies on the fact that Yi can take only the value 0 or 1.
+In each case, one of the exponents will be 1, "choosing" the value under it, while the other is 0, "canceling out" the value under it.
+Hence, the outcome is either pi or 1  pi, as in the previous line.
+; Linear predictor function The basic idea of logistic regression is to use the mechanism already developed for linear regression by modeling the probability pi using a linear predictor function, i.e.
+a linear combination of the explanatory variables and a set of regression coefficients that are specific to the model at hand but the same for all trials.
+The linear predictor function f(i) for a particular data point i is written as: :f(i)  beta_0  beta_1 x_1,i  cdots  beta_m x_m,i, where beta_0, ldots, beta_m are regression coefficients indicating the relative effect of a particular explanatory variable on the outcome.
+The model is usually put into a more compact form as follows:  The regression coefficients β0, β1, ..., βm are grouped into a single vector β of size m  1.
+ For each data point i, an additional explanatory pseudo-variable x0,i is added, with a fixed value of 1, corresponding to the intercept coefficient β0.
+ The resulting explanatory variables x0,i, x1,i, ..., xm,i are then grouped into a single vector Xi of size m  1.
+This makes it possible to write the linear predictor function as follows: :f(i) boldsymbolbeta cdot mathbfX_i, using the notation for a dot product between two vectors.
+The above example of binary logistic regression on one explanatory variable can be generalized to binary logistic regression on any number of explanatory variables x1, x2,...
+and any number of categorical values y0,1,2,dots.
+To begin with, we may consider a logistic model with M explanatory variables, x1, x2 ...
+xM and, as in the example above, two categorical values (y  0 and 1).
+For the simple binary logistic regression model, we assumed a linear relationship between the predictor variable and the log-odds (also called logit) of the event that y1.
+This linear relationship may be extended to the case of M explanatory variables: :t  log_b fracp1-p  beta_0  beta_1 x_1  beta_2 x_2 cdots beta_M x_M where t is the log-odds and beta_i are parameters of the model.
+An additional generalization has been introduced in which the base of the model (b) is not restricted to Euler's number e.
+In most applications, the base b of the logarithm is usually taken to be e.
+However, in some cases it can be easier to communicate results by working in base 2 or base 10.
+For a more compact notation, we will specify the explanatory variables and the β coefficients as -dimensional vectors: :boldsymbolxx_0,x_1,x_2,dots,x_M :boldsymbolbetabeta_0,beta_1,beta_2,dots,beta_M with an added explanatory variable x0 1.
+The logit may now be written as: :t sum_m0M beta_m x_m  boldsymbolbeta cdot x Solving for the probability p that y1 yields: :p(boldsymbolx)  fracbboldsymbolbeta cdot boldsymbolx1bboldsymbolbeta cdot boldsymbolx frac11b-boldsymbolbeta cdot boldsymbolxS_b(t), where S_b is the sigmoid function with base b.
+The above formula shows that once the beta_m are fixed, we can easily compute either the log-odds that y1 for a given observation, or the probability that y1 for a given observation.
+The main use-case of a logistic model is to be given an observation boldsymbolx, and estimate the probability p(boldsymbolx) that y1.
+The optimum beta coefficients may again be found by maximizing the log-likelihood.
+For K measurements, defining boldsymbolx_k as the explanatory vector of the k-th measurement, and y_k as the categorical outcome of that measurement, the log likelihood may be written in a form very similar to the simple M1 case above: :ell  sum_k1K y_k log_b(p(boldsymbolx_k))sum_k1K (1-y_k) log_b(1-p(boldsymbolx_k)) As in the simple example above, finding the optimum β parameters will require numerical methods.
+One useful technique is to equate the derivatives of the log likelihood with respect to each of the β parameters to zero yielding a set of equations which will hold at the maximum of the log likelihood: :fracpartial ellpartial beta_m  0  sum_k1K y_k x_mk - sum_k1K p(boldsymbolx_k)x_mk where xmk is the value of the xm explanatory variable from the k-th measurement.
+Consider an example with M2 explanatory variables, b10, and coefficients beta_0-3, beta_11, and beta_22 which have been determined by the above method.
+To be concrete, the model is: :tlog_10fracp1 - p  -3  x_1  2 x_2 :p  fracbboldsymbolbeta cdot boldsymbolx1bboldsymbolbeta cdot x  fracbbeta_0  beta_1 x_1  beta_2 x_21bbeta_0  beta_1 x_1  beta_2 x_2   frac11  b-(beta_0  beta_1 x_1  beta_2 x_2), where p is the probability of the event that y1.
+This can be interpreted as follows:  beta_0  -3 is the y-intercept.
+It is the log-odds of the event that y1, when the predictors x_1x_20.
+By exponentiating, we can see that when x_1x_20 the odds of the event that y1 are 1-to-1000, or 10-3.
+Similarly, the probability of the event that y1 when x_1x_20 can be computed as 1(1000  1)  11001.
+ beta_1  1 means that increasing x_1 by 1 increases the log-odds by 1.
+So if x_1 increases by 1, the odds that y1 increase by a factor of 101.
+The probability of y1 has also increased, but it has not increased by as much as the odds have increased.
+ beta_2  2 means that increasing x_2 by 1 increases the log-odds by 2.
+So if x_2 increases by 1, the odds that y1 increase by a factor of 102.
+Note how the effect of x_2 on the log-odds is twice as great as the effect of x_1, but the effect on the odds is 10 times greater.
+But the effect on the probability of y1 is not as much as 10 times greater, it's only the effect on the odds that is 10 times greater.
+In the above cases of two categories (binomial logistic regression), the categories were indexed by "0" and "1", and we had two probabilities: The probability that the outcome was in category 1 was given by p(boldsymbolx)and the probability that the outcome was in category 0 was given by 1-p(boldsymbolx).
+The sum of these probabilities equals 1, which must be true, since "0" and "1" are the only possible categories in this setup.
+In general, if we have explanatory variables (including x0) and categories, we will need separate probabilities, one for each category, indexed by n, which describe the probability that the categorical outcome y will be in category yn, conditional on the vector of covariates x.
+The sum of these probabilities over all categories must equal 1.
+Using the mathematically convenient base e, these probabilities are: :p_n(boldsymbolx)  fraceboldsymbolbeta_ncdot boldsymbolx1sum_u1N eboldsymbolbeta_ucdot boldsymbolx for n1,2,dots,N :p_0(boldsymbolx)  1-sum_n1N p_n(boldsymbolx)frac11sum_u1N eboldsymbolbeta_ucdot boldsymbolx Each of the probabilities except p_0(boldsymbolx) will have their own set of regression coefficients boldsymbolbeta_n.
+It can be seen that, as required, the sum of the p_n(boldsymbolx) over all categories n is 1.
+The selection of p_0(boldsymbolx) to be defined in terms of the other probabilities is artificial.
+Any of the probabilities could have been selected to be so defined.
+This special value of n is termed the "pivot index", and the log-odds (tn) are expressed in terms of the pivot probability and are again expressed as a linear combination of the explanatory variables: :t_n  lnleft(fracp_n(boldsymbolx)p_0(boldsymbolx)right)  boldsymbolbeta_n cdot boldsymbolx Note also that for the simple case of N1, the two-category case is recovered, with p(boldsymbolx)p_1(boldsymbolx) and p_0(boldsymbolx)1-p_1(boldsymbolx).
+The log-likelihood that a particular set of K measurements or data points will be generated by the above probabilities can now be calculated.
+Indexing each measurement by k, let the k-th set of measured explanatory variables be denoted by boldsymbolx_k and their categorical outcomes be denoted by y_k which can be equal to any integer in 0,N.
+The log-likelihood is then: :ell  sum_k1K sum_n0N Delta(n,y_k),ln(p_n(boldsymbolx_k)) where Delta(n,y_k) is an indicator function which equals 1 if yk  n and zero otherwise.
+In the case of two explanatory variables, this indicator function was defined as yk when n  1 and 1-yk when n  0.
+This was convenient, but not necessary.
+Again, the optimum beta coefficients may be found by maximizing the log-likelihood function generally using numerical methods.
+A possible method of solution is to set the derivatives of the log-likelihood with respect to each beta coefficient equal to zero and solve for the beta coefficients: :fracpartial ellpartial beta_nm  0  sum_k1K Delta(n,y_k)x_mk - sum_k1K p_n(boldsymbolx_k)x_mk where beta_nm is the m-th coefficient of the boldsymbolbeta_n vector and x_mk is the m-th explanatory variable of the k-th measurement.
+Once the beta coefficients have been estimated from the data, we will be able to estimate the probability that any subsequent set of explanatory variables will result in any of the possible outcome categories.
+There are various equivalent specifications and interpretations of logistic regression, which fit into different types of more general models, and allow different generalizations.
+The intuition for transforming using the logit function (the natural log of the odds) was explained above.
+It also has the practical effect of converting the probability (which is bounded to be between 0 and 1) to a variable that ranges over (-infty,infty)  thereby matching the potential range of the linear prediction function on the right side of the equation.
+Both the probabilities pi and the regression coefficients are unobserved, and the means of determining them is not part of the model itself.
+They are typically determined by some sort of optimization procedure, e.g.
+maximum likelihood estimation, that finds values that best fit the observed data (i.e.
+that give the most accurate predictions for the data already observed), usually subject to regularization conditions that seek to exclude unlikely values, e.g.
+extremely large values for any of the regression coefficients.
+The use of a regularization condition is equivalent to doing maximum a posteriori (MAP) estimation, an extension of maximum likelihood.
+(Regularization is most commonly done using a squared regularizing function, which is equivalent to placing a zero-mean Gaussian prior distribution on the coefficients, but other regularizers are also possible.) Whether or not regularization is used, it is usually not possible to find a closed-form solution; instead, an iterative numerical method must be used, such as iteratively reweighted least squares (IRLS) or, more commonly these days, a quasi-Newton method such as the L-BFGS method.
+The interpretation of the βj parameter estimates is as the additive effect on the log of the odds for a unit change in the j the explanatory variable.
+In the case of a dichotomous explanatory variable, for instance, gender ebeta is the estimate of the odds of having the outcome for, say, males compared with females.
+The logistic model has an equivalent formulation as a latent-variable model.
+This formulation is common in the theory of discrete choice models and makes it easier to extend to certain more complicated models with multiple, correlated choices, as well as to compare logistic regression to the closely related probit model.
+Imagine that, for each trial i, there is a continuous latent variable Yi (i.e.
+an unobserved random variable) that is distributed as follows: : Y_iast  boldsymbolbeta cdot mathbfX_i  varepsilon_i , where : varepsilon_i sim operatornameLogistic(0,1) , i.e.
+the latent variable can be written directly in terms of the linear predictor function and an additive random error variable that is distributed according to a standard logistic distribution.
+Then Yi can be viewed as an indicator for whether this latent variable is positive: : Y_i  begincases 1  textif Y_iast  0  text i.e.
+ - varepsilon_i The choice of modeling the error variable specifically with a standard logistic distribution, rather than a general logistic distribution with the location and scale set to arbitrary values, seems restrictive, but in fact, it is not.
+It must be kept in mind that we can choose the regression coefficients ourselves, and very often can use them to offset changes in the parameters of the error variable's distribution.
+For example, a logistic error-variable distribution with a non-zero location parameter μ (which sets the mean) is equivalent to a distribution with a zero location parameter, where μ has been added to the intercept coefficient.
+Both situations produce the same value for Yi regardless of settings of explanatory variables.
+Similarly, an arbitrary scale parameter s is equivalent to setting the scale parameter to 1 and then dividing all regression coefficients by s.
+In the latter case, the resulting value of Yi will be smaller by a factor of s than in the former case, for all sets of explanatory variables  but critically, it will always remain on the same side of 0, and hence lead to the same Yi choice.
+(This predicts that the irrelevancy of the scale parameter may not carry over into more complex models where more than two choices are available.) It turns out that this formulation is exactly equivalent to the preceding one, phrased in terms of the generalized linear model and without any latent variables.
+This can be shown as follows, using the fact that the cumulative distribution function (CDF) of the standard logistic distribution is the logistic function, which is the inverse of the logit function, i.e.
+:Pr(varepsilon_i Then: : beginalign Pr(Y_i1midmathbfX_i)  Pr(Y_iast  0midmathbfX_i) 5pt  Pr(boldsymbolbeta cdot mathbfX_i  varepsilon_i  0) 5pt  Pr(varepsilon_i  -boldsymbolbeta cdot mathbfX_i) 5pt  Pr(varepsilon_i This formulationwhich is standard in discrete choice modelsmakes clear the relationship between logistic regression (the "logit model") and the probit model, which uses an error variable distributed according to a standard normal distribution instead of a standard logistic distribution.
+Both the logistic and normal distributions are symmetric with a basic unimodal, "bell curve" shape.
+The only difference is that the logistic distribution has somewhat heavier tails, which means that it is less sensitive to outlying data (and hence somewhat more robust to model mis-specifications or erroneous data).
+Yet another formulation uses two separate latent variables: : beginalign Y_i0ast  boldsymbolbeta_0 cdot mathbfX_i  varepsilon_0 ,  Y_i1ast  boldsymbolbeta_1 cdot mathbfX_i  varepsilon_1 , endalign where : beginalign varepsilon_0  sim operatornameEV_1(0,1)  varepsilon_1  sim operatornameEV_1(0,1) endalign where EV1(0,1) is a standard type-1 extreme value distribution: i.e.
+:Pr(varepsilon_0x)  Pr(varepsilon_1x)  e-x e-e-x Then : Y_i  begincases 1  textif Y_i1ast  Y_i0ast,  0 textotherwise. endcases This model has a separate latent variable and a separate set of regression coefficients for each possible outcome of the dependent variable.
+The reason for this separation is that it makes it easy to extend logistic regression to multi-outcome categorical variables, as in the multinomial logit model.
+In such a model, it is natural to model each possible outcome using a different set of regression coefficients.
+It is also possible to motivate each of the separate latent variables as the theoretical utility associated with making the associated choice, and thus motivate logistic regression in terms of utility theory.
+(In terms of utility theory, a rational actor always chooses the choice with the greatest associated utility.) This is the approach taken by economists when formulating discrete choice models, because it both provides a theoretically strong foundation and facilitates intuitions about the model, which in turn makes it easy to consider various sorts of extensions.
+(See the example below.) The choice of the type-1 extreme value distribution seems fairly arbitrary, but it makes the mathematics work out, and it may be possible to justify its use through rational choice theory.
+It turns out that this model is equivalent to the previous model, although this seems non-obvious, since there are now two sets of regression coefficients and error variables, and the error variables have a different distribution.
+In fact, this model reduces directly to the previous one with the following substitutions: :boldsymbolbeta  boldsymbolbeta_1 - boldsymbolbeta_0 :varepsilon  varepsilon_1 - varepsilon_0 An intuition for this comes from the fact that, since we choose based on the maximum of two values, only their difference matters, not the exact values  and this effectively removes one degree of freedom.
+Another critical fact is that the difference of two type-1 extreme-value-distributed variables is a logistic distribution, i.e.
+varepsilon  varepsilon_1 - varepsilon_0 sim operatornameLogistic(0,1) .
+Yet another formulation combines the two-way latent variable formulation above with the original formulation higher up without latent variables, and in the process provides a link to one of the standard formulations of the multinomial logit.
+Here, instead of writing the logit of the probabilities pi as a linear predictor, we separate the linear predictor into two, one for each of the two outcomes: : beginalign ln Pr(Y_i0)  boldsymbolbeta_0 cdot mathbfX_i - ln Z  ln Pr(Y_i1)  boldsymbolbeta_1 cdot mathbfX_i - ln Z endalign Two separate sets of regression coefficients have been introduced, just as in the two-way latent variable model, and the two equations appear a form that writes the logarithm of the associated probability as a linear predictor, with an extra term - ln Z at the end.
+This term, as it turns out, serves as the normalizing factor ensuring that the result is a distribution.
+This can be seen by exponentiating both sides: : beginalign Pr(Y_i0)  frac1Z eboldsymbolbeta_0 cdot mathbfX_i 5pt Pr(Y_i1)  frac1Z eboldsymbolbeta_1 cdot mathbfX_i endalign In this form it is clear that the purpose of Z is to ensure that the resulting distribution over Yi is in fact a probability distribution, i.e.
+This means that Z is simply the sum of all un-normalized probabilities, and by dividing each probability by Z, the probabilities become "normalized".
+That is: : Z  eboldsymbolbeta_0 cdot mathbfX_i  eboldsymbolbeta_1 cdot mathbfX_i and the resulting equations are : beginalign Pr(Y_i0)  fraceboldsymbolbeta_0 cdot mathbfX_ieboldsymbolbeta_0 cdot mathbfX_i  eboldsymbolbeta_1 cdot mathbfX_i 5pt Pr(Y_i1)  fraceboldsymbolbeta_1 cdot mathbfX_ieboldsymbolbeta_0 cdot mathbfX_i  eboldsymbolbeta_1 cdot mathbfX_i.
+endalign Or generally: :Pr(Y_ic)  fraceboldsymbolbeta_c cdot mathbfX_isum_h eboldsymbolbeta_h cdot mathbfX_i This shows clearly how to generalize this formulation to more than two outcomes, as in multinomial logit.
+This general formulation is exactly the softmax function as in :Pr(Y_ic)  operatornamesoftmax(c, boldsymbolbeta_0 cdot mathbfX_i, boldsymbolbeta_1 cdot mathbfX_i, dots) .
+To prove that this is equivalent to the previous model, we start by recognizing the above model is overspecified, in that Pr(Y_i0) and Pr(Y_i1) cannot be independently specified: rather Pr(Y_i0)  Pr(Y_i1)  1 so knowing one automatically determines the other.
+As a result, the model is nonidentifiable, in that multiple combinations of boldsymbolbeta_0 and boldsymbolbeta_1 will produce the same probabilities for all possible explanatory variables.
+endalign As a result, we can simplify matters, and restore identifiability, by picking an arbitrary value for one of the two vectors.
+We choose to set boldsymbolbeta_0  mathbf0 .
+Then, :eboldsymbolbeta_0 cdot mathbfX_i  emathbf0 cdot mathbfX_i  1 and so : Pr(Y_i1)  fraceboldsymbolbeta_1 cdot mathbfX_i1  eboldsymbolbeta_1 cdot mathbfX_i  frac11e-boldsymbolbeta_1 cdot mathbfX_i  p_i which shows that this formulation is indeed equivalent to the previous formulation.
+(As in the two-way latent variable formulation, any settings where boldsymbolbeta  boldsymbolbeta_1 - boldsymbolbeta_0 will produce equivalent results.) Most treatments of the multinomial logit model start out either by extending the "log-linear" formulation presented here or the two-way latent variable formulation presented above, since both clearly show the way that the model could be extended to multi-way outcomes.
+In general, the presentation with latent variables is more common in econometrics and political science, where discrete choice models and utility theory reign, while the "log-linear" formulation here is more common in computer science, e.g.
+machine learning and natural language processing.
+The model has an equivalent formulation :p_i  frac11e-(beta_0  beta_1 x_1,i  cdots  beta_k x_k,i).
+, This functional form is commonly called a single-layer perceptron or single-layer artificial neural network.
+A single-layer neural network computes a continuous output instead of a step function.
+The derivative of pi with respect to X  (x1, ..., xk) is computed from the general form: : y  frac11e-f(X) where f(X) is an analytic function in X.
+With this choice, the single-layer neural network is identical to the logistic regression model.
+This function has a continuous derivative, which allows it to be used in backpropagation.
+This function is also preferred because its derivative is easily calculated: : fracmathrmdymathrmdX  y(1-y)fracmathrmdfmathrmdX.
+A closely related model assumes that each i is associated not with a single Bernoulli trial but with ni independent identically distributed trials, where the observation Yi is the number of successes observed (the sum of the individual Bernoulli-distributed random variables), and hence follows a binomial distribution: :Y_i ,sim operatornameBin(n_i,p_i),text for i  1, dots , n An example of this distribution is the fraction of seeds (pi) that germinate after ni are planted.
+In terms of expected values, this model is expressed as follows: :p_i  operatornamemathbb Eleftleft.fracY_in_i,right,mathbfX_i right,, so that :operatornamelogitleft(operatornamemathbb Eleftleft.fracY_in_i,right,mathbfX_i rightright)  operatornamelogit(p_i)  ln left(fracp_i1-p_iright)  boldsymbolbeta cdot mathbfX_i,, Or equivalently: :Pr(Y_iymid mathbfX_i)  n_i choose y p_iy(1-p_i)n_i-y n_i choose y left(frac11e-boldsymbolbeta cdot mathbfX_iright)y left(1-frac11e-boldsymbolbeta cdot mathbfX_iright)n_i-y,.
+This model can be fit using the same sorts of methods as the above more basic model.
+The regression coefficients are usually estimated using maximum likelihood estimation.
+Unlike linear regression with normally distributed residuals, it is not possible to find a closed-form expression for the coefficient values that maximize the likelihood function so an iterative process must be used instead; for example Newton's method.
+This process begins with a tentative solution, revises it slightly to see if it can be improved, and repeats this revision until no more improvement is made, at which point the process is said to have converged.
+Binary logistic regression (y0 or y1) can, for example, be calculated using iteratively reweighted least squares (IRLS), which is equivalent to maximizing the log-likelihood of a Bernoulli distributed process using Newton's method.
+More details can be found in the literature.
+with a scaled inverse probit function (i.e.
+the CDF of the normal distribution), comparing sigma(x) vs.
+Phi(sqrtfracpi8x), which makes the slopes the same at the origin.
+This shows the heavier tails of the logistic distribution. In a Bayesian statistics context, prior distributions are normally placed on the regression coefficients, for example in the form of Gaussian distributions.
+There is no conjugate prior of the likelihood function in logistic regression.
+When Bayesian inference was performed analytically, this made the posterior distribution difficult to calculate except in very low dimensions.
+Now, though, automatic software such as OpenBUGS, JAGS, PyMC, Stan or Turing.jl allows these posteriors to be computed using simulation, so lack of conjugacy is not a concern.
+However, when the sample size or the number of parameters is large, full Bayesian simulation can be slow, and people often use approximate methods such as variational Bayesian methods and expectation propagation.
+Widely used, the "one in ten rule", states that logistic regression models give stable values for the explanatory variables if based on a minimum of about 10 events per explanatory variable (EPV); where event denotes the cases belonging to the less frequent category in the dependent variable.
+Thus a study designed to use k explanatory variables for an event (e.g.
+myocardial infarction) expected to occur in a proportion p of participants in the study will require a total of 10kp participants.
+However, there is considerable debate about the reliability of this rule, which is based on simulation studies and lacks a secure theoretical underpinning.
+According to some authors the rule is overly conservative in some circumstances, with the authors stating, "If we (somewhat subjectively) regard confidence interval coverage less than 93 percent, type I error greater than 7 percent, or relative bias greater than 15 percent as problematic, our results indicate that problems are fairly frequent with 24 EPV, uncommon with 59 EPV, and still observed with 1016 EPV.
+The worst instances of each problem were not severe with 59 EPV and usually comparable to those with 1016 EPV".
+Others have found results that are not consistent with the above, using different criteria.
+A useful criterion is whether the fitted model will be expected to achieve the same predictive discrimination in a new sample as it appeared to achieve in the model development sample.
+For that criterion, 20 events per candidate variable may be required.
+including the following can be used instead.
+In linear regression analysis, one is concerned with partitioning variance via the sum of squares calculations  variance in the criterion is essentially divided into variance accounted for by the predictors and residual variance.
+In logistic regression analysis, deviance is used in lieu of a sum of squares calculations.
+Four of the most commonly used indices and one less commonly used one are examined on this page:  Likelihood ratio 2  Cox and Snell 2  Nagelkerke 2  McFadden 2  Tjur 2 .
+The HosmerLemeshow test uses a test statistic that asymptotically follows a chi2 distribution to assess whether or not the observed event rates match expected event rates in subgroups of the model population.
+This test is considered to be obsolete by some statisticians because of its dependence on arbitrary binning of predicted probabilities and relative low power.
+After fitting the model, it is likely that researchers will want to examine the contribution of individual predictors.
+To do so, they will want to examine the regression coefficients.
+In linear regression, the regression coefficients represent the change in the criterion for each unit change in the predictor.
+Alternatively, when assessing the contribution of individual predictors in a given model, one may examine the significance of the Wald statistic.
+The Wald statistic, analogous to the t-test in linear regression, is used to assess the significance of coefficients.
+The Wald statistic is the ratio of the square of the regression coefficient to the square of the standard error of the coefficient and is asymptotically distributed as a chi-square distribution.
+Logistic regression is unique in that it may be estimated on unbalanced data, rather than randomly sampled data, and still yield correct coefficient estimates of the effects of each independent variable on the outcome.
+That is to say, if we form a logistic model from such data, if the model is correct in the general population, the beta_j parameters are all correct except for beta_0.
+We can correct beta_0 if we know the true prevalence as follows: Consider a generalized linear model function parameterized by theta, : h_theta(X)  frac11  e-thetaTX  Pr(Y1 mid X; theta) Therefore, : Pr(Y0 mid X; theta)  1 - h_theta(X) and since Y in 0,1, we see that Pr(ymid X;theta) is given by Pr(y mid X; theta)  h_theta(X)y(1 - h_theta(X))(1-y).
+We now calculate the likelihood function assuming that all the observations in the sample are independently Bernoulli distributed, :beginalign L(theta mid y; x)  Pr(Y mid X; theta)   prod_i Pr(y_i mid x_i; theta)   prod_i h_theta(x_i)y_i(1 - h_theta(x_i))(1-y_i) endalign Typically, the log likelihood is maximized, : N-1 log L(theta mid y; x)  N-1 sum_i1N log Pr(y_i mid x_i; theta) which is maximized using optimization techniques such as gradient descent.
+Assuming the (x, y) pairs are drawn uniformly from the underlying distribution, then in the limit of large N, :beginalign  lim limits_N rightarrow infty N-1 sum_i1N log Pr(y_i mid x_i; theta)  sum_x in mathcalX sum_y in mathcalY Pr(Xx, Yy) log Pr(Yy mid Xx; theta) 6pt    sum_x in mathcalX sum_y in mathcalY Pr(Xx, Yy) left( - logfracPr(Yy mid Xx)Pr(Yy mid Xx; theta)  log Pr(Yy mid Xx) right) 6pt    - D_textKL( Y parallel Y_theta ) - H(Y mid X) endalign where H(Ymid X) is the conditional entropy and D_textKL is the KullbackLeibler divergence.
+This leads to the intuition that by maximizing the log-likelihood of a model, you are minimizing the KL divergence of your model from the maximal entropy distribution.
+Intuitively searching for the model that makes the fewest assumptions in its parameters.
+Logistic regression can be seen as a special case of the generalized linear model and thus analogous to linear regression.
+The model of logistic regression, however, is based on quite different assumptions (about the relationship between the dependent and independent variables) from those of linear regression.
+In particular, the key differences between these two models can be seen in the following two features of logistic regression.
+First, the conditional distribution y mid x is a Bernoulli distribution rather than a Gaussian distribution, because the dependent variable is binary.
+Second, the predicted values are probabilities and are therefore restricted to (0,1) through the logistic distribution function because logistic regression predicts the probability of particular outcomes rather than the outcomes themselves.
+A common alternative to the logistic model (logit model) is the probit model, as the related names suggest.
+From the perspective of generalized linear models, these differ in the choice of link function: the logistic model uses the logit function (inverse logistic function), while the probit model uses the probit function (inverse error function).
+Equivalently, in the latent variable interpretations of these two methods, the first assumes a standard logistic distribution of errors and the second a standard normal distribution of errors.
+Other sigmoid functions or error distributions can be used instead.
+Logistic regression is an alternative to Fisher's 1936 method, linear discriminant analysis.
+If the assumptions of linear discriminant analysis hold, the conditioning can be reversed to produce logistic regression.
+The converse is not true, however, because logistic regression does not require the multivariate normal assumption of discriminant analysis.
+The assumption of linear predictor effects can easily be relaxed using techniques such as spline functions.
+In his more detailed paper (1845), Verhulst determined the three parameters of the model by making the curve pass through three observed points, which yielded poor predictions.
+The logistic function was independently developed in chemistry as a model of autocatalysis (Wilhelm Ostwald, 1883).
+An autocatalytic reaction is one in which one of the products is itself a catalyst for the same reaction, while the supply of one of the reactants is fixed.
+This naturally gives rise to the logistic equation for the same reason as population growth: the reaction is self-reinforcing but constrained.
+The logistic function was independently rediscovered as a model of population growth in 1920 by Raymond Pearl and Lowell Reed, published as , which led to its use in modern statistics.
+They were initially unaware of Verhulst's work and presumably learned about it from L.
+Gustave du Pasquier, but they gave him little credit and did not adopt his terminology.
+Verhulst's priority was acknowledged and the term "logistic" revived by Udny Yule in 1925 and has been followed since.
+Pearl and Reed first applied the model to the population of the United States, and also initially fitted the curve by making it pass through three points; as with Verhulst, this again yielded poor results.
+In the 1930s, the probit model was developed and systematized by Chester Ittner Bliss, who coined the term "probit" in , and by John Gaddum in , and the model fit by maximum likelihood estimation by Ronald A.
+Fisher in , as an addendum to Bliss's work.
+The probit model was principally used in bioassay, and had been preceded by earlier work dating to 1860; see .
+The probit model influenced the subsequent development of the logit model and these models competed with each other.
+The logistic model was likely first used as an alternative to the probit model in bioassay by Edwin Bidwell Wilson and his student Jane Worcester in .
+However, the development of the logistic model as a general alternative to the probit model was principally due to the work of Joseph Berkson over many decades, beginning in , where he coined "logit", by analogy with "probit", and continuing through and following years.
+The logit model was initially dismissed as inferior to the probit model, but "gradually achieved an equal footing with the probit", particularly between 1960 and 1970.
+By 1970, the logit model achieved parity with the probit model in use in statistics journals and thereafter surpassed it.
+This relative popularity was due to the adoption of the logit outside of bioassay, rather than displacing the probit within bioassay, and its informal use in practice; the logit's popularity is credited to the logit model's computational simplicity, mathematical properties, and generality, allowing its use in varied fields.
+Various refinements occurred during that time, notably by David Cox, as in .
+The multinomial logit model was introduced independently in and , which greatly increased the scope of application and the popularity of the logit model.
+In 1973 Daniel McFadden linked the multinomial logit to the theory of discrete choice, specifically Luce's choice axiom, showing that the multinomial logit followed from the assumption of independence of irrelevant alternatives and interpreting odds of alternatives as relative preferences; this gave a theoretical foundation for the logistic regression.
+There are large numbers of extensions:  Multinomial logistic regression (or multinomial logit) handles the case of a multi-way categorical dependent variable (with unordered values, also called "classification").
+The general case of having dependent variables with more than two values is termed polytomous regression.
+ Ordered logistic regression (or ordered logit) handles ordinal dependent variables (ordered values).
+ Mixed logit is an extension of multinomial logit that allows for correlations among the choices of the dependent variable.
+ An extension of the logistic model to sets of interdependent variables is the conditional random field.
+ Conditional logistic regression handles matched or stratified data when the strata are small.
+It is mostly used in the analysis of observational studies.
+ Logistic function  Discrete choice  JarrowTurnbull model  Limited dependent variable  Multinomial logit model  Ordered logit  HosmerLemeshow test  Brier score  mlpack - contains a C implementation of logistic regression  Local case-control sampling  Logistic model tree .
+       Published in:                .
+  by Mark Thoma http:www.omidrouhani.comresearchlogisticregressionhtmllogisticregression.htm Logistic Regression tutorial https:czep.netstatmlelr.html mlelr: software in C for teaching purposes

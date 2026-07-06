@@ -1,0 +1,10 @@
+{
+  "endpoint": "GET /",
+  "description": "Health check endpoint. Returns service status, number of indexed documents, and model load state.",
+  "response": {
+    "status": "ok",
+    "documents_indexed": 20,
+    "model_loaded": true
+  },
+  "curl_example": "curl http://localhost:8000/"
+}

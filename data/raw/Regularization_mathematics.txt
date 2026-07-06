@@ -1,0 +1,118 @@
+In mathematics, statistics, finance, and computer science, particularly in machine learning and inverse problems, regularization is a process that converts the answer to a problem to a simpler one.
+It is often used in solving ill-posed problems or to prevent overfitting.
+There is a strong connection between regularization methods and Bayesian approaches for solving such ill-posed problems .
+Although regularization procedures can be divided in many ways, the following delineation is particularly helpful:  Explicit regularization is regularization whenever one explicitly adds a term to the optimization problem.
+These terms could be priors, penalties, or constraints.
+Explicit regularization is commonly employed with ill-posed optimization problems.
+The regularization term, or penalty, imposes a cost on the optimization function to make the optimal solution unique.
+ Implicit regularization is all other forms of regularization.
+This includes, for example, early stopping, using a robust loss function, and discarding outliers.
+Implicit regularization is essentially ubiquitous in modern machine learning approaches, including stochastic gradient descent for training deep neural networks, and ensemble methods (such as random forests and gradient boosted trees).
+In explicit regularization, independent of the problem or model, there is always a data term, that corresponds to a likelihood of the measurement, and a regularization term that corresponds to a prior.
+By combining both using Bayesian statistics, one can compute a posterior, that includes both information sources and therefore stabilizes the estimation process.
+By trading off both objectives, one chooses to be more aligned to the data or to enforce regularization (to prevent overfitting).
+There is a whole research branch dealing with all possible regularizations.
+In practice, one usually tries a specific regularization and then figures out the probability density that corresponds to that regularization to justify the choice.
+It can also be physically motivated by common sense or intuition.
+In machine learning, the data term corresponds to the training data and the regularization is either the choice of the model or modifications to the algorithm.
+It is always intended to reduce the generalization error, i.e.
+the error score with the trained model on the evaluation set (testing data) and not the training data.
+One of the earliest uses of regularization is Tikhonov regularization (ridge regression), related to the method of least squares.
+In machine learning, a key challenge is enabling models to accurately predict outcomes on unseen data, not just on familiar training data.
+Regularization is crucial for addressing overfittingwhere a model memorizes training data details but cannot generalize to new data.
+The goal of regularization is to encourage models to learn the broader patterns within the data rather than memorizing it.
+Techniques like early stopping, L1 and L2 regularization, and dropout are designed to prevent overfitting and underfitting, thereby enhancing the model's ability to adapt to and perform well with new data, thus improving model generalization.
+Stops training when validation performance deteriorates, preventing overfitting by halting before the model memorizes training data.
+Regularization can serve multiple purposes, including learning simpler models, inducing models to be sparse and introducing group structure into the learning problem.
+The same idea arose in many fields of science.
+A simple form of regularization applied to integral equations (Tikhonov regularization) is essentially a trade-off between fitting the data and reducing a norm of the solution.
+More recently, non-linear regularization methods, including total variation regularization, have become popular.
+Regularization can be motivated as a technique to improve the generalizability of a learned model.
+The goal of this learning problem is to find a function that fits or predicts the outcome (label) that minimizes the expected error over all possible inputs and labels.
+The expected error of a function f_n is: If_n  int_X times Y V(f_n(x),y) rho(x,y) , dx , dy where X and Y are the domains of input data x and their labels y respectively.
+Typically in learning problems, only a subset of input data and labels are available, measured with some noise.
+Therefore, the expected error is unmeasurable, and the best surrogate available is the empirical error over the N available samples: I_Sf_n  frac1n sum_i1N V(f_n(hat x_i), hat y_i) Without bounds on the complexity of the function space (formally, the reproducing kernel Hilbert space) available, a model will be learned that incurs zero loss on the surrogate empirical error.
+If measurements (e.g.
+of x_i) were made with noise, this model may suffer from overfitting and display poor expected error.
+Regularization introduces a penalty for exploring certain regions of the function space used to build the model, which can improve generalization.
+These techniques are named for Andrey Nikolayevich Tikhonov, who applied regularization to integral equations and made important contributions in many other areas.
+When learning a linear function f, characterized by an unknown vector w such that f(x)  w cdot x, one can add the L_2-norm of the vector w to the loss expression in order to prefer solutions with smaller norms.
+Tikhonov regularization is one of the most common forms.
+It is also known as ridge regression.
+It is expressed as: min_w sum_i1n V(hat x_i cdot w, hat y_i)  lambda leftwright_22, where (hat x_i, hat y_i), , 1 leq i leq n, would represent samples used for training.
+In the case of a general function, the norm of the function in its reproducing kernel Hilbert space is: min_f sum_i1n V(f(hat x_i), hat y_i)  lambda leftfright_mathcalH2 As the L_2 norm is differentiable, learning can be advanced by gradient descent.
+The learning problem with the least squares loss function and Tikhonov regularization can be solved analytically.
+Written in matrix form, the optimal w is the one for which the gradient of the loss function with respect to w is 0.
+min_w frac1n left(hat X w - Yright)mathsfT left(hat X w - Yright)  lambda leftwright_22 nabla_w  frac2n hat XmathsfT left(hat X w - Yright)  2 lambda w 0  hat XmathsfT left(hat X w - Yright)  n lambda ww  left(hat XmathsfT hat X  lambda n Iright)-1 left(hat XmathsfT Yright) where the third statement is a first-order condition.
+By construction of the optimization problem, other values of w give larger values for the loss function.
+This can be verified by examining the second derivative nabla_ww.
+During training, this algorithm takes O(d3  n d2) time.
+The terms correspond to the matrix inversion and calculating XmathsfT X, respectively.
+Testing takes O(nd) time.
+Early stopping can be viewed as regularization in time.
+Intuitively, a training procedure such as gradient descent tends to learn more and more complex functions with increasing iterations.
+By regularizing for time, model complexity can be controlled, improving generalization.
+Early stopping is implemented using one data set for training, one statistically independent data set for validation and another for testing.
+The model is trained until performance on the validation set no longer improves and then applied to the test set.
+Consider the finite approximation of Neumann series for an invertible matrix where left I - A right : sum_i0T-1 left(I - Aright)i approx A-1 This can be used to approximate the analytical solution of unregularized least squares, if is introduced to ensure the norm is less than one.
+w_T  fracgamman sum_i0T-1 left( I - fracgamman hat XmathsfT hat X right)i hat XmathsfT hat Y The exact solution to the unregularized least squares learning problem minimizes the empirical error, but may fail.
+By limiting , the only free parameter in the algorithm above, the problem is regularized for time, which may improve its generalization.
+The algorithm above is equivalent to restricting the number of gradient descent iterations for the empirical risk I_sw  frac12n left hat X w - hat Y right2_mathbbRn with the gradient descent update: beginalign w_0  0 1ex w_t1  left(I - fracgamman hat XmathsfT hat Xright) w_t  fracgamman hat XmathsfT hat Y endalign The base case is trivial.
+The inductive case is proved as follows: beginalign w_T  left(I - fracgamman hat XmathsfT hat Xright) fracgamman sum_i0T-2 left(I - fracgamman hat XmathsfT hat X right)i hat XmathsfT hat Y  fracgammanhat XmathsfT hat Y 1ex  fracgamman sum_i1T-1 left(I - fracgamman hat XmathsfT hat X right)i hat XmathsfT hat Y  fracgammanhat XmathsfT hat Y 1ex  fracgamman sum_i0T-1 left(I - fracgamman hat XmathsfT hat X right)i hat XmathsfT hat Y endalign .
+Assume that a dictionary phi_j with dimension p is given such that a function in the function space can be expressed as: f(x)  sum_j1p phi_j(x) w_j Enforcing a sparsity constraint on w can lead to simpler and more interpretable models.
+This is useful in many real-life applications such as computational biology.
+An example is developing a simple predictive test for a disease in order to minimize the cost of performing medical tests while maximizing predictive power.
+A sensible sparsity constraint is the L_0 norm w_0, defined as the number of non-zero elements in w.
+Solving a L_0 regularized learning problem, however, has been demonstrated to be NP-hard.
+The L_1 norm (see also Norms) can be used to approximate the optimal L_0 norm via convex relaxation.
+It can be shown that the L_1 norm induces sparsity.
+In the case of least squares, this problem is known as LASSO in statistics and basis pursuit in signal processing.
+min_w in mathbbRp frac1n lefthat X w - hat Y right2  lambda leftwright_1 L_1 regularization can occasionally produce non-unique solutions.
+A simple example is provided in the figure when the space of possible solutions lies on a 45 degree line.
+This can be problematic for certain applications, and is overcome by combining L_1 with L_2 regularization in elastic net regularization, which takes the following form: min_w in mathbbRp frac1n lefthat X w - hat Y right2  lambda left(alpha leftwright_1  (1 - alpha)leftwright_22right), alpha in 0, 1 Elastic net regularization tends to have a grouping effect, where correlated input features are assigned equal weights.
+Elastic net regularization is commonly used in practice and is implemented in many machine learning libraries.
+While the L_1 norm does not result in an NP-hard problem, the L_1 norm is convex but is not strictly differentiable due to the kink at x  0.
+Subgradient methods which rely on the subderivative can be used to solve L_1 regularized learning problems.
+However, faster convergence can be achieved through proximal methods.
+For a problem min_w in H F(w)  R(w) such that F is convex, continuous, differentiable, with Lipschitz continuous gradient (such as the least squares loss function), and R is convex, continuous, and proper, then the proximal method to solve the problem is as follows.
+First define the proximal operator operatornameprox_R(v)  mathopoperatornameargmin_w in mathbbRD left R(w)  frac12 leftw - vright2 right, and then iterate w_k1  mathopoperatornameprox_gamma, R left(w_k - gamma nabla F(w_k)right) The proximal method iteratively performs gradient descent and then projects the result back into the space permitted by R.
+When R is the Norm (mathematics) regularizer, the proximal operator is equivalent to the soft-thresholding operator, S_lambda(v)f(n)  begincases v_i - lambda,  textif v_i  lambda  0,  textif  v_i in -lambda, lambda  v_i  lambda,  textif v_i This allows for efficient computation.
+Groups of features can be regularized by a sparsity constraint, which can be useful for expressing certain prior knowledge into an optimization problem.
+In the case of a linear model with non-overlapping known groups, a regularizer can be defined: R(w)  sum_g1G leftw_gright_2, where w_g_2  sqrtsum_j1 left(w_gjright)2 This can be viewed as inducing a regularizer over the L_2 norm over members of each group followed by an L_1 norm over groups.
+This can be solved by the proximal method, where the proximal operator is a block-wise soft-thresholding function: operatornameproxlimits_lambda, R, g(w_g)  begincases left(1 - dfraclambdaleftw_gright_2right) w_g,  textif  leftw_gright_2  lambda 1ex 0,  textif  w_g_2 leq lambda endcases .
+The algorithm described for group sparsity without overlaps can be applied to the case where groups do overlap, in certain situations.
+This will likely result in some groups with all zero elements, and other groups with some non-zero and some zero elements.
+If it is desired to preserve the group structure, a new regularizer can be defined: R(w)  inf left sum_g1G w_g_2 : w  sum_g1G bar w_g right For each w_g, bar w_g is defined as the vector such that the restriction of bar w_g to the group g equals w_g and all other entries of bar w_g are zero.
+The regularizer finds the optimal disintegration of w into parts.
+It can be viewed as duplicating all elements that exist in multiple groups.
+Learning problems with this regularizer can also be solved with the proximal method with a complication.
+The proximal operator cannot be computed in closed form, but can be effectively solved iteratively, inducing an inner iteration within the proximal method iteration.
+When labels are more expensive to gather than input examples, semi-supervised learning can be useful.
+Regularizers have been designed to guide learning algorithms to learn models that respect the structure of unsupervised training samples.
+If a symmetric weight matrix W is given, a regularizer can be defined: R(f)  sum_i,j w_ij left(f(x_i) - f(x_j)right)2 If W_ij encodes the result of some distance metric for points x_i and x_j, it is desirable that f(x_i) approx f(x_j).
+This regularizer captures this intuition, and is equivalent to: R(f)  bar fmathsfT L bar f where L  D- W is the Laplacian matrix of the graph induced by W.
+The optimization problem min_f in mathbbRm R(f), m  u  l can be solved analytically if the constraint f(x_i)  y_i is applied for all supervised samples.
+The labeled part of the vector f is therefore obvious.
+The unlabeled part of f is solved for by: min_f_u in mathbbRu fmathsfT L f  min_f_u in mathbbRu left fmathsfT_u L_uu f_u  fmathsfT_l L_lu f_u  fmathsfT_u L_ul f_l right nabla_f_u  2L_uuf_u  2L_ulY f_u  L_uudagger left(L_ul Yright) The pseudo-inverse can be taken because L_ul has the same range as L_uu.
+In the case of multitask learning, T problems are considered simultaneously, each related in some way.
+The goal is to learn T functions, ideally borrowing strength from the relatedness of tasks, that have predictive power.
+This is equivalent to learning the matrix W: T times D .
+R(w)  sum_i1D leftWright_2,1 This regularizer defines an L2 norm on each column and an L1 norm over all columns.
+It can be solved by proximal methods.
+R(w)  leftsigma(W)right_1 where sigma(W) is the eigenvalues in the singular value decomposition of W.
+R(f_1 cdots f_T)  sum_t1T leftf_t - frac1T sum_s1T f_s right_H_k2 This regularizer constrains the functions learned for each task to be similar to the overall average of the functions across all tasks.
+This is useful for expressing prior information that each task is expected to share with each other task.
+An example is predicting blood iron levels measured at different times of the day, where each task represents an individual.
+R(f_1 cdots f_T)  sum_r1C sum_t in I(r) leftf_t - frac1I(r) sum_s in I(r) f_sright_H_k2 where I(r) is a cluster of tasks.
+This regularizer is similar to the mean-constrained regularizer, but instead enforces similarity between tasks within the same cluster.
+This can capture more complex prior information.
+This technique has been used to predict Netflix recommendations.
+A cluster would correspond to a group of people who share similar preferences.
+More generally than above, similarity between tasks can be defined by a function.
+The regularizer encourages the model to learn similar functions for similar tasks.
+R(f_1 cdots f_T)  sum_t,s1, t neq smathsfT left f_t - f_s right2 M_ts for a given symmetric similarity matrix M.
+Bayesian learning methods make use of a prior probability that (usually) gives lower probability to more complex models.
+Well-known model selection techniques include the Akaike information criterion (AIC), minimum description length (MDL), and the Bayesian information criterion (BIC).
+Alternative methods of controlling overfitting not involving regularization include cross-validation.
+Examples of applications of different methods of regularization to the linear model are: .
+ Bayesian interpretation of regularization  Biasvariance tradeoff  Matrix regularization  Regularization by spectral filtering  Regularized least squares  Lagrange multiplier  Variance reduction  L-curve .

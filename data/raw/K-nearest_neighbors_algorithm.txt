@@ -1,0 +1,117 @@
+k-means clustering In statistics, the k-nearest neighbors algorithm (k-NN) is a non-parametric supervised learning method.
+It was first developed by Evelyn Fix and Joseph Hodges in 1951, and later expanded by Thomas Cover.
+The input consists of the k closest training examples in a data set.
+The neighbors are taken from a set of objects for which the class (for k-NN classification) or the object property value (for k-NN regression) is known.
+This can be thought of as the training set for the algorithm, though no explicit training step is required.
+A peculiarity (sometimes even a disadvantage) of the k-NN algorithm is its sensitivity to the local structure of the data.
+In k-NN classification the function is only approximated locally and all computation is deferred until function evaluation.
+Since this algorithm relies on distance, if the features represent different physical units or come in vastly different scales, then feature-wise normalizing of the training data can greatly improve its accuracy.
+Suppose we have pairs (X_1,Y_1), (X_2,Y_2), dots, (X_n, Y_n) taking values in mathbbRd times 1,2, where is the class label of , so that XYr sim P_r for r  1,2 (and probability distributions P_r).
+Given some norm cdot on mathbbRd and a point x in mathbbRd, let (X_(1),Y_(1)), dots, (X_(n), Y_(n)) be a reordering of the training data such that X_(1)-x leq dots leq X_(n)-x .
+The training examples are vectors in a multidimensional feature space, each with a class label.
+The training phase of the algorithm consists only of storing the feature vectors and class labels of the training samples.
+In the classification phase, k is a user-defined constant, and an unlabeled vector (a query or test point) is classified by assigning the label which is most frequent among the k training samples nearest to that query point.
+A commonly used distance metric for continuous variables is Euclidean distance.
+For discrete variables, such as for text classification, another metric can be used, such as the overlap metric (or Hamming distance).
+In the context of gene expression microarray data, for example, k-NN has been employed with correlation coefficients, such as Pearson and Spearman, as a metric.
+Often, the classification accuracy of k-NN can be improved significantly if the distance metric is learned with specialized algorithms such as large margin nearest neighbor or neighborhood components analysis.
+A drawback of the basic "majority voting" classification occurs when the class distribution is skewed.
+That is, examples of a more frequent class tend to dominate the prediction of the new example, because they tend to be common among the k nearest neighbors due to their large number.
+One way to overcome this problem is to weight the classification, taking into account the distance from the test point to each of its k nearest neighbors.
+The class (or value, in regression problems) of each of the k nearest points is multiplied by a weight proportional to the inverse of the distance from that point to the test point.
+Another way to overcome skew is by abstraction in data representation.
+For example, in a self-organizing map (SOM), each node is a representative (a center) of a cluster of similar points, regardless of their density in the original training data.
+k-NN can then be applied to the SOM.
+The best choice of k depends upon the data; generally, larger values of k reduces effect of the noise on the classification, but make boundaries between classes less distinct.
+A good k can be selected by various heuristic techniques (see hyperparameter optimization).
+The special case where the class is predicted to be the class of the closest training sample (i.e.
+when k  1) is called the nearest neighbor algorithm.
+The accuracy of the k-NN algorithm can be severely degraded by the presence of noisy or irrelevant features, or if the feature scales are not consistent with their importance.
+Much research effort has been put into selecting or scaling features to improve classification.
+A particularly popular approach is the use of evolutionary algorithms to optimize feature scaling.
+Another popular approach is to scale features by the mutual information of the training data with the training classes.
+In binary (two class) classification problems, it is helpful to choose k to be an odd number as this avoids tied votes.
+One popular way of choosing the empirically optimal k in this setting is via bootstrap method.
+The most intuitive nearest neighbour type classifier is the one nearest neighbour classifier that assigns a point to the class of its closest neighbour in the feature space, that is C_n1nn(x)  Y_(1).
+As the size of training data set approaches infinity, the one nearest neighbour classifier guarantees an error rate of no worse than twice the Bayes error rate (the minimum achievable error rate given the distribution of the data).
+The -nearest neighbour classifier can be viewed as assigning the nearest neighbours a weight 1k and all others weight.
+This can be generalised to weighted nearest neighbour classifiers.
+That is, where the th nearest neighbour is assigned a weight w_ni, with sum_i1n w_ni  1.
+An analogous result on the strong consistency of weighted nearest neighbour classifiers also holds.
+Let Cwnn_n denote the weighted nearest classifier with weights w_ni_i1n.
+Subject to regularity conditions, which in asymptotic theory are conditional variables which require assumptions to differentiate among parameters with some criteria.
+On the class distributions the excess risk has the following asymptotic expansion The goal is typically to increase diversity or novelty in recommended items, since traditional nearest-neighbor methods may favor popular or obvious items.
+Empirical evaluations have found that furthest-neighbor approaches generally achieve lower predictive accuracy than standard k-nearest neighbor methods, although user-perceived usefulness may be similar or higher in some cases.
+k-NN is a special case of a variable-bandwidth, kernel density "balloon" estimator with a uniform kernel.
+The naive version of the algorithm is easy to implement by computing the distances from the test example to all stored examples, but it is computationally intensive for large training sets.
+Using an approximate nearest neighbor search algorithm makes k-NN computationally tractable even for large data sets.
+Many nearest neighbor search algorithms have been proposed over the years; these generally seek to reduce the number of distance evaluations actually performed.
+k-NN has some strong consistency results.
+As the amount of data approaches infinity, the two-class k-NN algorithm is guaranteed to yield an error rate no worse than twice the Bayes error rate (the minimum achievable error rate given the distribution of the data).
+Various improvements to the k-NN speed are possible by using proximity graphs.
+For multi-class k-NN classification, Cover and Hart (1967) prove an upper bound error rate of R  leq  R_kmathrmNN  leq  R left(2 - fracMRM-1right) where R is the Bayes error rate (which is the minimal error rate possible), R_kNN is the asymptotic k-NN error rate, and is the number of classes in the problem.
+This bound is tight in the sense that both the lower and upper bounds are achievable by some distribution.
+For M2 and as the Bayesian error rate R approaches zero, this limit reduces to "not more than twice the Bayesian error rate".
+There are many results on the error rate of the nearest neighbour classifiers.
+The -nearest neighbour classifier is strongly (that is for any joint distribution on (X, Y)) consistent provided k:k_n diverges and k_nn converges to zero as n to infty.
+Let C_nknn denote the nearest neighbour classifier based on a training set of size .
+Under certain regularity conditions, the excess risk yields the following asymptotic expansion mathcalR_mathcalR(Cknn_n) - mathcalR_mathcalR(CtextBayes)  leftB_1frac 1 k  B_2 left(frac k nright)4dright 1o(1), for some constants B_1 and B_2 .
+The choice k  leftlfloor B nfrac 4 d4 rightrfloor offers a trade off between the two terms in the above display, for which the k-nearest neighbour error converges to the Bayes error at the optimal (minimax) rate mathcalOleft(n-frac 4 d4right).
+The K-nearest neighbor classification performance can often be significantly improved through (supervised) metric learning.
+Popular algorithms are neighbourhood components analysis and large margin nearest neighbor.
+Supervised metric learning algorithms use the label information to learn a new metric or pseudo-metric.
+When the input data to an algorithm is too large to be processed and it is suspected to be redundant (e.g.
+the same measurement in both feet and meters) then the input data will be transformed into a reduced representation set of features (also named features vector).
+Transforming the input data into the set of features is called feature extraction.
+If the features extracted are carefully chosen it is expected that the features set will extract the relevant information from the input data in order to perform the desired task using this reduced representation instead of the full size input.
+Feature extraction is performed on raw data prior to applying k-NN algorithm on the transformed data in feature space.
+An example of a typical computer vision computation pipeline for face recognition using k-NN including feature extraction and dimension reduction pre-processing steps (usually implemented with OpenCV):  Haar face detection  Mean-shift tracking analysis  PCA or Fisher LDA projection into feature space, followed by k-NN classification .
+For high-dimensional data (e.g., with number of dimensions more than 10) dimension reduction is usually performed prior to applying the k-NN algorithm in order to avoid the effects of the curse of dimensionality.
+The curse of dimensionality in the k-NN context basically means that Euclidean distance is unhelpful in high dimensions because all vectors are almost equidistant to the search query vector (imagine multiple points lying more or less on a circle with the query point at the center; the distance from the query to all data points in the search space is almost the same).
+Feature extraction and dimension reduction can be combined in one step using principal component analysis (PCA), linear discriminant analysis (LDA), or canonical correlation analysis (CCA) techniques as a pre-processing step, followed by clustering by k-NN on feature vectors in reduced-dimension space.
+This process is also called low-dimensional embedding.
+For very-high-dimensional datasets (e.g.
+when performing a similarity search on live video streams, DNA data or high-dimensional time series) running a fast approximate k-NN search using locality sensitive hashing, "random projections", "sketches" or other high-dimensional similarity search techniques from the VLDB toolbox might be the only feasible option.
+Nearest neighbor rules in effect implicitly compute the decision boundary.
+It is also possible to compute the decision boundary explicitly, and to do so efficiently, so that the computational complexity is a function of the boundary complexity.
+Data reduction is one of the most important problems for work with huge data sets.
+Usually, only some of the data points are needed for accurate classification.
+Those data are called the prototypes and can be found as follows:  Select the class-outliers, that is, training data that are classified incorrectly by k-NN (for a given k)  Separate the rest of the data into two sets: (i) the prototypes that are used for the classification decisions and (ii) the absorbed points that can be correctly classified by k-NN using prototypes.
+The absorbed points can then be removed from the training set.
+A training example surrounded by examples of other classes is called a class outlier.
+Causes of class outliers include:  random error  insufficient training examples of this class (an isolated example appears instead of a cluster)  missing important features (the classes are separated in other dimensions which we don't know)  too many training examples of other classes (unbalanced classes) that create a "hostile" background for the given small class Class outliers with k-NN produce noise.
+They can be detected and separated for future analysis.
+Given two natural numbers, kr0, a training example is called a (k,r)NN class-outlier if its k nearest neighbors include more than r examples of other classes.
+Condensed nearest neighbor (CNN, the Hart algorithm) is an algorithm designed to reduce the data set for k-NN classification.
+It selects the set of prototypes U from the training data, such that 1NN with U can classify the examples almost as accurately as 1NN does with the whole data set.
+Given a training set X, CNN works iteratively:  Scan all elements of X, looking for an element x whose nearest prototype from U has a different label than x.
+ Remove x from X and add it to U  Repeat the scan until no more prototypes are added to U.
+Use U instead of X for classification.
+The examples that are not prototypes are called "absorbed" points.
+It is efficient to scan the training examples in order of decreasing border ratio.
+The border ratio of a training example x is defined as    where  is the distance to the closest example y having a different color than x, and  is the distance from y to its closest example x' with the same label as x.
+The border ratio is in the interval 0,1 because  never exceeds .
+This ordering gives preference to the borders of the classes for inclusion in the set of prototypes U.
+A point of a different label than x is called external to x.
+The calculation of the border ratio is illustrated by the figure on the right.
+The data points are labeled by colors: the initial point is x and its label is red.
+External points are blue and green.
+The closest to x external point is y.
+The closest to y red point is x' .
+The border ratio  is the attribute of the initial point x.
+Below is an illustration of CNN in a series of figures.
+There are three classes (red, green and blue).
+1: initially there are 60 points in each class.
+2 shows the 1NN classification map: each pixel is classified by 1NN using all the data.
+3 shows the 5NN classification map.
+White areas correspond to the unclassified regions, where 5NN voting is tied (for example, if there are two green, two red and one blue points among 5 nearest neighbors).
+4 shows the reduced data set.
+The crosses are the class-outliers selected by the (3,2)NN rule (all the three nearest neighbors of these instances belong to other classes); the squares are the prototypes, and the empty circles are the absorbed points.
+The left bottom corner shows the numbers of the class-outliers, prototypes and absorbed points for all three classes.
+The number of prototypes varies from 15 to 20 for different classes in this example.
+5 shows that the 1NN classification map with the prototypes is very similar to that with the initial data set.
+The figures were produced using the Mirkes applet.
+Although quite simple, this outlier model, along with another classic data mining method, local outlier factor, works quite well also in comparison to more recent and more complex approaches, according to a large scale experimental analysis.
+A confusion matrix or "matching matrix" is often used as a tool to validate the accuracy of k-NN classification.
+More robust statistical methods such as likelihood-ratio test can also be applied.
+ Nearest centroid classifier  Closest pair of points problem  Nearest neighbor graph  Segmentation-based object categorization .

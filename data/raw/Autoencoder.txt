@@ -1,0 +1,73 @@
+An autoencoder is a type of artificial neural network used to learn efficient codings of unlabeled data (unsupervised learning).
+An autoencoder learns two functions: an encoding function that transforms the input data, and a decoding function that recreates the input data from the encoded representation.
+The autoencoder learns an efficient representation (encoding) for a set of data, typically for dimensionality reduction, to generate lower-dimensional embeddings for subsequent use by other machine learning algorithms.
+Variants exist which aim to make the learned representations assume useful properties.
+Autoencoders are applied to many problems, including facial recognition, feature detection, anomaly detection, and learning the meaning of words.
+In terms of data synthesis, autoencoders can also be used to randomly generate new data that is similar to the input (training) data.
+In the ideal setting, the code dimension and the model capacity could be set on the basis of the complexity of the data distribution to be modeled.
+A standard way to do so is to add modifications to the basic autoencoder, to be detailed below.
+Encouraging sparsity improves performance on classification tasks.
+The k-sparse autoencoder inserts the following "k-sparse function" in the latent layer of a standard autoencoder:f_k(x_1, ..., x_n)  (x_1 b_1, ..., x_n b_n)where b_i  1 if x_i ranks in the top k, and 0 otherwise.
+Backpropagating through f_k is simple: set gradient to 0 for b_i  0 entries, and keep gradient for b_i1 entries.
+This is essentially a generalized ReLU function.
+::s(rho, hatrho)  KL(rho  hatrho)  rho log fracrhohatrho(1- rho)log frac1-rho1-hatrho or the L1 loss, as s(rho, hatrho)  rho- hatrho, or the L2 loss, as s(rho, hatrho)  rho- hatrho2.
+Alternatively, the sparsity regularization loss may be defined without reference to any "desired sparsity", but simply force as much sparsity as possible.
+In this case, one can define the sparsity regularization loss as L_textsparse(theta, phi)  mathbb mathbb E_xsimmu_Xleft sum_kin 1:K w_k h_k rightwhere h_k is the activation vector in the k-th layer of the autoencoder.
+The norm cdot is usually the L1 norm (giving the L1 sparse autoencoder) or the L2 norm (giving the L2 sparse autoencoder).
+Denoising autoencoders (DAE) try to achieve a good representation by changing the reconstruction criterion.
+is trained by intentionally corrupting the inputs of a standard autoencoder during training.
+A noise process is defined by a probability distribution mu_T over functions T:mathcal X to mathcal X.
+That is, the function T takes a message xin mathcal X, and corrupts it to a noisy version T(x).
+The function T is selected randomly, with a probability distribution mu_T.
+Given a task (mu_textref, d), the problem of training a DAE is the optimization problem:min_theta, phiL(theta, phi)  mathbb mathbb E_xsim mu_X, Tsimmu_Td(x, (D_thetacirc E_phi circ T)(x))That is, the optimal DAE should take any noisy message and attempt to recover the original message without noise, thus the name "denoising".
+Usually, the noise process T is applied only during training and testing, not during downstream use.
+The use of DAE depends on two assumptions:  There exist representations to the messages that are relatively stable and robust to the type of noise we are likely to encounter;  The said representations capture structures in the input distribution that are useful for our purposes.
+Example noise processes include:  additive isotropic Gaussian noise,  masking noise (a fraction of the input is randomly chosen and set to 0)  salt-and-pepper noise (a fraction of the input is randomly chosen and randomly set to its minimum or maximum value).
+The concrete autoencoder is designed for discrete feature selection.
+A concrete autoencoder forces the latent space to consist only of a user-specified number of features.
+The concrete autoencoder uses a continuous relaxation of the categorical distribution to allow gradients to pass through the feature selector layer, which makes it possible to use standard backpropagation to learn an optimal subset of input features that minimize reconstruction loss.
+Autoencoders are often trained with a single-layer encoder and a single-layer decoder, but using many-layered (deep) encoders and decoders offers many advantages.
+Geoffrey Hinton developed the deep belief network technique for training many-layered deep autoencoders.
+His method involves treating each neighboring set of two layers as a restricted Boltzmann machine so that pretraining approximates a good solution, then using backpropagation to fine-tune the results.
+Researchers have debated whether joint training (i.e.
+training the whole architecture together with a single global reconstruction objective to optimize) would be better for deep auto-encoders.
+A 2015 study showed that joint training learns better data models along with more representative features for classification as compared to the layerwise method.
+(Oja, 1982) noted that PCA is equivalent to a neural network with one hidden layer with identity activation function.
+In the language of autoencoding, the input-to-hidden module is the encoder, and the hidden-to-output module is the decoder.
+Subsequently, in (Baldi and Hornik, 1989) and (Kramer, 1991) that a neural network be put in "auto-association mode".
+This was then implemented in (Harrison, 1987) and (Elman, Zipser, 1988) for speech and in (Cottrell, Munro, Zipser, 1987) for images.
+deep belief networks were developed.
+These train a pair restricted Boltzmann machines as encoder-decoder pairs, then train another pair on the latent representation of the first pair, and so on.
+The first applications of AE date to early 1990s.
+Some of the most powerful AIs in the 2010s involved autoencoder modules as a component of larger AI systems, such as VAE in Stable Diffusion, discrete VAE in Transformer-based image generators like DALL-E 1, etc.
+During the early days, when the terminology was uncertain, the autoencoder has also been called identity mapping, self-supervised backpropagation, but modern variations have been applied to other tasks.
+The two models being both linear learn to span the same subspace.
+The projection of the data points is indeed identical, apart from rotation of the subspace.
+While PCA selects a specific orientation up to reflections in the general case, the cost function of a simple autoencoder is invariant to rotations of the latent space.Dimensionality reduction was one of the first deep learning applications.
+The weights of an autoencoder with a single hidden layer of size p (where p is less than the size of the input) span the same vector subspace as the one spanned by the first p principal components, and the output of the autoencoder is an orthogonal projection onto this subspace.
+The autoencoder weights are not equal to the principal components, and are generally not orthogonal, yet the principal components may be recovered from them using the singular value decomposition.
+However, the potential of autoencoders resides in their non-linearity, allowing the model to learn more powerful generalizations compared to PCA, and to reconstruct the input with significantly lower information loss.
+By learning to replicate the most salient features in the training data under some of the constraints described previously, the model is encouraged to learn to precisely reproduce the most frequently observed characteristics.
+When facing anomalies, the model should worsen its reconstruction performance.
+In most cases, only data with normal instances are used to train the autoencoder; in others, the frequency of anomalies is small compared to the observation set so that its contribution to the learned representation could be ignored.
+After training, the autoencoder will accurately reconstruct "normal" data, while failing to do so with unfamiliar anomalous data.
+Intuitively, this can be understood by considering those one layer auto encoders which are related to PCA - also in this case there can be perfect rein reconstructions for points which are far away from the data region but which lie on a principal component axis.
+It is best to analyze if the anomalies which are flagged by the auto encoder are true anomalies.
+In this sense all the metrics in Evaluation of binary classifiers can be considered.
+The fundamental challenge which comes with the unsupervised (self-supervised) learning setting is, that labels for rare events do not exist (in which case the labels first have to be gathered and the data set will be imbalanced) or anomaly indicating labels are very rare, introducing larger confidence intervals for these performance estimates.
+The characteristics of autoencoders are useful in image processing.
+One example can be found in lossy image compression, where autoencoders outperformed other approaches and proved competitive against JPEG 2000.
+Another useful application of autoencoders in image preprocessing is image denoising.
+Autoencoders found use in more demanding contexts such as medical imaging where they have been used for image denoising as well as super-resolution.
+In image-assisted diagnosis, experiments have applied autoencoders for breast cancer detection and for modelling the relation between the cognitive decline of Alzheimer's disease and the latent features of an autoencoder trained with MRI.
+In 2019 molecules generated with variational autoencoders were validated experimentally in mice.
+Recently, a stacked autoencoder framework produced promising results in predicting popularity of social media posts, which is helpful for online advertising strategies.
+Autoencoders have been applied to machine translation, which is usually referred to as neural machine translation (NMT).
+Unlike traditional autoencoders, the output does not match the input - it is in another language.
+In NMT, texts are treated as sequences to be encoded into the learning procedure, while on the decoder side sequences in the target language(s) are generated.
+Language-specific autoencoders incorporate further linguistic features into the learning procedure, such as Chinese decomposition features.
+Machine translation is rarely still done with autoencoders, due to the availability of more effective transformer networks.
+Autoencoders in communication systems are important because they help in encoding data into a more resilient representation for channel impairments, which is crucial for transmitting information while minimizing errors.
+In Addition, AE-based systems can optimize end-to-end communication performance.
+This approach can solve the several limitations of designing communication systems such as the inherent difficulty in accurately modeling the complex behavior of real-world channels.
+ Representation learning  Singular value decomposition  Sparse dictionary learning  Deep learning .

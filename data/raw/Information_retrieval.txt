@@ -1,0 +1,148 @@
+Information retrieval (IR) in computing and information science is the task of identifying and retrieving information system resources that are relevant to an information need.
+The information need can be specified in the form of a search query.
+In the case of document retrieval, queries can be based on full-text or other content-based indexing.
+Information retrieval is the science of searching for information in a document, searching for documents themselves, and also searching for the metadata that describes data, and for databases of texts, images, or sounds.
+Cross-modal retrieval implies retrieval across modalities.
+Automated information retrieval systems are used to reduce what has been called information overload.
+An IR system is a software system that provides access to books, journals, and other documents, as well as storing and managing those documents.
+Web search engines are the most visible IR applications.
+An information retrieval process begins when a user enters a query into the system.
+Queries are formal statements of information needs, for example search strings in web search engines.
+In information retrieval, a query does not uniquely identify a single object in the collection.
+Instead, several objects may match the query, perhaps with different degrees of relevance.
+An object is an entity that is represented by information in a content collection or database.
+User queries are matched against the database information.
+However, as opposed to classical SQL queries of a database, in information retrieval the results returned may or may not match the query, so results are typically ranked.
+This ranking of results is a key difference of information retrieval searching compared to database searching.
+Depending on the application the data objects may be, for example, text documents, images, audio, mind maps or videos.
+Often the documents themselves are not kept or stored directly in the IR system, but are instead represented in the system by document surrogates or metadata.
+Most IR systems compute a numeric score on how well each object in the database matches the query, and rank the objects according to this value.
+The top ranking objects are then shown to the user.
+The process may then be iterated if the user wishes to refine the query.
+The idea of using computers to search for relevant pieces of information was popularized in the article As We May Think by Vannevar Bush in 1945.
+It would appear that Bush was inspired by patents for a 'statistical machine'  filed by Emanuel Goldberg in the 1920s and 1930s  that searched for documents stored on film.
+The first description of a computer searching for information was described by Holmstrom in 1948, detailing an early mention of the Univac computer.
+Automated information retrieval systems were introduced in the 1950s: one even featured in the 1957 romantic comedy Desk Set.
+In the 1960s, the first large information retrieval research group was formed by Gerard Salton at Cornell.
+By the 1970s several different retrieval techniques had been shown to perform well on small text corpora such as the Cranfield collection (several thousand documents).
+using the web's hyperlink structure to assess page importance and improve relevance ranking.
+During the 2000s, web search systems evolved rapidly with the integration of machine learning techniques.
+These systems began to incorporate user behavior data (e.g., click-through logs), query reformulation, and content-based signals to improve search accuracy and personalization.
+In 2009, Microsoft launched Bing, introducing features that would later incorporate semantic web technologies through the development of its Satori knowledge base.
+Academic analysis have highlighted Bing's semantic capabilities, including structured data use and entity recognition, as part of a broader industry shift toward improving search relevance and understanding user intent through natural language processing.
+A major leap occurred in 2018, when Google deployed BERT (Bidirectional Encoder Representations from Transformers) to better understand the contextual meaning of queries and documents.
+This marked one of the first times deep neural language models were used at scale in real-world retrieval systems.
+BERT's bidirectional training enabled a more refined comprehension of word relationships in context, improving the handling of natural language queries.
+Because of its success, transformer-based models gained traction in academic research and commercial search applications.
+Simultaneously, the research community began exploring neural ranking models that outperformed traditional lexical-based methods.
+Long-standing benchmarks such as the Text REtrieval Conference (TREC), initiated in 1992, and more recent evaluation frameworks Microsoft MARCO(MAchine Reading COmprehension) (2019) became central to training and evaluating retrieval systems across multiple tasks and domains.
+MS MARCO has also been adopted in the TREC Deep Learning Tracks, where it serves as a core dataset for evaluating advances in neural ranking models within a standardized benchmarking environment.
+As deep learning became integral to information retrieval systems, researchers began to categorize neural approaches into three broad classes: sparse, dense, and hybrid models.
+Sparse models, including traditional term-based methods and learned variants like SPLADE, rely on interpretable representations and inverted indexes to enable efficient exact term matching with added semantic signals.
+Dense models, such as dual-encoder architectures like ColBERT, use continuous vector embeddings to support semantic similarity beyond keyword overlap.
+Hybrid models aim to combine the advantages of both, balancing the lexical (token) precision of sparse methods with the semantic depth of dense models.
+This way of categorizing models balances scalability, relevance, and efficiency in retrieval systems.
+As IR systems increasingly rely on deep learning, concerns around bias, fairness, and explainability have also come to the picture.
+Research is now focused not just on relevance and efficiency, but on transparency, accountability, and user trust in retrieval algorithms.
+Areas where information retrieval techniques are employed include (the entries are in alphabetical order within each category): .
+ Digital libraries  Information filtering  Recommender systems  Media search  Blog search  Image retrieval  3D retrieval  Music retrieval  News search  Speech retrieval  Video retrieval  Search engines  Site search  Desktop search  Enterprise search  Federated search  Mobile search  Social search  Web search .
+ Expert search finding  Genomic information retrieval  Geographic information retrieval  Information retrieval for chemical structures  Information retrieval in software engineering  Legal information retrieval  Vertical search .
+MethodsTechniques in which information retrieval techniques are employed include:  Cross-modal retrieval  Adversarial information retrieval  Automatic summarization  Multi-document summarization  Compound term processing  Cross-lingual retrieval  Document classification  Spam filtering  Question answering .
+, original source http:www.logos-verlag.decgi-binengbuchmid?isbn0514lngengid Dominik Kuropka) In order to effectively retrieve relevant documents by IR strategies, the documents are typically transformed into a suitable representation.
+Each retrieval strategy incorporates a specific model for its document representation purposes.
+The picture on the right illustrates the relationship of some common models.
+In the picture, the models are categorized according to two dimensions: the mathematical basis and the properties of the model.
+ Set-theoretic models represent documents as sets of words or phrases.
+Similarities are usually derived from set-theoretic operations on those sets.
+Common models are:  Standard Boolean model  Extended Boolean model  Fuzzy retrieval  Algebraic models represent documents and queries usually as vectors, matrices, or tuples.
+The similarity of the query vector and document vector is represented as a scalar value.
+ Vector space model  Generalized vector space model  (Enhanced) Topic-based Vector Space Model  Extended Boolean model  Latent semantic indexing a.k.a.
+latent semantic analysis  Probabilistic models treat the process of document retrieval as a probabilistic inference.
+Similarities are computed as probabilities that a document is relevant for a given query.
+Probabilistic theorems like Bayes' theorem are often used in these models.
+ Binary Independence Model  Probabilistic relevance model on which is based the okapi (BM25) relevance function  Uncertain inference  Language models  Divergence-from-randomness model  Latent Dirichlet allocation  Feature-based retrieval models view documents as vectors of values of feature functions (or just features) and seek the best way to combine these features into a single relevance score, typically by learning to rank methods.
+Feature functions are arbitrary functions of document and query, and as such can easily incorporate almost any other retrieval model as just another feature.
+ Data fusion models: Data fusion in information retrieval combines results from multiple search systems or retrieval models to improve performance.
+By merging ranked lists, it leverages the strengths of diverse approaches, often enhancing recall and precision.
+Common methods include score normalization and voting techniques like CombSUM or Borda count.
+This meta-search strategy is particularly effective when individual systems have complementary coverage or when query difficulty varies, producing a more robust and reliable final ranking sparsity.
+ Models without term-interdependencies treat different termswords as independent.
+This fact is usually represented in vector space models by the orthogonality assumption of term vectors or in probabilistic models by an independency assumption for term variables.
+ Models with immanent term interdependencies allow a representation of interdependencies between terms.
+However the degree of the interdependency between two terms is defined by the model itself.
+It is usually directly or indirectly derived (e.g.
+by dimensional reduction) from the co-occurrence of those terms in the whole set of documents.
+ Models with transcendent term interdependencies allow a representation of interdependencies between terms, but they do not allege how the interdependency between two terms is defined.
+They rely on an external source for the degree of interdependency between two terms.
+(For example, a human or sophisticated algorithms.) .
+In addition to the theoretical distinctions, modern information retrieval models are also categorized on how queries and documents are represented and compared, using a practical classification distinguishing between sparse, dense and hybrid models.
+ Dense models represent queries and documents as continuous vectors using deep learning models, typically transformer-based encoders.
+These models enable semantic similarity matching beyond exact term overlap and are used in tasks involving semantic search and question answering.
+ Hybrid models aim to combine the strengths of both approaches, integrating lexical (tokens) and semantic signals through score fusion, late interaction, or multi-stage ranking pipelines.
+This classification has become increasingly common in both academic and the real world applications and is getting widely adopted and used in evaluation benchmarks for Information Retrieval models.
+: 1951: Philip Bagley conducted the earliest experiment in computerized document retrieval in a master thesis at MIT.
+: 1955: Allen Kent joined Case Western Reserve University, and eventually became associate director of the Center for Documentation and Communications Research.
+That same year, Kent and colleagues published a paper in American Documentation describing the precision and recall measures as well as detailing a proposed "framework" for evaluating an IR system which included statistical sampling methods for determining the number of relevant documents not retrieved.
+: 1958: International Conference on Scientific Information Washington DC included consideration of IR systems as a solution to problems identified.
+See: Proceedings of the International Conference on Scientific Information, 1958 (National Academy of Sciences, Washington, DC, 1959) : 1959: Hans Peter Luhn published "Auto-encoding of documents for information retrieval".
+ 1960s: : early 1960s: Gerard Salton began work on IR at Harvard, later moved to Cornell.
+: 1960: Melvin Earl Maron and John Lary Kuhns published "On relevance, probabilistic indexing, and information retrieval" in the Journal of the ACM 7(3):216244, July 1960.
+Cleverdon published early findings of the Cranfield studies, developing a model for IR system evaluation.
+Cleverdon, "Report on the Testing and Analysis of an Investigation into the Comparative Efficiency of Indexing Systems".
+Cranfield Collection of Aeronautics, Cranfield, England, 1962.
+:  Kent published Information Analysis and Retrieval.
+: 1963: :  Weinberg report "Science, Government and Information" gave a full articulation of the idea of a "crisis of scientific information".
+The report was named after Dr.
+:  Joseph Becker and Robert M.
+Hayes published text on information retrieval.
+Becker, Joseph; Hayes, Robert Mayo.
+Information storage and retrieval: tools, elements, theories.
+New York, Wiley (1963).
+: 1964: :  Karen Spärck Jones finished her thesis at Cambridge, Synonymy and Semantic Classification, and continued work on computational linguistics as it applies to IR.
+:  The National Bureau of Standards sponsored a symposium titled "Statistical Association Methods for Mechanized Documentation".
+Several highly significant papers, including G.
+Salton's first published reference (we believe) to the SMART system.
+: mid-1960s: ::  National Library of Medicine (NLM) developed MEDLARS Medical Literature Analysis and Retrieval System, the first major machine-readable database and batch-retrieval system.
+::  Project Intrex at MIT.
+Licklider published Libraries of the Future.
+:: 1966: Don Swanson was involved in studies at University of Chicago on Requirements for Future Catalogs.
+Wilfrid Lancaster completed evaluation studies of the MEDLARS system and published the first edition of his text on information retrieval.
+:: 1968: :  Gerard Salton published Automatic Information Organization and Retrieval.
+Sammon, Jr.'s RADC Tech report "Some Mathematics of Information Storage and Retrieval..." outlined the vector model.
+:: 1969: Sammon's "http:studentnet.cs.manchester.ac.ukpgtCOMP61021referenceSammon.pdf A nonlinear mapping for data structure analysis " (IEEE Transactions on Computers) was the first proposal for visualization interface to an IR system.
+ 1970s : early 1970s: ::  First online systemsNLM's AIM-TWX, MEDLINE; Lockheed's Dialog; SDC's ORBIT.
+::  Theodor Nelson promoting concept of hypertext, published Computer LibDream Machines.
+: 1971: Nicholas Jardine and Cornelis J.
+van Rijsbergen published "The use of hierarchic clustering in information retrieval", which articulated the "cluster hypothesis".
+: 1975: Three highly influential publications by Salton fully articulated his vector processing framework and term discrimination model: ::  A Theory of Indexing (Society for Industrial and Applied Mathematics) ::  A Theory of Term Importance in Automatic Text Analysis (JASIS v.
+26) ::  A Vector Space Model for Automatic Indexing (CACM 18:11) : 1978: The First ACM SIGIR conference.
+van Rijsbergen published Information Retrieval (Butterworths).
+Heavy emphasis on probabilistic models.
+: 1979: Tamas Doszkocs implemented the CITE natural language user interface for MEDLINE at the National Library of Medicine.
+The CITE system supported free form query input, ranked output and relevance feedback.
+ 1980s : 1980: First international ACM SIGIR conference, joint with British Computer Society IR group in Cambridge.
+Brooks proposed the ASK (Anomalous State of Knowledge) viewpoint for information retrieval.
+This was an important concept, though their automated analysis tool proved ultimately disappointing.
+: 1983: Salton (and Michael J.
+McGill) published Introduction to Modern Information Retrieval (McGraw-Hill), with heavy emphasis on vector models.
+: 1985: David Blair and Bill Maron publish: An Evaluation of Retrieval Effectiveness for a Full-Text Document-Retrieval System.
+Lindberg M.D., NLM Director, implemented a direct health professional interface to MEDLINE and other MEDLARS databases.
+Grateful Med, a pun on the Grateful Dead, was adapted from Microsearch, an ELHILL user interface that assembled query language prior to connecting to the NLM mainframe.
+After retrieving the query results, Grateful Med disconnected from the mainframe to keep search costs low.
+: mid-1980s: Efforts to develop end-user versions of commercial IR systems.
+:: 19851993: Key papers on and experimental systems for visualization interfaces.
+Korfhage, Matthew Chalmers, Anselm Spoerri and others.
+: 1989: First World Wide Web proposals by Tim Berners-Lee at CERN.
+ 1990s : 1992: First TREC conference.
+: 1997: Publication of Korfhage's Information Storage and Retrieval with emphasis on visualization and multi-reference point systems.
+: 1998: Google is founded by Larry Page and Sergey Brin.
+It introduces the PageRank algorithm, which evaluates the importance of web pages based on hyperlink structure.
+: 2009: Microsoft launches Bing, introducing features such as related searches, semantic suggestions, and later incorporating deep learning techniques into its ranking algorithms.
+: 2018: Google AI researchers release BERT (Bidirectional Encoder Representations from Transformers), enabling deep bidirectional understanding of language and improving document ranking and query understanding in IR.
+: 2022: The BEIR benchmark is released to evaluate zero-shot IR across 18 datasets covering diverse tasks.
+It standardizes comparisons between dense, sparse, and hybrid IR models.
+ SIGIR: Special Interest Group on Information Retrieval  ECIR: European Conference on Information Retrieval  CIKM: Conference on Information and Knowledge Management  WWW: International World Wide Web Conference .
+ Tony Kent Strix award  Gerard Salton Award  Karen Spärck Jones Award .
+                            .
+ https:sigir.org ACM SIGIR: Information Retrieval Special Interest Group  https:www.bcs.orgmembership-and-registrationsmember-communitiesinformation-retrieval-specialist-group BCS IRSG: British Computer Society  Information Retrieval Specialist Group  https:trec.nist.gov Text Retrieval Conference (TREC)  http:www.isical.ac.infire Forum for Information Retrieval Evaluation (FIRE)  https:www.dcs.gla.ac.ukKeithPreface.html Information Retrieval (online book) by C.
+van Rijsbergen  http:ir.dcs.gla.ac.ukwiki Information Retrieval Wiki  http:ir-facility.org Information Retrieval Facility  https:trec.nist.govpubstrec15appendicesCE.MEASURES06.pdf TREC report on information retrieval evaluation techniques  https:innovation.ebayinc.comtechengineeringmeasuring-search-relevance How eBay measures search relevance  http:retrieval.ceti.gr Information retrieval performance evaluation tool  Athena Research Centre

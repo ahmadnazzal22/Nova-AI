@@ -1,0 +1,17 @@
+{
+  "endpoint": "POST /query",
+  "description": "Ask a question to the RAG system. The system retrieves relevant context using custom Transformer embeddings and generates an answer.",
+  "request": {
+    "question": "What is a transformer and how does self-attention work?"
+  },
+  "response": {
+    "answer": "A transformer is a neural network architecture that uses a self-attention mechanism to process sequential data in parallel. Self-attention computes weighted sums of value vectors based on query-key similarity scores, allowing the model to focus on different parts of the input sequence simultaneously.",
+    "sources": [
+      "Transformers use a self-attention mechanism to process sequential data in parallel.",
+      "Multi-head attention allows the model to focus on different parts of the input simultaneously.",
+      "The attention mechanism computes weighted sums of value vectors based on query-key compatibility scores."
+    ]
+  },
+  "curl_example": "curl -X POST http://localhost:8000/query -H \"Content-Type: application/json\" -d '{\"question\": \"What is a transformer and how does self-attention work?\"}'",
+  "python_example": "import requests\nresp = requests.post('http://localhost:8000/query', json={'question': 'What is a transformer?'})\nprint(resp.json()['answer'])"
+}

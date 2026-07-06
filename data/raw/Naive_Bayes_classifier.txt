@@ -1,0 +1,111 @@
+In statistics, naive (sometimes simple or idiot's) Bayes classifiers are a family of "probabilistic classifiers" which assume that the features are conditionally independent, given the target class.
+In other words, a naive Bayes model assumes the information about the class provided by each variable is unrelated to the information from the others, with no information shared between the predictors.
+The highly unrealistic nature of this assumption, called the naive independence assumption, is what gives the classifier its name.
+These classifiers are some of the simplest Bayesian network models.
+Naive Bayes classifiers generally perform worse than more advanced models like logistic regressions, especially at quantifying uncertainty (with naive Bayes models often producing wildly overconfident probabilities).
+However, they are highly scalable, requiring only one parameter for each feature or predictor in a learning problem.
+Maximum-likelihood training can be done by evaluating a closed-form expression (simply by counting observations in each group), .
+Naive Bayes is a simple technique for constructing classifiers: models that assign class labels to problem instances, represented as vectors of feature values, where the class labels are drawn from some finite set.
+There is not a single algorithm for training such classifiers, but a family of algorithms based on a common principle: all naive Bayes classifiers assume that the value of a particular feature is independent of the value of any other feature, given the class variable.
+For example, a fruit may be considered to be an apple if it is red, round, and about 10 cm in diameter.
+A naive Bayes classifier considers each of these features to contribute independently to the probability that this fruit is an apple, regardless of any possible correlations between the color, roundness, and diameter features.
+In many practical applications, parameter estimation for naive Bayes models uses the method of maximum likelihood; in other words, one can work with the naive Bayes model without accepting Bayesian probability or using any Bayesian methods.
+Despite their naive design and apparently oversimplified assumptions, naive Bayes classifiers have worked quite well in many complex real-world situations.
+In 2004, an analysis of the Bayesian classification problem showed that there are sound theoretical reasons for the apparently implausible efficacy of naive Bayes classifiers.
+Still, a comprehensive comparison with other classification algorithms in 2006 showed that Bayes classification is outperformed by other approaches, such as boosted trees or random forests.
+An advantage of naive Bayes is that it only requires a small amount of training data to estimate the parameters necessary for classification.
+Abstractly, naive Bayes is a conditional probability model: it assigns probabilities p(C_k mid x_1, ldots, x_n) for each of the possible outcomes or classes C_k given a problem instance to be classified, represented by a vector mathbfx  (x_1, ldots, x_n) encoding some features (independent variables).
+The problem with the above formulation is that if the number of features is large or if a feature can take on a large number of values, then basing such a model on probability tables is infeasible.
+The model must therefore be reformulated to make it more tractable.
+Using Bayes' theorem, the conditional probability can be decomposed as: p(C_k mid mathbfx)  fracp(C_k)  p(mathbfx mid C_k)p(mathbfx) , In plain English, using Bayesian probability terminology, the above equation can be written as textposterior  fractextprior times textlikelihoodtextevidence , In practice, there is interest only in the numerator of that fraction, because the denominator does not depend on C and the values of the features x_i are given, so that the denominator is effectively constant.
+Under this assumption, p(x_i mid x_i1, ldots ,x_n, C_k )  p(x_i mid C_k),.
+Thus, the joint model can be expressed as beginalign p(C_k mid x_1, ldots, x_n) varpropto  p(C_k, x_1, ldots, x_n)    p(C_k)  p(x_1 mid C_k)  p(x_2mid C_k)  p(x_3mid C_k)  cdots    p(C_k) prod_i1n p(x_i mid C_k),, endalign where varpropto denotes proportionality since the denominator p(mathbfx) is omitted.
+This means that under the above independence assumptions, the conditional distribution over the class variable C is: p(C_k mid x_1, ldots, x_n)  frac1Z  p(C_k) prod_i1n p(x_i mid C_k) where the evidence Z  p(mathbfx)  sum_k p(C_k)  p(mathbfx mid C_k) is a scaling factor dependent only on x_1, ldots, x_n, that is, a constant if the values of the feature variables are known.
+Often, it is only necessary to discriminate between classes.
+In that case, the scaling factor is irrelevant, and it is sufficient to calculate the log-probability up to a factor:ln p(C_k mid x_1, ldots, x_n)  ln p(C_k)  sum_i1n ln p(x_i mid C_k) underbrace- ln Z_textirrelevantThe scaling factor is irrelevant, since discrimination subtracts it away:ln fracp(C_k mid x_1, ldots, x_n)p(C_l mid x_1, ldots, x_n)  left(ln p(C_k)  sum_i1n ln p(x_i mid C_k) right) - left(ln p(C_l)  sum_i1n ln p(x_i mid C_l) right)There are two benefits of using log-probability.
+One is that it allows an interpretation in information theory, where log-probabilities are units of information in nats.
+Another is that it avoids arithmetic underflow.
+The discussion so far has derived the independent feature model, that is, the naive Bayes probability model.
+The naive Bayes classifier combines this model with a decision rule.
+One common rule is to pick the hypothesis that is most probable so as to minimize the probability of misclassification; this is known as the maximum a posteriori or MAP decision rule.
+The corresponding classifier, a Bayes classifier, is the function that assigns a class label haty  C_k for some as follows: haty  undersetk in 1, ldots, Koperatornameargmax  p(C_k) displaystyleprod_i1n p(x_i mid C_k).
+s p(mathbfx mid Y), Confusion matrix and ROC curve.
+For the naive Bayes classifier and given that the a priori probabilities p(Y) are the same for all classes, then the decision boundary (green line) would be placed on the point where the two probability densities intersect, due to  .
+A class's prior may be calculated by assuming equiprobable classes, i.e., p(C_k)  frac1K, or by calculating an estimate for the class probability from the training set: textprior for a given class  fractextno.
+of samples in that classtexttotal no.
+of samples , To estimate the parameters for a feature's distribution, one must assume a distribution or generate nonparametric models for the features from the training set.
+The assumptions on distributions of features are called the "event model" of the naive Bayes classifier.
+For discrete features like the ones encountered in document classification (include spam filtering), multinomial and Bernoulli distributions are popular.
+These assumptions lead to two distinct models, which are often confused.
+When dealing with continuous data, a typical assumption is that the continuous values associated with each class are distributed according to a normal (or Gaussian) distribution.
+For example, suppose the training data contains a continuous attribute, x.
+The data is first segmented by the class, and then the mean and variance of x is computed in each class.
+Let mu_k be the mean of the values in x associated with class C_k, and let sigma2_k be the Bessel corrected variance of the values in x associated with class C_k.
+Suppose one has collected some observation value v.
+Then, the probability density of v given a class C_k, i.e., p(xv mid C_k), can be computed by plugging v into the equation for a normal distribution parameterized by mu_k and sigma2_k.
+Formally, p(xv mid C_k)  frac1sqrt2pisigma2_k,e -frac(v-mu_k)22sigma2_k  Another common technique for handling continuous values is to use binning to discretize the feature values and obtain a new set of Bernoulli-distributed features.
+Some literature suggests that this is required in order to use naive Bayes, but it is not true, as the discretization may throw away discriminative information.
+With a multinomial event model, samples (feature vectors) represent the frequencies with which certain events have been generated by a multinomial (p_1, dots, p_n) where p_i is the probability that event occurs (or such multinomials in the multiclass case).
+A feature vector mathbfx  (x_1, dots, x_n) is then a histogram, with x_i counting the number of times event was observed in a particular instance.
+This is the event model typically used for document classification, with events representing the occurrence of a word in a single document (see bag of words assumption).
+The likelihood of observing a histogram is given by: p(mathbfx mid C_k)  frac(sum_i1n x_i)!prod_i1n x_i ! prod_i1n p_kix_i where p_ki : p(i mid C_k).
+The multinomial naive Bayes classifier becomes a linear classifier when expressed in log-space: beginalign log p(C_k mid mathbfx)  varpropto log left( p(C_k) prod_i1n p_kix_i right)    log p(C_k)  sum_i1n x_i cdot log p_ki    b  mathbfw_ktop mathbfx endalign where b  log p(C_k) and w_ki  log p_ki.
+Estimating the parameters in log space is advantageous since multiplying a large number of small values can lead to significant rounding error.
+Applying a log transform reduces the effect of this rounding error.
+If a given class and feature value never occur together in the training data, then the frequency-based probability estimate will be zero, because the probability estimate is directly proportional to the number of occurrences of a feature's value.
+This is problematic because it will wipe out all information in the other probabilities when they are multiplied.
+Therefore, it is often desirable to incorporate a small-sample correction, called pseudocount, in all probability estimates such that no probability is ever set to be exactly zero.
+This way of regularizing naive Bayes is called Laplace smoothing when the pseudocount is one, and Lidstone smoothing in the general case.
+discuss problems with the multinomial assumption in the context of document classification and possible ways to alleviate those problems, including the use of tfidf weights instead of raw term frequencies and document length normalization, to produce a naive Bayes classifier that is competitive with support vector machines.
+Despite the fact that the far-reaching independence assumptions are often inaccurate, the naive Bayes classifier has several properties that make it surprisingly useful in practice.
+In particular, the decoupling of the class conditional feature distributions means that each distribution can be independently estimated as a one-dimensional distribution.
+This helps alleviate problems stemming from the curse of dimensionality, such as the need for data sets that scale exponentially with the number of features.
+While naive Bayes often fails to produce a good estimate for the correct class probabilities, this may not be a requirement for many applications.
+For example, the naive Bayes classifier will make the correct MAP decision rule classification so long as the correct class is predicted as more probable than any other class.
+This is true regardless of whether the probability estimate is slightly, or even grossly inaccurate.
+In this manner, the overall classifier can be robust enough to ignore serious deficiencies in its underlying naive probability model.
+Other reasons for the observed success of the naive Bayes classifier are discussed in the literature cited below.
+In the case of discrete inputs (indicator or frequency features for discrete events), naive Bayes classifiers form a generative-discriminative pair with multinomial logistic regression classifiers: each naive Bayes classifier can be considered a way of fitting a probability model that optimizes the joint likelihood p(C, mathbfx), while logistic regression fits the same probability model to optimize the conditional p(C mid mathbfx).
+More formally, we have the following: The link between the two can be seen by observing that the decision function for naive Bayes (in the binary case) can be rewritten as "predict class C_1 if the odds of p(C_1 mid mathbfx) exceed those of p(C_2 mid mathbfx)".
+Expressing this in log-space gives: logfracp(C_1 mid mathbfx)p(C_2 mid mathbfx)  log p(C_1 mid mathbfx) - log p(C_2 mid mathbfx)  0 The left-hand side of this equation is the log-odds, or logit, the quantity predicted by the linear model that underlies logistic regression.
+Since naive Bayes is also a linear model for the two "discrete" event models, it can be reparametrised as a linear function b  mathbfwtop x  0.
+Obtaining the probabilities is then a matter of applying the logistic function to b  mathbfwtop x, or in the multiclass case, the softmax function.
+Discriminative classifiers have lower asymptotic error than generative ones; however, research by Ng and Jordan has shown that in some practical cases naive Bayes can outperform logistic regression because it reaches its asymptotic error faster.
+The first scholarly publication using the naive Bayes classifier for spam filtering was by Sahami et al.
+Variants of the basic technique have been implemented in a number of research works and commercial software products.
+Many modern mail clients implement Bayesian spam filtering.
+Users can also install separate email filtering programs.
+Server-side email filters, such as DSPAM, Rspamd, SpamAssassin, SpamBayes, Bogofilter, and ASSP, make use of Bayesian spam filtering techniques, and the functionality is sometimes embedded within mail server software itself.
+CRM114, often cited as a Bayesian filter, is not intended to use a Bayes filter in production, but includes the unigram feature for reference.
+In the case a word has never been met during the learning phase, both the numerator and the denominator are equal to zero, both in the general formula and in the spamicity formula.
+The software can decide to discard such words for which there is no information available.
+More generally, the words that were encountered only a few times during the learning phase cause a problem, because it would be an error to trust blindly the information they provide.
+A simple solution is to simply avoid taking such unreliable words into account as well.
+(Demonstration:) This corrected probability is used instead of the spamicity in the combining formula.
+This formula can be extended to the case where n is equal to zero (and where the spamicity is not defined), and evaluates in this case to Pr(S).
+"Neutral" words like "the", "a", "some", or "is" (in English), or their equivalents in other languages, can be ignored.
+These are also known as Stop words.
+More generally, some bayesian filtering filters simply ignore all the words which have a spamicity next to 0.5, as they contribute little to a good decision.
+The words taken into consideration are those whose spamicity is next to 0.0 (distinctive signs of legitimate messages), or next to 1.0 (distinctive signs of spam).
+A method can be for example to keep only those ten words, in the examined message, which have the greatest absolute value 0.5  pI.
+Some software products take into account the fact that a given word appears several times in the examined message, others don't.
+Some software products use patterns (sequences of words) instead of isolated natural languages words.
+For example, with a "context window" of four words, they compute the spamicity of "Viagra is good for", instead of computing the spamicities of "Viagra", "is", "good", and "for".
+This method gives more sensitivity to context and eliminates the Bayesian noise better, at the expense of a bigger database.
+Depending on the implementation, Bayesian spam filtering may be susceptible to Bayesian poisoning, a technique used by spammers in an attempt to degrade the effectiveness of spam filters that rely on Bayesian filtering.
+A spammer practicing Bayesian poisoning will send out emails with large amounts of legitimate text (gathered from legitimate news or literary sources).
+Spammer tactics include insertion of random innocuous words that are not normally associated with spam, thereby decreasing the email's spam score, making it more likely to slip past a Bayesian spam filter.
+However, with (for example) Paul Graham's scheme only the most significant probabilities are used, so that padding the text out with non-spam-related words does not affect the detection probability significantly.
+Words that normally appear in large quantities in spam may also be transformed by spammers.
+For example, Viagra would be replaced with Viaagra or V!agra in the spam message.
+The recipient of the message can still read the changed words, but each of these words is met more rarely by the Bayesian filter, which hinders its learning process.
+As a general rule, this spamming technique does not work very well, because the derived words end up recognized by the filter just like the normal ones.
+Another technique used to try to defeat Bayesian spam filters is to replace text with pictures, either directly included or linked.
+The whole text of the message, or some part of it, is replaced with a picture where the same text is "drawn".
+The spam filter is usually unable to analyze this picture, which would contain the sensitive words like Viagra.
+However, since many mail clients disable the display of linked pictures for security reasons, the spammer sending links to distant pictures might reach fewer targets.
+Also, a picture's size in bytes is bigger than the equivalent text's size, so the spammer needs more bandwidth to send messages directly including pictures.
+Some filters are more inclined to decide that a message is spam if it has mostly graphical contents.
+A solution used by Google in its Gmail email system is to perform an OCR (Optical Character Recognition) on every mid to large size image, analyzing the text inside.
+ AODE  Anti-spam techniques  Bayes classifier  Bayesian network  Bayesian poisoning  Email filtering  Linear classifier  Logistic regression  Markovian discrimination  Mozilla Thunderbird mail client with native implementation of Bayes filters  Perceptron  Random naive Bayes  Take-the-best heuristic .
+ http:nlp.stanford.eduIR-bookhtmlhtmleditionnaive-bayes-text-classification-1.html Book Chapter: Naive Bayes text classification, Introduction to Information Retrieval  http:www.cs.waikato.ac.nzeibepubsFrankAndBouckaertPKDD06new.pdf Naive Bayes for Text Classification with Unbalanced Classes

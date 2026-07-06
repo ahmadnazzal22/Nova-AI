@@ -1,0 +1,133 @@
+Association rule learning is a rule-based machine learning method for discovering interesting relations between variables in large databases.
+It is intended to identify strong rules discovered in databases using some measures of interestingness.
+In any given transaction with a variety of items, association rules are meant to discover the rules that determine how or why certain items are connected.
+Based on the concept of strong rules, Rakesh Agrawal, Tomasz Imieliński and Arun Swami introduced association rules for discovering regularities between products in large-scale transaction data recorded by point-of-sale (POS) systems in supermarkets.
+For example, the rule mathrmonions, potatoes Rightarrow mathrmburger found in the sales data of a supermarket would indicate that if a customer buys onions and potatoes together, they are likely to also buy hamburger meat.
+Such information can be used as the basis for decisions about marketing activities such as, e.g., promotional pricing or product placements.
+In addition to the above example from market basket analysis, association rules are employed today in many application areas including Web usage mining, intrusion detection, continuous production, and bioinformatics.
+In contrast with sequence mining, association rule learning typically does not consider the order of items either within a transaction or across transactions.
+The association rule algorithm itself consists of various parameters that can make it difficult for those without some expertise in data mining to execute, with many rules that are arduous to understand.
+Following the original definition by Agrawal, Imieliński, Swami What technique you should use depends on what you are looking for with your data.
+Association rules are primarily used to find analytics and a prediction of customer behavior.
+For Classification analysis, it would most likely be used to question, make decisions, and predict behavior.
+Clustering analysis is primarily used when there are no assumptions made about the likely relationships within the data.
+Downsides However, Association rules also lead to many different downsides such as finding the appropriate parameter and threshold settings for the mining algorithm.
+But there is also the downside of having a large number of discovered rules.
+The reason is that this does not guarantee that the rules will be found relevant, but it could also cause the algorithm to have low performance.
+Sometimes the implemented algorithms will contain too many variables and parameters.
+For someone that doesnt have a good concept of data mining, this might cause them to have trouble understanding it.
+Thresholds P(E_Y  E_X), the probability of finding the RHS of the rule in transactions under the condition that these transactions also contain the LHS.
+It is commonly depicted as: :mathrmconf(X Rightarrow Y)  P(Y  X)  fracmathrmsupp(X cup Y) mathrmsupp(X) fractextnumber of transactions containing Xtext and Ytextnumber of transactions containing X The equation illustrates that confidence can be computed by calculating the co-occurrence of transactions and within the dataset in ratio to transactions containing only .
+This means that the number of transactions in both and is divided by those just in .
+For example, Table 2 shows the rule mathrmbutter, bread Rightarrow mathrmmilk which has a confidence of frac1515frac0.20.21.0 in the dataset, which denotes that every time a customer buys butter and bread, they also buy milk.
+This particular example demonstrates the rule being correct 100 of the time for transactions containing both butter and bread.
+The rule mathrmfruit Rightarrow mathrmeggs, however, has a confidence of frac2535frac0.40.60.67.
+This suggests that eggs are bought 67 of the times that fruit is brought.
+Within this particular dataset, fruit is purchased a total of 3 times, with two of those times consisting of egg purchases.
+For larger datasets, a minimum threshold, or a percentage cutoff, for the confidence can be useful for determining item relationships.
+When applying this method to some of the data in Table 2, information that does not meet the requirements are removed.
+Table 4 shows association rule examples where the minimum threshold for confidence is 0.5 (50).
+Any data that does not have a confidence of at least 0.5 is omitted.
+Generating thresholds allow for the association between items to become stronger as the data is further researched by emphasizing those that co-occur the most.
+The table uses the confidence information from Table 3 to implement the Support  Confidence column, where the relationship between items via their both confidence and support, instead of just one concept, is highlighted.
+Ranking the rules by Support  Confidence multiples the confidence of a particular rule to its support and is often implemented for a more in-depth understanding of the relationship between the items.
+Overall, using confidence in association rule mining is great way to bring awareness to data relations.
+Its greatest benefit is highlighting the relationship between particular items to one another within the set, as it compares co-occurrences of items to the total occurrence of the antecedent in the specific rule.
+However, confidence is not the optimal method for every concept in association rule mining.
+The disadvantage of using it is that it does not offer multiple difference outlooks on the associations.
+Unlike support, for instance, confidence does not provide the perspective of relationships between certain items in comparison to the entire dataset, so while milk and bread, for example, may occur 100 of the time for confidence, it only has a support of 0.4 (40).
+This is why it is important to look at other viewpoints, such as Support  Confidence, instead of solely relying on one concept incessantly to define the relationships.
+The lift of a rule is defined as: mathrmlift(XRightarrow Y)  frac mathrmsupp(X cup Y) mathrmsupp(X) times mathrmsupp(Y)  or the ratio of the observed support to that expected if X and Y were independent.
+For example, the rule mathrmmilk, bread Rightarrow mathrmbutter has a lift of frac0.20.4 times 0.4  1.25 .
+If the rule had a lift of 1, it would imply that the probability of occurrence of the antecedent and that of the consequent are independent of each other.
+When two events are independent of each other, no rule can be drawn involving those two events.
+If the lift is  1, that lets us know the degree to which those two occurrences are dependent on one another, and makes those rules potentially useful for predicting the consequent in future data sets.
+If the lift is mathrmmilk, bread Rightarrow mathrmbutter has a conviction of frac1 - 0.41 - 0.5  1.2 , and can be interpreted as the ratio of the expected frequency that X occurs without Y (that is to say, the frequency that the rule makes an incorrect prediction) if X and Y were independent divided by the observed frequency of incorrect predictions.
+In this example, the conviction value of 1.2 shows that the rule mathrmmilk, bread Rightarrow mathrmbutter would be incorrect 20 more often (1.2 times as often) if the association between X and Y was purely random chance.
+In addition to confidence, other measures of interestingness for rules have been proposed.
+Some popular measures are:  All-confidence  Collective strength  Leverage Several more measures are presented and compared by Tan et al.
+Looking for techniques that can model what the user has known (and using these models as interestingness measures) is currently an active research trend under the name of "Subjective Interestingness." .
+The concept of association rules was popularized particularly due to the 1993 article of Agrawal et al., on GUHA, a general data mining method developed by Petr Hájek et al.
+An early (circa 1989) use of minimum support and confidence to find all association rules is the Feature Based Modeling framework, which found all rules with mathrmsupp(X) and mathrmconf(X Rightarrow Y) greater than user defined constraints.
+One limitation of the standard approach to discovering associations is that by searching massive numbers of possible associations to look for collections of items that appear to be associated, there is a large risk of finding many spurious associations.
+These are collections of items that co-occur with unexpected frequency in the data, but only do so by chance.
+For example, suppose we are considering a collection of 10,000 items and looking for rules containing two items in the left-hand-side and 1 item in the right-hand-side.
+There are approximately 1,000,000,000,000 such rules.
+If we apply a statistical test for independence with a significance level of 0.05 it means there is only a 5 chance of accepting a rule if there is no association.
+If we assume there are no associations, we should nonetheless expect to find 50,000,000,000 rules.
+Statistically sound association discovery controls this risk, in most cases reducing the risk of finding any spurious associations to a user-specified significance level.
+Many algorithms for generating association rules have been proposed.
+Some well-known algorithms are Apriori, Eclat algorithm and FP-Growth, but they only do half the job, since they are algorithms for mining frequent itemsets.
+Another step needs to be done after to generate rules from frequent itemsets found in a database.
+Apriori is given by R.
+Srikant in 1994 for frequent item set mining and association rule learning.
+It proceeds by identifying the frequent individual items in the database and extending them to larger and larger item sets as long as those item sets appear sufficiently often.
+The name of the algorithm is Apriori because it uses prior knowledge of frequent itemset properties.
+Overview: Apriori uses a "bottom up" approach, where frequent subsets are extended one item at a time (a step known as candidate generation), and groups of candidates are tested against the data.
+The algorithm terminates when no further successful extensions are found.
+Apriori uses breadth-first search and a Hash tree structure to count candidate item sets efficiently.
+It generates candidate item sets of length from item sets of length .
+Then it prunes the candidates which have an infrequent sub pattern.
+According to the downward closure lemma, the candidate set contains all frequent -length item sets.
+After that, it scans the transaction database to determine frequent item sets among the candidates.
+Example: Assume that each row is a cancer sample with a certain combination of mutations labeled by a character in the alphabet.
+For example a row could have a, c which means it is affected by mutation 'a' and mutation 'c'.
+Now we will generate the frequent item set by counting the number of occurrences of each character.
+This is also known as finding the support values.
+Then we will prune the item set by picking a minimum support threshold.
+For this pass of the algorithm we will pick 3.
+Since all support values are three or above there is no pruning.
+The frequent item set is a, b, c, and d.
+After this we will repeat the process by counting pairs of mutations in the input set.
+Now we will make our minimum support value 4 so only a, d will remain after pruning.
+Now we will use the frequent item set to make combinations of triplets.
+We will then repeat the process by counting occurrences of triplets of mutations in the input set.
+Since we only have one item the next set of combinations of quadruplets is empty so the algorithm will stop.
+Advantages and Limitations: Apriori has some limitations.
+Candidate generation can result in large candidate sets.
+For example a 104 frequent 1-itemset will generate a 107 candidate 2-itemset.
+The algorithm also needs to frequently scan the database, to be specific n1 scans where n is the length of the longest pattern.
+Apriori is slower than the Eclat algorithm.
+However, Apriori performs well compared to Eclat when the dataset is large.
+This is because in the Eclat algorithm if the dataset is too large the tid-lists become too large for memory.
+FP-growth outperforms the Apriori and Eclat.
+This is due to the FP-growth algorithm not having candidate generation or test, using a compact data structure, and only having one database scan.
+FP stands for frequent pattern.
+In the first pass, the algorithm counts the occurrences of items (attribute-value pairs) in the dataset of transactions, and stores these counts in a 'header table'.
+In the second pass, it builds the FP-tree structure by inserting transactions into a trie.
+Items in each transaction have to be sorted by descending order of their frequency in the dataset before being inserted so that the tree can be processed quickly.
+Items in each transaction that do not meet the minimum support requirement are discarded.
+If many transactions share most frequent items, the FP-tree provides high compression close to tree root.
+Recursive processing of this compressed version of the main dataset grows frequent item sets directly, instead of generating candidate items and testing them against the entire database (as in the apriori algorithm).
+Growth begins from the bottom of the header table i.e.
+the item with the smallest support by finding all sorted transactions that end in that item.
+A new conditional tree is created which is the original FP-tree projected onto I.
+The supports of all nodes in the projected tree are re-counted with each node getting the sum of its children counts.
+Nodes (and hence subtrees) that do not meet the minimum support are pruned.
+Recursive growth ends when no individual items conditional on I meet the minimum support threshold.
+The resulting paths from root to I will be frequent itemsets.
+After this step, processing continues with the next least-supported header item of the original FP-tree.
+Once the recursive process has completed, all frequent item sets will have been found, and association rule creation begins.
+The ASSOC procedure is a GUHA method which mines for generalized association rules using fast bitstrings operations.
+The association rules mined by this method are more general than those output by apriori, for example "items" can be connected both with conjunction and disjunctions and the relation between antecedent and consequent of the rule is not restricted to setting minimum support and confidence as in apriori: an arbitrary combination of supported interest measures can be used.
+OPUS is an efficient algorithm for rule discovery that, in contrast to most alternatives, does not require either monotone or anti-monotone constraints such as minimum support.
+Initially used to find rules for a fixed consequent it has subsequently been extended to find rules with any item as a consequent.
+OPUS search is the core technology in the popular Magnum Opus association discovery system.
+A famous story about association rule mining is the "beer and diaper" story.
+A purported survey of behavior of supermarket shoppers discovered that customers (presumably young men) who buy diapers tend also to buy beer.
+This anecdote became popular as an example of how unexpected association rules might be found from everyday data.
+There are varying opinions as to how much of the story is true.
+Daniel Powers says: Contrast set learning is a form of associative learning.
+Contrast set learners use rules that differ meaningfully in their distribution across subsets.
+Weighted class learning is another form of associative learning where weights may be assigned to classes to give focus to a particular issue of concern for the consumer of the data mining results.
+High-order pattern discovery facilitates the capture of high-order (polythetic) patterns or event associations that are intrinsic to complex real-world data.
+K-optimal pattern discovery provides an alternative to the standard approach to association rule learning which requires that each pattern appear frequently in the data.
+Approximate Frequent Itemset mining is a relaxed version of Frequent Itemset mining that allows some of the items in some of the rows to be 0.
+Generalized Association Rules hierarchical taxonomy (concept hierarchy) Quantitative Association Rules categorical and quantitative data Interval Data Association Rules e.g.
+partition the age into 5-year-increment ranged Sequential pattern mining discovers subsequences that are common to more than minsup (minimum support threshold) sequences in a sequence database, where minsup is set by the user.
+A sequence is an ordered list of transactions.
+Subspace Clustering, a specific type of clustering high-dimensional data, is in many variants also based on the downward-closure property for specific clustering models.
+Warmr, shipped as part of the ACE data mining suite, allows association rule learning for first order relational rules.
+ Sequence mining  Production system (computer science)  Learning classifier system  Rule-based machine learning .
+ http:michael.hahsler.netresearchbibassociation_rules Annotated Bibliography on Association Rules by M.
+ https:mcpanalytics.aiarticlesassociation-rules-apriori-practical-guide-for-data-driven-decisions Association Rules (Apriori): A Practical Guide for Data-Driven Decisions

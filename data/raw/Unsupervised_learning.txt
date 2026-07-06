@@ -1,0 +1,31 @@
+Unsupervised learning is a framework in machine learning where, in contrast to supervised learning, algorithms learn patterns exclusively from unlabeled data.
+Other frameworks in the spectrum of supervisions include weak- or semi-supervision, where a small portion of the data is tagged, and self-supervision.
+Some researchers consider self-supervised learning a form of unsupervised learning.
+Conceptually, unsupervised learning divides into the aspects of data, training, algorithm, and downstream applications.
+Typically, the dataset is harvested cheaply "in the wild", such as massive text corpus obtained by web crawling, with only minor filtering (such as Common Crawl).
+This compares favorably to supervised learning, where the dataset (such as the ImageNet1000) is typically constructed manually, which is much more expensive.
+There are algorithms designed specifically for unsupervised learning, such as clustering algorithms like k-means, dimensionality reduction techniques like principal component analysis (PCA), Boltzmann machine learning, and autoencoders.
+After the rise of deep learning, most large-scale unsupervised learning has been done by training general-purpose neural network architectures by gradient descent, adapted to performing unsupervised learning by designing an appropriate training procedure.
+Sometimes a trained model can be used as-is, but more often they are modified for downstream applications.
+For example, the generative pretraining method trains a model to generate a textual dataset, before finetuning it for other applications, such as text classification.
+As another example, autoencoders are trained to produce good features, which can then be used as a module for other models, such as in a latent diffusion model.
+Tasks are often categorized as discriminative (recognition) or generative (imagination).
+Often but not always, discriminative tasks use supervised methods and generative tasks use unsupervised (see Venn diagram); however, the separation is very hazy.
+For example, object recognition favors supervised learning but unsupervised learning can also cluster objects into groups.
+Furthermore, as progress marches onward, some tasks employ both methods, and some tasks swing from one to another.
+For example, image recognition started off as heavily supervised, but became hybrid by employing unsupervised pre-training, and then moved towards supervision again with the advent of dropout, ReLU, and adaptive learning rates.
+A typical generative task is as follows.
+At each step, a datapoint is sampled from the dataset, and part of the data is removed, and the model must infer the removed part.
+This is particularly clear for the denoising autoencoders and BERT.
+During the learning phase, an unsupervised network tries to mimic the data it is given and uses the error in its mimicked output to correct itself (i.e.
+correct its weights and biases).
+Sometimes the error is expressed as a low probability that the erroneous output occurs, or it might be expressed as an unstable high energy state in the network.
+In contrast to supervised methods' dominant use of backpropagation, unsupervised learning also employs other methods including: Hopfield learning rule, Boltzmann learning rule, Contrastive Divergence, Wake Sleep, Variational Inference, Maximum Likelihood, Maximum A Posteriori, Gibbs Sampling, and backpropagating reconstruction errors or hidden state reparameterizations.
+See the table below for more details.
+An energy function is a macroscopic measure of a network's activation state.
+In Boltzmann machines, it plays the role of the Cost function.
+This analogy with physics is inspired by Ludwig Boltzmann's analysis of a gas' macroscopic energy from the microscopic probabilities of particle motion p propto e-EkT, where k is the Boltzmann constant and T is temperature.
+In the RBM network the relation is p  e-E  Z , the stochastic binary neuron outputs a probability that its state is 0 or 1.
+The data input is normally not considered a layer, but in the Helmholtz machine generation mode, the data layer receives input from the middle layer and has separate weights for this purpose, so it is considered a layer.
+Hence this network has 3 layers. .
+The classical example of unsupervised learning in the study of neural networks is Donald Hebb's principle, that is, neurons that fire together wire together.

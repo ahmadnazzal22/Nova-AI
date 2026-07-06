@@ -1,0 +1,111 @@
+In data mining and statistics, hierarchical clustering (also called hierarchical cluster analysis or HCA) is a method of cluster analysis that seeks to build a hierarchy of clusters.
+Strategies for hierarchical clustering generally fall into two categories:  Agglomerative: Agglomerative clustering, often referred to as a "bottom-up" approach, begins with each data point as an individual cluster.
+At each step, the algorithm merges the two most similar clusters based on a chosen distance metric (e.g., Euclidean distance) and linkage criterion (e.g., single-linkage, complete-linkage).
+This process continues until all data points are combined into a single cluster or a stopping criterion is met.
+Agglomerative methods are more commonly used due to their simplicity and computational efficiency for small to medium-sized datasets.
+ Divisive: Divisive clustering, known as a "top-down" approach, starts with all data points in a single cluster and recursively splits the cluster into smaller ones.
+At each step, the algorithm selects a cluster and divides it into two or more subsets, often using a criterion such as maximizing the distance between resulting clusters.
+Divisive methods are less common but can be useful when the goal is to identify large, distinct clusters first.
+In general, the merges and splits are determined in a greedy manner.
+The results of hierarchical clustering for single-linkage and CLINK for complete-linkage clustering.
+With a heap, the runtime of the general case can be reduced to mathcalO(n2 log n) instead of mathcalO(n3), at the cost of additional the memory requirements.
+In many cases, the memory overheads of this approach are too large to make it practically usable.
+Methods exist which use quadtrees that demonstrate mathcalO(n2) total running time with mathcalO(n) space.
+Divisive clustering with an exhaustive search is mathcalO(2n), but it is common to use faster heuristics to choose splits, such as k-means.
+While the linkage criterion determines how dissimilarity between sets of observations is computed, the underlying distance metric determines how dissimilarity between individual observations is measured.
+Because hierarchical clustering permits any valid measure of distance, the choice of metric is guided by the nature of the data and can have a significant effect on the resulting clustering.
+Euclidean distance is the most widely used metric for continuous numerical data.
+It corresponds to the straight-line distance between two points in Euclidean space and is the default choice in most statistical software: :d(mathbfx,mathbfy)  1 - fracmathbfxcdotmathbfylVertmathbfxrVert,lVertmathbfyrVert Because it disregards vector magnitude, it is frequently used in text mining and document clustering, where documents are represented as high-dimensional term-frequency vectors.
+:d(mathbfx,mathbfy)  sqrt(mathbfx-mathbfy)top S-1 (mathbfx-mathbfy) Unlike Euclidean distance, it is scale-invariant and is useful when features are correlated or measured in different units.
+Hamming distance is used for categorical or binary data and counts the number of positions at which two observations differ.
+It is commonly applied to genetic sequences and binary feature vectors.
+The choice of metric interacts with the choice of linkage criterion.
+For example, Ward's method and centroid-based linkages are defined in terms of squared Euclidean distances, whereas single-linkage and complete-linkage clustering can be used with any valid metric.
+sum_a in A sum_ b in B d(a,b).
+-  Weighted average linkage clustering (or WPGMA)  d(i cup j, k)  fracd(i, k)  d(j, k)2.
+-  Centroid linkage clustering, or UPGMC  lVert mu_A-mu_BrVert2 where mu_A and mu_B are the centroids of A resp.
+Other linkage criteria include:  The probability that candidate clusters spawn from the same distribution function (V-linkage).
+ The product of in-degree and out-degree on a k-nearest-neighbour graph (graph degree linkage).
+ The increment of some cluster descriptor (i.e., a quantity defined for measuring the quality of a cluster) after merging two clusters.
+The choice of linkage criterion significantly affects the shape and quality of the resulting clusters.
+Each method has distinct strengths and weaknesses depending on the structure of the data.
+Single linkage (also called the nearest-neighbor method) defines the distance between two clusters as the minimum distance between any pair of points, one from each cluster.
+This method can detect and handle clusters of arbitrary shape, including elongated and non-globular structures.
+However, it is highly sensitive to noise and outliers, because a single pair of close points is sufficient to merge two clusters.
+Complete linkage defines the distance between two clusters as the maximum distance between any pair of points across the two clusters.
+It is less susceptible to noise and outliers than single linkage.
+However, complete linkage is biased toward producing globular clusters of similar size and may incorrectly break apart large or irregularly shaped clusters.
+Formally, let (S, delta) be a metric space, and let A and B be nonempty compact subsets of S.
+The distance from a point a to a set B is defined as: :tilded(a, B)  inf_b in B delta(a, b) Extending this to sets, the directed distance from A to B is: :tilded(A, B)  sup_a in A inf_b in B delta(a, b) Since this quantity is not symmetric, the Hausdorff distance between two sets is defined as: :d_H(A, B)  maxtilded(A, B), tilded(B, A) This definition captures the largest distance from a point in one set to the closest point in the other set.
+Equivalently, it can be interpreted as the smallest radius r such that every point of A lies within distance r of some point in B, and every point of B lies within distance r of some point in A.
+In this sense, the Hausdorff distance measures the maximum mismatch between two sets.
+Early merges at lower heights reflect the closest relationships between observations, while later merges combine increasingly different groups.
+When the dendrogram is scaled using actual or normalized distances, the vertical spacing between merges provides insight into the relative differences between clusters.
+Large vertical gaps between successive merges often indicate meaningful separations in the data.
+In practice, the selection of the number of clusters may also depend on domain knowledge or application-specific requirements.
+Quantitative measures such as the silhouette coefficient can be used to evaluate the quality of different clusterings.
+Because hierarchical clustering is sensitive to the choice of distance metric and linkage criterion, the optimal number of clusters may vary depending on these factors.
+This method builds the hierarchy from the individual elements by progressively merging clusters.
+In our example, we have six elements a b c d e and f.
+The first step is to determine which elements to merge in a cluster.
+Usually, we want to take the two closest elements, according to the chosen distance.
+Optionally, one can also construct a distance matrix at this stage, where the number in the i-th row j-th column is the distance between the i-th and j-th elements.
+Then, as clustering progresses, rows and columns are merged as the clusters are merged and the distances updated.
+This is a common way to implement this type of clustering, and has the benefit of caching distances between clusters.
+A simple agglomerative clustering algorithm is described in the single-linkage clustering page; it can easily be adapted to different types of linkage (see below).
+Suppose we have merged the two closest elements b and c, we now have the following clusters a, b, c, d, e and f, and want to merge them further.
+To do that, we need to take the distance between a and b c, and therefore define the distance between two clusters.
+Usually the distance between two clusters mathcalA and mathcalB is one of the following:  The maximum distance between elements of each cluster (also called complete-linkage clustering): :: max , d(x,y) : x in mathcalA,, y in mathcalB,.
+ The minimum distance between elements of each cluster (also called single-linkage clustering): :: min , d(x,y) : x in mathcalA,, y in mathcalB ,.
+ The mean distance between elements of each cluster (also called average linkage clustering, used e.g.
+in UPGMA): :: 1 over sum_x in mathcalAsum_ y in mathcalB d(x,y).
+ The sum of all intra-cluster variance.
+ The increase in variance for the cluster being merged (Ward's method One can always decide to stop clustering when there is a sufficiently small number of clusters (number criterion).
+Some linkages may also guarantee that agglomeration occurs at a greater distance between clusters than the previous agglomeration, and then one can stop clustering when the clusters are too far apart to be merged (distance criterion).
+However, this is not the case of, e.g., the centroid linkage where the so-called reversals (inversions, departures from ultrametricity) may occur.
+The basic principle of divisive clustering was published as the DIANA (DIvisive ANAlysis clustering) algorithm.
+Initially, all data is in the same cluster, and the largest cluster is split until every object is separate.
+Because there exist O(2n) ways of splitting each cluster, heuristics are needed.
+DIANA chooses the object with the maximum average dissimilarity and then moves all objects to this cluster that are more similar to the new cluster than to the remainder.
+Informally, DIANA is not so much a process of "dividing" as it is of "hollowing out": each iteration, an existing cluster (e.g.
+the initial cluster of the entire dataset) is chosen to form a new cluster inside of it.
+Objects progressively move to this nested cluster, and hollow out the existing cluster.
+Eventually, all that's left inside a cluster is nested clusters that grew there, without it owning any loose objects by itself.
+Formally, DIANA operates in the following steps:  Let C_0  1dots n be the set of all n object indices and mathcalC  C_0 the set of all formed clusters so far.
+ Iterate the following until mathcalC  n:  Find the current cluster with 2 or more objects that has the largest diameter: C_  argmax_Cin mathcalC max_i_1,i_2in C delta(i_1,i_2)  Find the object in this cluster with the most dissimilarity to the rest of the cluster: i  argmax_iin C_ frac1sum_jin C_textrmnew delta(i,j), then either stop iterating when D(i) , or migrate i.
+ Add C_textrmnew to mathcalC.
+Intuitively, D(i) above measures how strongly an object wants to leave its current cluster, but it is attenuated when the object wouldn't fit in the splinter group either.
+Such objects will likely start their own splinter group eventually.
+The dendrogram of DIANA can be constructed by letting the splinter group C_textrmnew be a child of the hollowed-out cluster C_ each time.
+This constructs a tree with C_0 as its root and n unique single-object clusters as its leaves.
+of the Iris dataset (using R).
+https:cran.r-project.orgwebpackagesdendextendvignettesCluster_Analysis.html Source  .  ALGLIB implements several hierarchical clustering algorithms (single-link, complete-link, Ward) in C and C with O(n²) memory and O(n³) run time.
+ ELKI includes multiple hierarchical clustering algorithms, various linkage strategies and also includes the efficient SLINK,  Octave, the GNU analog to MATLAB implements hierarchical clustering in function "linkage".
+ Orange, a data mining software suite, includes hierarchical clustering with interactive dendrogram visualisation.
+ R has built-in functions and packages that provide functions for hierarchical clustering.
+ SciPy implements hierarchical clustering in Python, including the efficient SLINK algorithm.
+ scikit-learn also implements hierarchical clustering in Python.
+ Weka includes hierarchical cluster analysis.
+ MATLAB includes hierarchical cluster analysis.
+ SAS includes hierarchical cluster analysis in PROC CLUSTER.
+ Mathematica includes a Hierarchical Clustering Package.
+ NCSS includes hierarchical cluster analysis.
+ SPSS includes hierarchical cluster analysis.
+ Qlucore Omics Explorer includes hierarchical cluster analysis.
+ Stata includes hierarchical cluster analysis.
+ CrimeStat includes a nearest neighbor hierarchical cluster algorithm with a graphical output for a Geographic Information System.
+Standard hierarchical agglomerative clustering is difficult to apply to very large datasets because typical implementations require substantial memory for pairwise structures and can scale poorly as n grows (see  Complexity above).
+In computational biology, single-cell technologies such as mass cytometry routinely produce tens of millions of high-dimensional observations, which motivates specialized workflows that preserve biological resolution without requiring that every expensive step be run on the full matrix at once.
+HAL-x is a hierarchical density clustering algorithm introduced for large, high-dimensional point clouds.
+Rather than agglomerating solely from a fixed linkage criterion on a precomputed distance matrix, HAL-x builds an initial set of high-density pure clusters in a low-dimensional embedding of a downsampled subset of the data, then merges clusters using supervised linkage: it trains supervised classifiers on the original (unreduced) feature space to measure how reliably two proposed clusters can be separated, and uses those separation scores to decide merge order.
+The method outputs a hierarchy that can be read as a tree of merges together with a predictive model that can assign labels to held-out or newly collected cells without re-running the entire clustering pipeline on every point during exploratory iterations.
+In outline, the published implementation proceeds by (i) normalizing and downsampling for dimensionality reduction (commonly t-SNE or UMAP), (ii) estimating density in the embedded space to obtain initial clusters, (iii) constructing a sparse k-nearest neighbor graph between clusters with edge weights derived from classifier-based separability on unreduced coordinates, and (iv) agglomeratively merging the weakest edges while retaining cross-validated accuracy information so users can obtain multiple resolutions from one fitted model.
+The figure summarizes the HAL-x workflow: dimensionality reduction for density estimation, density-based seed clusters, a supervised linkage graph between clusters, and successive merges to a chosen generalization threshold.
+Compared with textbook agglomerative hierarchical clustering on a full n times n dissimilarity structure, HAL-x trades exact, purely geometric linkage updates for a pipeline that depends on embedding choices, density-thresholding heuristics, and the capacity of classifiers such as random forests or support vector machines to estimate separability in high dimensions.
+This design targets scalability: expensive steps are deliberately restricted to manageable downscaled subsamples, while label prediction can be applied broadly to the full dataset once the hierarchy and classifiers are established.
+Because of this, HAL-x is extremely useful when hierarchical clustering requires minimal RAM.
+A practical limitation, common to embedding-first pipelines, is that low-dimensional representations can distort global geometry and reduce accuracy.
+The HAL-x paper discusses when auxiliary preprocessing such as PCA may help for correlated features.
+HAL-x was motivated by workflows in which biologists need many related clusterings at different granularities (for example to preserve rare leukocyte subsets while still summarizing abundant lineages) without repeatedly training separate models from scratch on millions of cells.
+The authors report analyses on large cytometry-style datasets where rapid, tunable clusterings are used to support downstream interpretation of cellular phenotypes across conditions.
+ Binary space partitioning  Bounding volume hierarchy  Brown clustering  Cladistics  Cluster analysis  Computational phylogenetics  CURE data clustering algorithm  Dasgupta's objective  Dendrogram  Determining the number of clusters in a data set  Hierarchical clustering of networks  Locality-sensitive hashing  Nearest neighbor search  Nearest-neighbor chain algorithm  Numerical taxonomy  OPTICS algorithm  Statistical distance  Persistent homology .

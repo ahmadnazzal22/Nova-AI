@@ -1,0 +1,15 @@
+and a 1 bit interrupt signal.
+Upper right: the model's output. In artificial intelligence, a differentiable neural computer (DNC) is a memory augmented neural network architecture (MANN), which is typically (but not by definition) recurrent in its implementation.
+The model was published in 2016 by Alex Graves et al.
+and address big-data applications that require some sort of reasoning, such as generating video commentaries or semantic text analysis.
+DNC can be trained to navigate rapid transit systems, and apply that network to a different system.
+A neural network without memory would typically have to learn about each transit system from scratch.
+On graph traversal and sequence-processing tasks with supervised learning, DNCs performed better than alternatives such as long short-term memory or a neural turing machine.
+With a reinforcement learning approach to a block puzzle problem inspired by SHRDLU, DNC was trained via curriculum learning, and learned to make a plan.
+It performed better than a traditional recurrent neural network.
+The DNC model is similar to the Von Neumann architecture, and because of the resizability of memory, it is Turing complete.
+DNC, as originally published Adding Adaptive Computation Time (ACT) separates computation time from data time, which uses the fact that problem length and problem difficulty are not always the same.
+Training using synthetic gradients performs considerably better than Backpropagation through time (BPTT).
+Robustness can be improved with use of layer normalization and Bypass Dropout as regularization.
+Differentiable programming .
+ https:jaspock.github.iofuniculardnc.html A bit-by-bit guide to the equations governing differentiable neural computers  http:www.i-programmer.infonews105-artificial-intelligence10174-deepminds-differential-nn-thinks-deeply.html DeepMind's Differentiable Neural Network Thinks Deeply

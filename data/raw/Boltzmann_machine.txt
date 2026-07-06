@@ -1,0 +1,74 @@
+A Boltzmann machine (also called SherringtonKirkpatrick model with external field or stochastic Ising model), named after Ludwig Boltzmann, is a spin-glass model with an external field, i.e., a SherringtonKirkpatrick model, that is a stochastic Ising model.
+It is a statistical physics technique applied in the context of cognitive science.
+It is also classified as a Markov random field.
+Boltzmann machines are theoretically intriguing because of the locality and Hebbian nature of their training algorithm (being trained by Hebb's rule), and because of their parallelism and the resemblance of their dynamics to simple physical processes.
+Boltzmann machines with unconstrained connectivity have not been proven useful for practical problems in machine learning or inference, but if the connectivity is properly constrained, the learning can be made efficient enough to be useful for practical problems.
+They are named after the Boltzmann distribution in statistical mechanics, which is used in their sampling function.
+They were heavily popularized and promoted by Geoffrey Hinton, Terry Sejnowski and Yann LeCun in cognitive sciences communities, particularly in machine learning, .
+A Boltzmann machine, like a SherringtonKirkpatrick model, is a network of units with a total "energy" (Hamiltonian) defined for the overall network.
+Its units produce binary results.
+Boltzmann machine weights are stochastic.
+The global energy E in a Boltzmann machine is identical in form to that of Hopfield networks and Ising models: :E  -left(sum_i Where:  w_ij is the connection strength between unit j and unit i.
+ s_i is the state, s_i in 0,1, of unit i.
+ theta_i is the bias of unit i in the global energy function.
+(-theta_i is the activation threshold for the unit.) Often the weights w_ij are represented as a symmetric matrix Ww_ij with zeros along the diagonal.
+Noting that the probabilities of the unit being on or off sum to 1 allows for the simplification: : -fracDelta E_ik_BT  -ln(p_itexton)  ln(p_itextoff)  lnBig(frac1 - p_itextonp_itextonBig)  ln(p_itexton-1 - 1), whence the probability that the i-th unit is given by :p_itexton  frac11expBig(-fracDelta E_ik_BTBig), where the scalar T is referred to as the temperature of the system.
+This relation is the source of the logistic function found in probability expressions in variants of the Boltzmann machine.
+The network runs by repeatedly choosing a unit and resetting its state.
+After running for long enough at a certain temperature, the probability of a global state of the network depends only upon that global state's energy, according to a Boltzmann distribution, and not on the initial state from which the process was started.
+This means that log-probabilities of global states become linear in their energies.
+This relationship is true when the machine is "at thermal equilibrium", meaning that the probability distribution of global states has converged.
+Running the network beginning from a high temperature, its temperature gradually decreases until reaching a thermal equilibrium at a lower temperature.
+It then may converge to a distribution where the energy level fluctuates around the global minimum.
+This process is called simulated annealing.
+To train the network so that it will converge to a global state according to an external distribution over these states, the weights must be set so that the global states with the highest probabilities get the lowest energies.
+This is done by training.
+The units in the Boltzmann machine are divided into 'visible' units, V, and 'hidden' units, H.
+The visible units are those that receive information from the 'environment', i.e.
+the training set is a set of binary vectors over the set V.
+The distribution over the training set is denoted P(V).
+The distribution over global states converges as the Boltzmann machine reaches thermal equilibrium.
+We denote this distribution, after we marginalize it over the hidden units, as P-(V).
+Our goal is to approximate the "real" distribution P(V) using the P-(V) produced by the machine.
+The similarity of the two distributions is measured by the KullbackLeibler divergence, G: :G  sum_vP(v)lnleft(fracP(v)P-(v)right) where the sum is over all the possible states of V.
+G is a function of the weights, since they determine the energy of a state, and the energy determines P-(v), as promised by the Boltzmann distribution.
+A gradient descent algorithm over G changes a given weight, w_ij, by subtracting the partial derivative of G with respect to the weight.
+Boltzmann machine training involves two alternating phases.
+One is the "positive" phase where the visible units' states are clamped to a particular binary state vector sampled from the training set (according to P).
+The other is the "negative" phase where the network is allowed to run freely, i.e.
+only the input nodes have their state determined by external data, but the output nodes are allowed to float.
+The gradient with respect to a given weight, w_ij, is given by the equation: One example of a practical RBM application is in speech recognition.
+A deep Boltzmann machine (DBM) is a type of binary pairwise Markov random field (undirected probabilistic graphical model) with multiple layers of hidden random variables.
+It is a network of symmetrically coupled stochastic binary units.
+It comprises a set of visible units boldsymbolnu in 0,1D and layers of hidden units boldsymbolh(1) in 0,1F_1, boldsymbolh(2) in 0,1F_2, ldots, boldsymbolh(L) in 0,1F_L.
+No connection links units of the same layer (like RBM).
+For the , the probability assigned to vector is : p(boldsymbolnu)  frac1Zsum_h esum_ijW_ij(1)nu_i h_j(1)  sum_jlW_jl(2)h_j(1)h_l(2)sum_lmW_lm(3)h_l(2)h_m(3), where boldsymbolh  boldsymbolh(1), boldsymbolh(2), boldsymbolh(3)  are the set of hidden units, and theta  boldsymbolW(1), boldsymbolW(2), boldsymbolW(3)  are the model parameters, representing visible-hidden and hidden-hidden interactions.
+In a DBN only the top two layers form a restricted Boltzmann machine (which is an undirected graphical model), while lower layers form a directed generative model.
+In a DBM all layers are symmetric and undirected.
+Like DBNs, DBMs can learn complex and abstract internal representations of the input in tasks such as object or speech recognition, using limited, labeled data to fine-tune the representations built using a large set of unlabeled sensory input data.
+However, unlike DBNs and deep convolutional neural networks, they pursue the inference and training procedure in both directions, bottom-up and top-down, which allow the DBM to better unveil the representations of the input structures.
+However, the slow speed of DBMs limits their performance and functionality.
+Because exact maximum likelihood learning is intractable for DBMs, only approximate maximum likelihood learning is possible.
+Another option is to use mean-field inference to estimate data-dependent expectations and approximate the expected sufficient statistics by using Markov chain Monte Carlo (MCMC).
+Similar to basic RBMs and its variants, a spike-and-slab RBM is a bipartite graph, while like GRBMs, the visible units (input) are real-valued.
+The difference is in the hidden layer, where each hidden unit has a binary spike variable and a real-valued slab variable.
+A spike is a discrete probability mass at zero, while a slab is a density over continuous domain; their mixture forms a prior.
+An extension of ssRBM called μ-ssRBM provides extra modeling capacity using additional terms in the energy function.
+One of these terms enables the model to form a conditional distribution of the spike variables by marginalizing out the slab variables given an observation.
+In more general mathematical setting, the Boltzmann distribution is also known as the Gibbs measure.
+In statistics and machine learning it is called a log-linear model.
+In deep learning the Boltzmann distribution is used in the sampling distribution of stochastic neural networks such as the Boltzmann machine.
+The Boltzmann machine is based on the SherringtonKirkpatrick spin glass model by David Sherrington and Scott Kirkpatrick.
+The seminal publication by John Hopfield (1982) applied methods of statistical mechanics, mainly the recently developed (1970s) theory of spin glasses, to study associative memory (later named the "Hopfield network").
+The original contribution in applying such energy-based models in cognitive science appeared in papers by Geoffrey Hinton and Terry Sejnowski.
+In a 1995 interview, Hinton stated that in 1983 February or March, he was going to give a talk on simulated annealing in Hopfield networks, so he had to design a learning algorithm for the talk, resulting in the Boltzmann machine learning algorithm.
+The idea of applying the Ising model with annealed Gibbs sampling was used in Douglas Hofstadter's Copycat project (1984).
+The explicit analogy drawn with statistical mechanics in the Boltzmann machine formulation led to the use of terminology borrowed from physics (e.g., "energy"), which became standard in the field.
+The widespread adoption of this terminology may have been encouraged by the fact that its use led to the adoption of a variety of concepts and methods from statistical mechanics.
+The various proposals to use simulated annealing for inference were apparently independent.
+Similar ideas (with a change of sign in the energy function) are found in Paul Smolensky's "Harmony Theory".
+Ising models can be generalized to Markov random fields, which find widespread application in linguistics, robotics, computer vision and artificial intelligence.
+In 2024, Hopfield and Hinton were awarded Nobel Prize in Physics for their foundational contributions to machine learning, such as the Boltzmann machine.
+ Restricted Boltzmann machine  Helmholtz machine  Markov random field (MRF)  Ising model (LenzIsing model)  Hopfield network .
+    https:www.forbes.comsitestomtaulli20200202coronavirus-can-ai-artificial-intelligence-make-a-difference?sh1eca51e55817 Kothari P (2020): https:www.forbes.comsitestomtaulli20200202coronavirus-can-ai-artificial-intelligence-make-a-difference?sh1eca51e55817  .
+https:www.scholarpedia.orgarticleBoltzmann_Machine Scholarpedia article by Hinton about Boltzmann machines https:www.youtube.comwatch?vAyzOUbkUf3M Talk at Google by Geoffrey Hinton

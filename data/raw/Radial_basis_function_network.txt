@@ -1,0 +1,92 @@
+In the field of mathematical modeling, a radial basis function network is an artificial neural network that uses radial basis functions as activation functions.
+The output of the network is a linear combination of radial basis functions of the inputs and neuron parameters.
+Radial basis function networks have many uses, including function approximation, time series prediction, classification, and system control.
+They were first formulated in a 1988 paper by Broomhead and Lowe, both researchers at the Royal Signals and Radar Establishment.) and the radial basis function is commonly taken to be Gaussian : rho big ( left Vert mathbfx - mathbfc_i right Vert big )  exp left -beta_i left Vert mathbfx - mathbfc_i right Vert 2 right .
+The Gaussian basis functions are local to the center vector in the sense that :lim_x to inftyrho(left Vert mathbfx - mathbfc_i right Vert)  0 i.e.
+changing parameters of one neuron has only a small effect for input values that are far away from the center of that neuron.
+Given certain mild conditions on the shape of the activation function, RBF networks are universal approximators on a compact subset of mathbbRn.
+This means that an RBF network with enough hidden neurons can approximate any continuous function on a closed, bounded set with arbitrary precision.
+The parameters a_i , mathbfc_i , and beta_i are determined in a manner that optimizes the fit between varphi and the data.
+In addition to the above unnormalized architecture, RBF networks can be normalized.
+In this case the mapping is : varphi ( mathbfx )  stackrelmathrmdef frac  sum_i1N a_i rho big ( left Vert mathbfx - mathbfc_i right Vert big )   sum_i1N rho big ( left Vert mathbfx - mathbfc_i right Vert big )   sum_i1N a_i u big ( left Vert mathbfx - mathbfc_i right Vert big ) where : u big ( left Vert mathbfx - mathbfc_i right Vert big )  stackrelmathrmdef frac  rho big ( left Vert mathbfx - mathbfc_i right Vert big )   sum_j1N rho big ( left Vert mathbfx - mathbfc_j right Vert big )  is known as a normalized radial basis function.
+There is theoretical justification for this architecture in the case of stochastic data flow.
+Assume a stochastic kernel approximation for the joint probability density : Pleft ( mathbfx land y right )  1 over N sum_i1N , rho big ( left Vert mathbfx - mathbfc_i right Vert big ) , sigma big ( left vert y - e_i right vert big ) where the weights mathbfc_i and e_i are exemplars from the data and we require the kernels to be normalized : int rho big ( left Vert mathbfx - mathbfc_i right Vert big ) , dnmathbfx 1 and : int sigma big ( left vert y - e_i right vert big ) , dy 1.
+The probability densities in the input and output spaces are : P left ( mathbfx right )  int P left ( mathbfx land y right ) , dy  1 over N sum_i1N , rho big ( left Vert mathbfx - mathbfc_i right Vert big ) and : The expectation of y given an input mathbfx is : varphi left ( mathbfx right )  stackrelmathrmdef Eleft ( y mid mathbfx right )  int y , Pleft ( y mid mathbfx right ) dy where : Pleft ( y mid mathbfx right ) is the conditional probability of y given mathbfx .
+The conditional probability is related to the joint probability through Bayes' theorem : Pleft ( y mid mathbfx right )  frac P left ( mathbfx land y right ) P left ( mathbfx right ) which yields : varphi left ( mathbfx right )  int y , frac P left ( mathbfx land y right ) P left ( mathbfx right ) , dy .
+This becomes : varphi left ( mathbfx right )  frac  sum_i1N e_i rho big ( left Vert mathbfx - mathbfc_i right Vert big )   sum_i1N rho big ( left Vert mathbfx - mathbfc_i right Vert big )   sum_i1N e_i u big ( left Vert mathbfx - mathbfc_i right Vert big ) when the integrations are performed.
+It is sometimes convenient to expand the architecture to include local linear models.
+In that case the architectures become, to first order, : varphi left ( mathbfx right )  sum_i1N left ( a_i  mathbfb_i cdot left ( mathbfx - mathbfc_i right ) right )rho big ( left Vert mathbfx - mathbfc_i right Vert big ) and : varphi left ( mathbfx right )  sum_i1N left ( a_i  mathbfb_i cdot left ( mathbfx - mathbfc_i right ) right )u big ( left Vert mathbfx - mathbfc_i right Vert big ) in the unnormalized and normalized cases, respectively.
+Here mathbfb_i are weights to be determined.
+Higher order linear terms are also possible.
+This result can be written : varphi left ( mathbfx right )  sum_i12N sum_j1n e_ij v_ij big ( mathbfx - mathbfc_i big ) where : e_ij  begincases a_i,  mboxif  i in 1,N  b_ij,  mboxif i in N1,2N endcases and : v_ijbig ( mathbfx - mathbfc_i big )  stackrelmathrmdef begincases delta_ij rho big ( left Vert mathbfx - mathbfc_i right Vert big ) ,  mboxif  i in 1,N  left ( x_ij - c_ij right ) rho big ( left Vert mathbfx - mathbfc_i right Vert big ) ,  mboxif i in N1,2N endcases in the unnormalized case and in the normalized case.
+Here delta_ij is a Kronecker delta function defined as : delta_ij  begincases 1,  mboxif i  j  0,  mboxif i ne j endcases .
+RBF networks are typically trained from pairs of input and target values mathbfx(t), y(t), t  1, dots, T by a two-step algorithm.
+In the first step, the center vectors mathbf c_i of the RBF functions in the hidden layer are chosen.
+This step can be performed in several ways; centers can be randomly sampled from some set of examples, or they can be determined using k-means clustering.
+Note that this step is unsupervised.
+The second step simply fits a linear model with coefficients w_i to the hidden layer's outputs with respect to some objective function.
+A common objective function, at least for regressionfunction estimation, is the least squares function: : K( mathbfw )  stackrelmathrmdef sum_t1T K_t( mathbfw ) where : K_t( mathbfw )  stackrelmathrmdef big  y(t) - varphi big ( mathbfx(t), mathbfw big ) big 2 .
+We have explicitly included the dependence on the weights.
+Minimization of the least squares objective function by optimal choice of weights optimizes accuracy of fit.
+There are occasions in which multiple objectives, such as smoothness as well as accuracy, must be optimized.
+In that case it is useful to optimize a regularized objective function such as : H( mathbfw )  stackrelmathrmdef K( mathbfw )  lambda S( mathbfw )  stackrelmathrmdef sum_t1T H_t( mathbfw ) where : S( mathbfw )  stackrelmathrmdef sum_t1T S_t( mathbfw ) and : H_t( mathbfw )  stackrelmathrmdef K_t ( mathbfw )  lambda S_t ( mathbfw ) where optimization of S maximizes smoothness and lambda is known as a regularization parameter.
+A third optional backpropagation step can be performed to fine-tune all of the RBF net's parameters.
+RBF networks can be used to interpolate a function y: mathbbRn to mathbbR when the values of that function are known on finite number of points: y(mathbf x_i)  b_i, i1, ldots, N.
+If the purpose is not to perform strict interpolation but instead more general function approximation or classification the optimization is somewhat more complex because there is no obvious choice for the centers.
+The training is typically done in two phases first fixing the width and centers and then the weights.
+This can be justified by considering the different nature of the non-linear hidden neurons versus the linear output neuron.
+Basis function centers can be randomly sampled among the input instances or obtained by Orthogonal Least Square Learning Algorithm or found by clustering the samples and choosing the cluster means as the centers.
+The RBF widths are usually all fixed to same value which is proportional to the maximum distance between the chosen centers.
+After the centers c_i have been fixed, the weights that minimize the error at the output can be computed with a linear pseudoinverse solution: :mathbfw  mathbfG mathbfb, where the entries of G are the values of the radial basis functions evaluated at the points x_i: g_ji  rho(x_j-c_i).
+The existence of this linear solution means that unlike multi-layer perceptron (MLP) networks, RBF networks have an explicit minimizer (when the centers are fixed).
+Another possible training algorithm is gradient descent.
+For local-linear-architectures gradient-descent training is : e_ij (t1)  e_ij(t)  nu big  y(t) - varphi big ( mathbfx(t), mathbfw big ) big  v_ij big ( mathbfx(t) - mathbfc_i big ) .
+For one basis function, projection operator training reduces to Newton's method.
+The basic properties of radial basis functions can be illustrated with a simple mathematical map, the logistic map, which maps the unit interval onto itself.
+It can be used to generate a convenient prototype data stream.
+The logistic map can be used to explore function approximation, time series prediction, and control theory.
+The map originated from the field of population dynamics and became the prototype for chaotic time series.
+The map, in the fully chaotic regime, is given by : x(t1) stackrelmathrmdef fleft  x(t)right   4 x(t) left  1-x(t) right  where t is a time index.
+The value of x at time t1 is a parabolic function of x at time t.
+This equation represents the underlying geometry of the chaotic time series generated by the logistic map.
+Generation of the time series from this equation is the forward problem.
+The examples here illustrate the inverse problem; identification of the underlying dynamics, or fundamental equation, of the logistic map from exemplars of the time series.
+The goal is to find an estimate : x(t1)  f left  x(t) right  approx varphi(t)  varphi left  x(t)right  for f.
+The architecture is : varphi ( mathbfx )  stackrelmathrmdef sum_i1N a_i rho big ( left Vert mathbfx - mathbfc_i right Vert big ) where : rho big ( left Vert mathbfx - mathbfc_i right Vert big )  exp left -beta_i left Vert mathbfx - mathbfc_i right Vert 2 right  exp left -beta_i left ( x(t) - c_i right ) 2 right .
+Since the input is a scalar rather than a vector, the input dimension is one.
+We choose the number of basis functions as N5 and the size of the training set to be 100 exemplars generated by the chaotic time series.
+The weight beta is taken to be a constant equal to 5.
+The weights c_i are five exemplars from the time series.
+The weights a_i are trained with projection operator training: : a_i (t1)  a_i(t)  nu big  x(t1) - varphi big ( mathbfx(t), mathbfw big ) big  frac rho big ( left Vert mathbfx(t) - mathbfc_i right Vert big ) sum_i1N rho2 big ( left Vert mathbfx(t) - mathbfc_i right Vert big ) where the learning rate nu is taken to be 0.3.
+The training is performed with one pass through the 100 training points.
+The rms error is 0.15.
+The normalized RBF architecture is : varphi ( mathbfx )  stackrelmathrmdef frac  sum_i1N a_i rho big ( left Vert mathbfx - mathbfc_i right Vert big )   sum_i1N rho big ( left Vert mathbfx - mathbfc_i right Vert big )   sum_i1N a_i u big ( left Vert mathbfx - mathbfc_i right Vert big ) where : u big ( left Vert mathbfx - mathbfc_i right Vert big )  stackrelmathrmdef frac  rho big ( left Vert mathbfx - mathbfc_i right Vert big )   sum_i1N rho big ( left Vert mathbfx - mathbfc_i right Vert big )  .
+Again: : rho big ( left Vert mathbfx - mathbfc_i right Vert big )  exp left -beta left Vert mathbfx - mathbfc_i right Vert 2 right  exp left -beta left ( x(t) - c_i right ) 2 right .
+Again, we choose the number of basis functions as five and the size of the training set to be 100 exemplars generated by the chaotic time series.
+The weight beta is taken to be a constant equal to 6.
+The weights c_i are five exemplars from the time series.
+The weights a_i are trained with projection operator training: : a_i (t1)  a_i(t)  nu big  x(t1) - varphi big ( mathbfx(t), mathbfw big ) big  frac u big ( left Vert mathbfx(t) - mathbfc_i right Vert big ) sum_i1N u2 big ( left Vert mathbfx(t) - mathbfc_i right Vert big ) where the learning rate nu is again taken to be 0.3.
+The training is performed with one pass through the 100 training points.
+The rms error on a test set of 100 exemplars is 0.084, smaller than the unnormalized error.
+Normalization yields accuracy improvement.
+Typically accuracy with normalized basis functions increases even more over unnormalized functions as input dimensionality increases.
+Once the underlying geometry of the time series is estimated as in the previous examples, a prediction for the time series can be made by iteration: : varphi(0)  x(1) : x(t) approx varphi(t-1) : x(t1) approx varphi(t)varphi varphi(t-1).
+A comparison of the actual and estimated time series is displayed in the figure.
+The estimated times series starts out at time zero with an exact knowledge of x(0).
+It then uses the estimate of the dynamics to update the time series estimate for several time steps.
+Note that the estimate is accurate for only a few time steps.
+This is a general characteristic of chaotic time series.
+This is a property of the sensitive dependence on initial conditions common to chaotic time series.
+A small initial error is amplified with time.
+A measure of the divergence of time series with nearly identical initial conditions is known as the Lyapunov exponent.
+We assume the output of the logistic map can be manipulated through a control parameter c x(t),t such that : x _ (t1)  4 x(t) 1-x(t) cx(t),t .
+The goal is to choose the control parameter in such a way as to drive the time series to a desired output d(t) .
+This can be done if we choose the control parameter to be : c _ x(t),t  stackrelmathrmdef -varphi x(t)  d(t1) where : yx(t) approx fx(t)  x(t1)- cx(t),t is an approximation to the underlying natural dynamics of the system.
+The learning algorithm is given by : a_i (t1)  a_i(t)  nu varepsilon frac u big ( left Vert mathbfx(t) - mathbfc_i right Vert big ) sum_i1N u2 big ( left Vert mathbfx(t) - mathbfc_i right Vert big ) where : varepsilon  stackrelmathrmdef fx(t) - varphi x(t)  x(t1)- cx(t),t - varphi x(t)  x(t1) - d(t1) .
+ Radial basis function kernel  instance-based learning  In Situ Adaptive Tabulation  Predictive analytics  Chaos theory  Hierarchical RBF  Cerebellar model articulation controller  Instantaneously trained neural networks  Support vector machine .
+Darken, "Fast learning in networks of locally tuned processing units," Neural Computation, 1, 281-294 (1989).
+Also see https:web.archive.orgweb20070302175857http:www.ki.inf.tu-dresden.defritzkeFuzzyPapernode5.html Radial basis function networks according to Moody and Darken  T.
+Girosi, "http:courses.cs.tamu.edurgutiercpsc636_s10poggio1990rbf2.pdf Networks for approximation and learning," Proc.
+IEEE 78(9), 1484-1487 (1990).
+Qian, https:ieeexplore.ieee.orgXplorehome.jsp;jsessionid1BAA8854614AFC21D2C29CDB4FC7DBEB Function approximation and time series prediction with neural networks, Proceedings of the International Joint Conference on Neural Networks, June 1721, p.
+Grant, "https:eprints.soton.ac.uk251135100080341.pdf Orthogonal Least Squares Learning Algorithm for Radial Basis Function Networks", IEEE Transactions on Neural Networks, Vol 2, No 2 (Mar) 1991.

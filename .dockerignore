@@ -1,0 +1,17 @@
+__pycache__
+*.pyc
+*.pyo
+venv/
+.env
+.git/
+.gitignore
+chroma_db/
+data/raw/
+checkpoints/
+transformer_best.pth
+transformer_checkpoint.pth
+embeddings.pth
+*.bak
+.pytest_cache
+.venv/
+README.md

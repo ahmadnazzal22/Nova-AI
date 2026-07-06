@@ -1,0 +1,52 @@
+Density-based spatial clustering of applications with noise (DBSCAN) is a data clustering algorithm proposed by Martin Ester, Hans-Peter Kriegel, Jörg Sander, and Xiaowei Xu in 1996.
+It is a density-based clustering algorithm that does not assume a fixed parametric model for the clusters, such as Gaussian blobs, and it does not require the number of clusters to be specified in advance.
+Given a set of points in some space, it groups together points that are closely packed (points with many nearby neighbors), and marks as outliers points that lie alone in low-density regions (those whose nearest neighbors are too far away).
+DBSCAN is one of the most commonly used and cited clustering algorithms.
+In 2014, the algorithm was awarded the Test of Time Award (an award given to algorithms which have received substantial attention in theory and practice) at the leading data mining conference, ACM SIGKDD.
+, the follow-up paper "DBSCAN Revisited, Revisited: Why and How You Should (Still) Use DBSCAN" Another follow-up, HDBSCAN, was initially published by Ricardo J.
+Campello, David Moulavi, and Jörg Sander in 2013, then expanded upon with Arthur Zimek in 2015.
+It revises some of the original decisions such as the border points, and produces a hierarchical instead of a flat result.
+Ling published a closely related algorithm in "The Theory and Construction of k-Clusters" in The Computer Journal with an estimated runtime complexity of O(n³).
+For any possible clustering C C_1, ldots , C_l out of the set of all clusterings mathcalC, it minimizes the number of clusters under the condition that every pair of points in a cluster is density-reachable, which corresponds to the original two properties "maximality" and "connectivity" of a cluster: both on core points and noise points, DBSCAN is deterministic.
+DBSCAN  If the data and scale are not well understood, choosing a meaningful distance threshold ε can be difficult.
+See the section below on extensions for algorithmic modifications to handle these issues.
+Every data mining task has the problem of parameters.
+Every parameter influences the algorithm in specific ways.
+For DBSCAN, the parameters ε and are needed.
+The parameters must be specified by the user.
+Ideally, the value of ε is given by the problem to solve (e.g.
+a physical distance), and is then the desired minimum cluster size.
+ MinPts: As a rule of thumb, a minimum can be derived from the number of dimensions D in the data set, as  D  1.
+The low value of  1 does not make sense, as then every point is a core point by definition.
+With  2, the result will be the same as of hierarchical clustering with the single link metric, with the dendrogram cut at height ε.
+Therefore, must be chosen at least 3.
+However, larger values are usually better for data sets with noise and will yield more significant clusters.
+As a rule of thumb,  2dim can be used, However, it can be computationally intensive, up to O(n3).
+Additionally, one has to choose the number of eigenvectors to compute.
+For performance reasons, the original DBSCAN algorithm remains preferable to its spectral implementation.
+Generalized DBSCAN (GDBSCAN) is a generalization by the same authors to arbitrary "neighborhood" and "dense" predicates.
+The ε and parameters are removed from the original algorithm and moved to the predicates.
+For example, on polygon data, the "neighborhood" could be any intersecting polygon, whereas the density predicate uses the polygon areas instead of just the object count.
+Various extensions to the DBSCAN algorithm have been proposed, including methods for parallelization, parameter estimation, and support for uncertain data.
+The basic idea has been extended to hierarchical clustering by the OPTICS algorithm.
+DBSCAN is also used as part of subspace clustering algorithms like PreDeCon and SUBCLU.
+Different implementations of the same algorithm were found to exhibit enormous performance differences, with the fastest on a test data set finishing in 1.4 seconds, the slowest taking 13803 seconds.
+The differences can be attributed to implementation quality, language and compiler differences, and the use of indexes for acceleration.
+ Apache Commons http:commons.apache.orgpropercommons-math Math contains a Java implementation of the algorithm running in quadratic time.
+ ELKI offers an implementation of DBSCAN as well as GDBSCAN and other variants.
+This implementation can use various index structures for sub-quadratic runtime and supports arbitrary distance functions and arbitrary data types, but it may be outperformed by low-level optimized (and specialized) implementations on small data sets.
+ mlpack includes an implementation of DBSCAN accelerated with dual-tree range search techniques.
+ PostGIS includes ST_ClusterDBSCAN  a 2D implementation of DBSCAN that uses R-tree index.
+Any geometry type is supported, e.g.
+Point, LineString, Polygon, etc.
+ R contains implementations of DBSCAN in the packages https:cran.r-project.orgpackagedbscan dbscan and https:cran.r-project.orgpackagefpc fpc.
+Both packages support arbitrary distance functions via distance matrices.
+The package fpc does not have index support (and thus has quadratic runtime and memory complexity) and is rather slow due to the R interpreter.
+The package dbscan provides a fast C implementation using k-d trees (for Euclidean distance only) and also includes implementations of DBSCAN, HDBSCAN, OPTICS, OPTICSXi, and other related methods.
+ scikit-learn includes a Python implementation of DBSCAN for arbitrary Minkowski metrics, which can be accelerated using k-d trees and ball trees but which uses worst-case quadratic memory.
+A https:github.comscikit-learn-contribhdbscan contribution to scikit-learn provides an implementation of the HDBSCAN algorithm.
+ https:github.comannovikopyclustering pyclustering library includes a Python and C implementation of DBSCAN for Euclidean distance only as well as OPTICS algorithm.
+ http:www.philippe-fournier-viger.comspmf SPMF includes an implementation of the DBSCAN algorithm with k-d tree support for Euclidean distance only.
+ Weka contains (as an optional package in latest versions) a basic implementation of DBSCAN that runs in quadratic time and linear memory.
+ https:docs.rslinfa-clusteringlatestlinfa_clusteringstruct.Dbscan.html linfa includes an implementation of the DBSCAN for the rust programming language.
+ Julia includes an implementation of DBSCAN in the Julia Statistics's Clustering.jl package.
